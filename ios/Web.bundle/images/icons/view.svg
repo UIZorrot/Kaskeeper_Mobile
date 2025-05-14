@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/16px/View</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="History" transform="translate(-328.000000, -87.000000)" fill="#2FE8B7" fill-rule="nonzero">
+            <g id="List-1" transform="translate(0.000000, 71.000000)">
+                <g id="icon/16px/View" transform="translate(328.000000, 16.000000)">
+                    <path d="M6.66666667,2 L6.66666667,3.33333333 L3.33333333,3.33333333 L3.33333333,12.6666667 L12.6666667,12.6666667 L12.6666667,9.33333333 L14,9.33333333 L14,13.3333333 C14,13.7015333 13.7015333,14 13.3333333,14 L2.66666667,14 C2.29848,14 2,13.7015333 2,13.3333333 L2,2.66666667 C2,2.29848 2.29848,2 2.66666667,2 L6.66666667,2 Z M11.7238667,3.33333333 L8.66666667,3.33333333 L8.66666667,2 L14,2 L14,7.33333333 L12.6666667,7.33333333 L12.6666667,4.27614 L8,8.9428 L7.0572,8 L11.7238667,3.33333333 Z" id="形状"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

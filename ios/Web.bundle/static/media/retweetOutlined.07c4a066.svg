@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/18px/arrow-left-right-line</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Send-KAS" transform="translate(-304.000000, -79.000000)" fill="#0A2463" fill-rule="nonzero">
+            <g id="List-1" transform="translate(16.000000, 69.000000)">
+                <g id="➤右侧区域" transform="translate(258.000000, 5.000000)">
+                    <g id="icon/18px/arrow-left-right-line" transform="translate(30.000000, 5.000000)">
+                        <path d="M11.8697254,9.03030227 L14.8545441,12.0151813 L11.8697254,15 L11.0168597,14.1471947 L12.5461444,12.6177291 L4.60303023,12.6182115 L4.60303023,11.4121511 L12.5461444,11.4116686 L11.0168597,9.88310762 L11.8697254,9.03030227 Z M6.98484887,3 L7.83766024,3.85281741 L6.30839971,5.38136637 L14.2515139,5.38181864 L14.2515139,6.58787909 L6.30839971,6.58742682 L7.83766024,8.11689238 L6.98484887,8.96969773 L4,5.98484887 L6.98484887,3 Z" id="形状"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

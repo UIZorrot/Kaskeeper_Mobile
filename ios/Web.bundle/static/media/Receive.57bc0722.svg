@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/24px/Receive</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="切图" transform="translate(-530.000000, -198.000000)">
+            <g id="icon/24px/Receive" transform="translate(530.000000, 198.000000)">
+                <rect id="矩形" x="0" y="0" width="24" height="24"></rect>
+                <polygon id="路径" fill="#0A2463" fill-rule="nonzero" points="12.8754525 16.69305 18.9099525 10.65855 20.5009275 12.249525 11.7504525 21 3 12.249525 4.5909975 10.65855 10.6254525 16.69305 10.6254525 3 12.8754525 3"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

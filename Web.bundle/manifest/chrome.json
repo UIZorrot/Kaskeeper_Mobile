@@ -1,0 +1,7 @@
+{
+  "externally_connectable": {
+    "matches": ["https://kaspa.org/*"],
+    "ids": ["*"]
+  },
+  "minimum_chrome_version": "88"
+}

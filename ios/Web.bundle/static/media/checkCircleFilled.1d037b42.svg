@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/18px/checkbox-circle/2</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.25">
+        <g id="Switch-Account" transform="translate(-30.000000, -186.000000)" fill="#0A2463" fill-rule="nonzero">
+            <g id="编组-2" transform="translate(16.000000, 159.000000)">
+                <g id="icon/18px/checkbox-circle/2" transform="translate(14.000000, 27.000000)">
+                    <path d="M9,16 C5.134005,16 2,12.86596 2,9 C2,5.134005 5.134005,2 9,2 C12.86596,2 16,5.134005 16,9 C16,12.86596 12.86596,16 9,16 Z M9,14.6 C12.09281,14.6 14.6,12.09281 14.6,9 C14.6,5.907204 12.09281,3.4 9,3.4 C5.907204,3.4 3.4,5.907204 3.4,9 C3.4,12.09281 5.907204,14.6 9,14.6 Z M8.30182,11.8 L5.331993,8.83018 L6.321947,7.84017 L8.30182,9.82012 L12.26165,5.860304 L13.25159,6.850251 L8.30182,11.8 Z" id="形状"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

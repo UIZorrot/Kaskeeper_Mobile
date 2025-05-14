@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>切片</title>
+    <defs>
+        <linearGradient x1="100%" y1="100%" x2="0%" y2="1.72254642e-14%" id="linearGradient-1">
+            <stop stop-color="#02DDA4" offset="0%"></stop>
+            <stop stop-color="#29FAC4" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Switch-Account" transform="translate(-30.000000, -102.000000)" fill-rule="nonzero">
+            <g id="编组-2" transform="translate(16.000000, 75.000000)">
+                <g id="Icon-/-16pt-/-ic_verified" transform="translate(14.000000, 27.000000)">
+                    <circle id="椭圆形" fill="url(#linearGradient-1)" cx="9" cy="9" r="7.875"></circle>
+                    <polygon id="Path" fill="#FFFFFF" points="8.44636034 11.3431746 6.22356207 9.18180388 7.21879138 8.21426509 8.44636034 9.40800647 10.7795793 7.13955388 11.7747621 8.10709267"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

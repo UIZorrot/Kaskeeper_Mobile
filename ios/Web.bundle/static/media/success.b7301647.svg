@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="70px" height="70px" viewBox="0 0 70 70" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Success</title>
+    <defs>
+        <linearGradient x1="100%" y1="100%" x2="0%" y2="1.72254642e-14%" id="linearGradient-1">
+            <stop stop-color="#02DDA4" offset="0%"></stop>
+            <stop stop-color="#29FAC4" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Send-KAS" transform="translate(-145.000000, -90.000000)" fill="url(#linearGradient-1)" fill-rule="nonzero">
+            <g id="Success" transform="translate(145.000000, 90.000000)">
+                <path d="M35,70 C54.3298,70 70,54.3298 70,35 C70,15.670025 54.3298,0 35,0 C15.670025,0 0,15.670025 0,35 C0,54.3298 15.670025,70 35,70 Z M54.09985,26.099885 L31.5,48.6997 L16.775115,33.97485 L21.724885,29.02515 L31.5,38.8003 L49.15015,21.150115 L54.09985,26.099885 Z" id="形状"></path>
+            </g>
+        </g>
+    </g>
+</svg>

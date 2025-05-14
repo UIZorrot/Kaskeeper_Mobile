@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/18px/refresh</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" fill-opacity="0.45">
+        <g id="1-首页" transform="translate(-326.000000, -454.000000)" fill="#0A2463" fill-rule="nonzero">
+            <g id="编组-2" transform="translate(0.000000, 451.000000)">
+                <g id="icon/18px/refresh" transform="translate(326.000000, 3.000000)">
+                    <path d="M3.770056,2.946096 C5.172448,1.733504 7.00056,1 9,1 C13.41824,1 17,4.58172 17,9 C17,10.70888 16.46416,12.29264 15.55136,13.59248 L13,9 L15.4,9 C15.4,5.465376 12.53464,2.6 9,2.6 C7.279856,2.6 5.718216,3.278616 4.568184,4.382736 L3.770056,2.946096 Z M14.22992,15.05392 C12.82752,16.26648 10.99944,17 9,17 C4.58172,17 1,13.41824 1,9 C1,7.291088 1.535832,5.707328 2.44864,4.407552 L5,9 L2.6,9 C2.6,12.53464 5.465376,15.4 9,15.4 C10.72016,15.4 12.28176,14.72136 13.43184,13.61728 L14.22992,15.05392 Z" id="形状"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="18px" height="18px" viewBox="0 0 18 18" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>icon/18px/more</title>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Switch-Account" transform="translate(-326.000000, -19.000000)" fill="#0A2463" fill-rule="nonzero">
+            <g id="icon/18px/more" transform="translate(326.000000, 19.000000)">
+                <g id="more-fill" transform="translate(0.000000, 7.000000)">
+                    <path d="M2,0 C0.9,0 0,0.9 0,2 C0,3.1 0.9,4 2,4 C3.1,4 4,3.1 4,2 C4,0.9 3.1,0 2,0 Z M16,0 C14.9,0 14,0.9 14,2 C14,3.1 14.9,4 16,4 C17.1,4 18,3.1 18,2 C18,0.9 17.1,0 16,0 Z M9,0 C7.9,0 7,0.9 7,2 C7,3.1 7.9,4 9,4 C10.1,4 11,3.1 11,2 C11,0.9 10.1,0 9,0 Z" id="形状"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
