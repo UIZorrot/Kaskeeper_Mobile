@@ -1,7 +1,7 @@
 import React, { useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 import { Colors } from 'react-native/Libraries/NewAppScreen';
-import { View, Text, StyleSheet, SafeAreaView, StatusBar, useColorScheme, Image, BackHandler, Alert, Linking } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView, StatusBar, useColorScheme, Image, BackHandler, Alert, Linking, Platform } from 'react-native';
 import { Camera, useCameraDevice, useCodeScanner } from 'react-native-vision-camera';
 import { ScanDataContext } from './App';
 import { useFocusEffect } from '@react-navigation/native';
@@ -121,7 +121,9 @@ function QRScanner({
           left: 0,
           width: '100%',
           height: '100%',
-          display: isDisplay ? 'flex' : 'none'
+          // backfaceVisibility: isDisplay ? 'visible' : 'hidden',
+          // opacity: isDisplay ? 1 : 0,
+          display: Platform.OS === 'ios' ? 'flex' : isDisplay ? 'flex' : 'none'
         }}
         resizeMode='cover'
         device={device}

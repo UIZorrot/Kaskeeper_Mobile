@@ -7,7 +7,8 @@
 
 import React, { memo, useContext, useEffect, useRef, useState } from 'react';
 import { request, PERMISSIONS, RESULTS, openSettings } from 'react-native-permissions';
-import { NativeModules } from 'react-native';
+import { Dimensions, Keyboard, KeyboardAvoidingView, Linking, NativeModules, StyleSheet, TextInput, TouchableWithoutFeedback, useWindowDimensions } from 'react-native';
+import { useCameraPermission } from 'react-native-vision-camera';
 
 const appVersion = NativeModules.RNDeviceInfo.appVersion;
 
@@ -37,6 +38,9 @@ const Home = memo(({ navigation, route }: {
   const insets = useSafeAreaInsets();
   const isFocused = useIsFocused();
   const canGoBack = useRef(false);
+  const { hasPermission, requestPermission } = useCameraPermission()
+  const { width, height } = useWindowDimensions();
+  const keyboradHeight = useRef(0);
 
   useEffect(() => {
     // 当全局状态更新时，执行相关操作
@@ -47,13 +51,6 @@ const Home = memo(({ navigation, route }: {
       });
     }
   }, [scanData]);
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    flex: 1,
-    paddingTop: insets.top
-    // height: 600,
-  };
 
   const htmlFilePath = Platform.OS === 'android'
     ? 'file:///android_asset/index.html'
@@ -75,28 +72,64 @@ const Home = memo(({ navigation, route }: {
       const { callbackId, action, payload } = data || {};
       switch (action) {
         case 'openScan':
-          const status = await request(PERMISSIONS.ANDROID.CAMERA);
-          if (status === RESULTS.BLOCKED) {
-            console.log('Camera permission blocked');
-            return Alert.alert(
-              'Permission Blocked',
-              'You have permanently denied camera permission. Please go to settings to enable it.',
-              [
-                {
-                  text: 'Cancel',
-                  style: 'cancel',
-                },
-                {
-                  text: 'Open Settings',
-                  onPress: () => openSettings(),
-                },
-              ]
-            );
-          }
-          if (status === RESULTS.GRANTED) {
-            navigation.navigate('Scan', { callbackId })
+          let status;
+          // 判断是ios / android
+          console.log('Platform.OS', hasPermission);
+          try {
+            let status = false
+            if (!hasPermission) {
+              status = await requestPermission()
+            }
+            if (hasPermission || status) {
+              navigation.navigate('Scan', { callbackId })
+            }
+            console.log('status', status);
+            // if (Platform.OS === 'ios') {
+            //   status = await requestPermission();
+            // } else {
+            //   status = await request(PERMISSIONS.ANDROID.CAMERA);
+            // }
+            // if (status === RESULTS.BLOCKED) {
+            //   console.log('Camera permission blocked');
+            //   return Alert.alert(
+            //     'Permission Blocked',
+            //     'You have permanently denied camera permission. Please go to settings to enable it.',
+            //     [
+            //       {
+            //         text: 'Cancel',
+            //         style: 'cancel',
+            //       },
+            //       {
+            //         text: 'Open Settings',
+            //         onPress: () => openSettings(),
+            //       },
+            //     ]
+            //   );
+            // }
+            if (!hasPermission && !status) {
+              return Alert.alert(
+                'Permission Blocked',
+                'You have permanently denied camera permission. Please go to settings to enable it.',
+                [
+                  {
+                    text: 'Cancel',
+                    style: 'cancel',
+                  },
+                  {
+                    text: 'Open Settings',
+                    onPress: () => openSettings(),
+                  },
+                ]
+              );
+            }
+          } catch (error) {
+            console.log('openScan', error)
           }
           break;
+        case 'openBrowser':
+          console.log('openBrowser', payload)
+          Linking.openURL(payload.url)
+          break
         default:
           console.log('default', data);
           break;
@@ -115,7 +148,34 @@ const Home = memo(({ navigation, route }: {
     }
   }, [route.params]);
 
+  console.log({ width, height })
 
+
+  const [webViewHeight, setWebViewHeight] = useState(height);
+  useEffect(() => {
+    const keyboardDidShowListener = Keyboard.addListener(
+      'keyboardDidShow',
+      (e) => {
+        if (e.endCoordinates.height > 0) {
+          keyboradHeight.current = e.endCoordinates.height
+        } 
+        console.log('键盘显示',height, keyboradHeight.current);
+        setWebViewHeight(height - keyboradHeight.current);
+      }
+    );
+    const keyboardDidHideListener = Keyboard.addListener(
+      Platform.OS === 'ios' ? 'keyboardWillHide' : 'keyboardDidHide',
+      () => {
+        console.log('键盘隐藏', height);
+        setWebViewHeight(height);
+      }
+    );
+
+    return () => {
+      keyboardDidShowListener.remove();
+      keyboardDidHideListener.remove();
+    };
+  }, []);
   useEffect(() => {
     const backAction = () => {
       // 阻止返回键操作
@@ -135,52 +195,75 @@ const Home = memo(({ navigation, route }: {
     return () => backHandler.remove();
   }, [isFocused]);
 
+
+
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    // flex: 1,
+    height: webViewHeight, // webViewHeight,
+    paddingTop: insets.top
+  };
+
   return <SafeAreaView style={backgroundStyle}>
     <StatusBar
       barStyle={isDarkMode ? 'light-content' : 'dark-content'}
       backgroundColor={backgroundStyle.backgroundColor}
     />
-    <WebView
-      ref={webViewRef}
-      originWhitelist={['*']}
-      javaScriptEnabled={true}
-      key={'webView'}
-      source={{
-        uri: htmlFilePath,
-        // uri: 'http://192.168.3.116:8080',
+    {/* <KeyboardAvoidingView
+      behavior={
+        Platform.OS == "ios" ? "padding" : "height"
+      }
+      // enabled={false}
+      style={{
+        flex: 1
       }}
-      onError={(error) => {
-        console.log('onError', error);
-      }}
-      onLoadEnd={(e) => {
-        console.log('onLoadEnd', e);
-        // 注入 JavaScript 代码，将版本号传递给网页
-        const script = `
+    > */}
+      {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
+        <WebView
+          ref={webViewRef}
+          originWhitelist={['*']}
+          javaScriptEnabled={true}
+          key={'webView'}
+          source={{
+            uri: htmlFilePath,
+            // uri: 'http://192.168.3.119:4300',
+          }}
+          onError={(error) => {
+            console.log('onError', error);
+          }}
+          onLoadEnd={(e) => {
+            console.log('onLoadEnd', e);
+            // 注入 JavaScript 代码，将版本号传递给网页
+            const script = `
           window.appVersion = '${appVersion}';
           console.log('App Version in WebView:', window.appVersion);
         `;
-        webViewRef?.current?.injectJavaScript(script);
-      }}
-      renderError={(errorDomain, errorCode, errorDesc) => (
-        <View>
-          <Text>
-            An error occurred while loading the web page: {errorDomain} {errorCode}
-          </Text>
-          <Text>{errorDesc || 'Unknown error'}</Text>
-        </View>
-      )}
-      onMessage={e => handleMessage(e)}
-      webviewDebuggingEnabled={true}
-      javaScriptCanOpenWindowsAutomatically={true}
-      domStorageEnabled={true}
-      allowFileAccess={true}
-      allowFileAccessFromFileURLs={true}
-      allowUniversalAccessFromFileURLs={true}
-      style={{ flex: 1 }}
-      onNavigationStateChange={(navState) => {
-        canGoBack.current = navState.canGoBack; // 更新是否可以后退
-      }}
-    />
+            webViewRef?.current?.injectJavaScript(script);
+          }}
+          renderError={(errorDomain, errorCode, errorDesc) => (
+            <View>
+              <Text>
+                An error occurred while loading the web page: {errorDomain} {errorCode}
+              </Text>
+              <Text>{errorDesc || 'Unknown error'}</Text>
+            </View>
+          )}
+          onMessage={e => handleMessage(e)}
+          webviewDebuggingEnabled={true}
+          javaScriptCanOpenWindowsAutomatically={true}
+          domStorageEnabled={true}
+          allowFileAccess={true}
+          allowFileAccessFromFileURLs={true}
+          allowUniversalAccessFromFileURLs={true}
+          scrollEnabled={false}
+          bounces={false}
+          onNavigationStateChange={(navState) => {
+            canGoBack.current = navState.canGoBack; // 更新是否可以后退
+          }}
+          style={{ flex: 1 }}
+        />
+      {/* </TouchableWithoutFeedback> */}
+    {/* </KeyboardAvoidingView> */}
   </SafeAreaView>;
 });
 
