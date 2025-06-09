@@ -9,6 +9,7 @@ import React, { memo, useContext, useEffect, useRef, useState } from 'react';
 import { request, PERMISSIONS, RESULTS, openSettings } from 'react-native-permissions';
 import { Dimensions, Keyboard, KeyboardAvoidingView, Linking, NativeModules, StyleSheet, TextInput, TouchableWithoutFeedback, useWindowDimensions } from 'react-native';
 import { useCameraPermission } from 'react-native-vision-camera';
+import Clipboard from '@react-native-clipboard/clipboard';
 
 const appVersion = NativeModules.RNDeviceInfo.appVersion;
 
@@ -127,8 +128,13 @@ const Home = memo(({ navigation, route }: {
           }
           break;
         case 'openBrowser':
-          console.log('openBrowser', payload)
           Linking.openURL(payload.url)
+          break
+        case 'openCopyText':
+          console.log('openCopyText', payload.textToCopy)
+          // 复制文字到粘贴板
+          Clipboard.setString(payload.textToCopy)
+          executeNativeCallback(callbackId, 'success', {})
           break
         default:
           console.log('default', data);
@@ -148,7 +154,7 @@ const Home = memo(({ navigation, route }: {
     }
   }, [route.params]);
 
-  console.log({ width, height })
+  console.log({ width, height }, insets)
 
 
   const [webViewHeight, setWebViewHeight] = useState(height);
@@ -201,7 +207,8 @@ const Home = memo(({ navigation, route }: {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     // flex: 1,
     height: webViewHeight, // webViewHeight,
-    paddingTop: insets.top
+    paddingTop: insets.top,
+    paddingBottom: insets.bottom,
   };
 
   return <SafeAreaView style={backgroundStyle}>
@@ -226,7 +233,7 @@ const Home = memo(({ navigation, route }: {
           key={'webView'}
           source={{
             uri: htmlFilePath,
-            // uri: 'http://192.168.3.119:4300',
+            // uri: 'http://192.168.110.196:4300',
           }}
           onError={(error) => {
             console.log('onError', error);
