@@ -12200,6 +12200,7 @@ const theme = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_0__/* ["default"]
     }
   },
   typography: {
+    fontFamily: 'Inter-Regular, Inter, Arial, sans-serif',
     fontWeightLight: 300,
     fontWeightRegular: 400,
     fontWeightMedium: 500,
@@ -12233,6 +12234,11 @@ const theme = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_0__/* ["default"]
   },
   components: {
     MuiTypography: {
+      styleOverrides: {
+        root: {
+          fontFamily: 'Inter-Regular, Inter, Arial, sans-serif'
+        }
+      },
       defaultProps: {
         variantMapping: {
           body1: 'div',
@@ -12244,7 +12250,8 @@ const theme = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_0__/* ["default"]
       styleOverrides: {
         root: {
           boxShadow: 'none',
-          backgroundColor: '#F5F5F5'
+          backgroundColor: '#F5F5F5',
+          fontFamily: 'Inter-Regular, Inter, Arial, sans-serif'
         }
       }
     },
@@ -12259,7 +12266,8 @@ const theme = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_0__/* ["default"]
       styleOverrides: {
         root: {
           textTransform: 'capitalize',
-          borderRadius: '40px'
+          borderRadius: '40px',
+          fontFamily: 'Inter-Regular, Inter, Arial, sans-serif'
         },
         containedPrimary: {
           background: 'linear-gradient(to right, #29FAC4, #02DDA4)',

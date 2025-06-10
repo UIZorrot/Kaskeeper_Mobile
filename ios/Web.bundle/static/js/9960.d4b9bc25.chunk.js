@@ -105,6 +105,7 @@ function ReceiveScreen() {
   } = (0,react_i18next__WEBPACK_IMPORTED_MODULE_11__/* .useTranslation */ .G)();
   const currentLayer = (0,_ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_7__/* .useLayerType */ .wl)();
   const theme = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .c)();
+  const networkType = (0,_ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_7__/* .useNetworkType */ .qS)();
   const [activeKey, setActiveKey] = (0,react__WEBPACK_IMPORTED_MODULE_6__.useState)(currentLayer);
   const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_6__.useState)(true);
   const [qrCode, setQrCode] = (0,react__WEBPACK_IMPORTED_MODULE_6__.useState)('');
@@ -132,7 +133,7 @@ function ReceiveScreen() {
       className: "m-[16px]",
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .c, {
         className: "space-y-4",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_ui_components_TabPaper__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .c, {
+        children: networkType !== 0 && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_ui_components_TabPaper__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .c, {
           tabs: [{
             key: 'L1',
             label: 'L1'

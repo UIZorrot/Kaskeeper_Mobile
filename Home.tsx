@@ -239,7 +239,6 @@ const Home = memo(({ navigation, route }: {
             console.log('onError', error);
           }}
           onLoadEnd={(e) => {
-            console.log('onLoadEnd', e);
             // 注入 JavaScript 代码，将版本号传递给网页
             const script = `
           window.appVersion = '${appVersion}';
@@ -264,7 +263,21 @@ const Home = memo(({ navigation, route }: {
           allowUniversalAccessFromFileURLs={true}
           scrollEnabled={false}
           bounces={false}
+          onShouldStartLoadWithRequest={
+            (event) => {
+              console.log('onShouldStartLoadWithRequest', event);
+              if (['https://kaspa.org/crescendo-hard-fork-roadmap-10bps/', 'https://kas.fyi/krc20-tokens', 'https://kaspa.org/'].includes(event.url)) {
+                Linking.openURL(event.url)
+                return false
+              }
+              return true;
+            }
+          }
           onNavigationStateChange={(navState) => {
+            console.log('onNavigationStateChange', navState);
+            // if (navState.url.startsWith('https:')) {
+            //   return Linking.openURL(navState.url)
+            // }
             canGoBack.current = navState.canGoBack; // 更新是否可以后退
           }}
           style={{ flex: 1 }}

@@ -228,7 +228,6 @@
   height: 1.125rem;
 }
 .receive-content .frame1 span {
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 700;
   font-size: 1.125rem;
@@ -251,7 +250,6 @@
 }
 .receive-tip span {
   height: 1.18rem;
-  font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 1rem;
