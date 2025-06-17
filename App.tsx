@@ -12,6 +12,8 @@ import QRScanner from './QRScanner';
 import Home from './Home';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+// import useUpdateApp from './hooks/useUpdateApp';
+
 const Stack = createStackNavigator();
 
 // 创建Context
@@ -20,6 +22,8 @@ export const ScanDataContext = createContext<any>(null);
 function App(): JSX.Element {
 
   const [scanData, setScanData] = useState(null);
+
+  // useUpdateApp()
 
   return (
     <SafeAreaProvider>
@@ -40,3 +44,4 @@ function App(): JSX.Element {
 }
 
 export default App;
+
