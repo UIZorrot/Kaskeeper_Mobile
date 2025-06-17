@@ -46,12 +46,16 @@ function UnlockScreen() {
   const unlock = (0,_ui_state_global_hooks__WEBPACK_IMPORTED_MODULE_3__/* .useUnlockCallback */ .UD)();
   const tools = (0,_ui_components_ActionComponent__WEBPACK_IMPORTED_MODULE_2__/* .useTools */ .w)();
   const btnClick = async () => {
+    checkPassword(password);
+  };
+  const checkPassword = async password => {
     if (password == "") {
       tools.toastError('Password Cannot Be Empty');
     }
     // run(password);
     try {
       await unlock(password);
+      (0,_ui_utils__WEBPACK_IMPORTED_MODULE_4__/* .updatePasswordToApp */ .oN)(password);
       if (!isInNotification) {
         const hasVault = await wallet.hasVault();
         if (!hasVault) {
@@ -78,6 +82,25 @@ function UnlockScreen() {
       setDisabled(true);
     }
   }, [password]);
+
+  // Register biometric auth callback
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var _window, _window$NativeCallbac;
+    const params = {
+      action: 'openBiometricAuth',
+      payload: null,
+      success: async data => {
+        console.log('success', data.password);
+        const passwordStr = (0,_ui_utils__WEBPACK_IMPORTED_MODULE_4__/* .getPasswordFromApp */ .K2)();
+        checkPassword(passwordStr);
+      },
+      fail: data => {
+        console.log('fail', data);
+        tools.toastError('biometric auth error, please use password to unlock wallet');
+      }
+    };
+    (_window = window) === null || _window === void 0 ? void 0 : (_window$NativeCallbac = _window.NativeCallbacks) === null || _window$NativeCallbac === void 0 ? void 0 : _window$NativeCallbac.register(params);
+  }, []);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Layout */ ._W, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Content */ .kP, {
       preset: "middle",

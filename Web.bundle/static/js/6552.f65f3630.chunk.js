@@ -1,5 +1,41 @@
 "use strict";
-(self["webpackChunkKaspaWallet"] = self["webpackChunkKaspaWallet"] || []).push([[256],{
+(self["webpackChunkKaspaWallet"] = self["webpackChunkKaspaWallet"] || []).push([[6552],{
+
+/***/ 21132:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utils_createSvgIcon_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(19408);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2488);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c)(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", {
+  d: "M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5M12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5m0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3"
+}), 'Visibility'));
+
+/***/ }),
+
+/***/ 77320:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _utils_createSvgIcon_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(19408);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2488);
+"use client";
+
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,_utils_createSvgIcon_js__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c)(/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("path", {
+  d: "M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7M2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2m4.31-.78 3.15 3.15.02-.16c0-1.66-1.34-3-3-3z"
+}), 'VisibilityOff'));
+
+/***/ }),
 
 /***/ 25350:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -460,146 +496,35 @@ function createSvgIcon(path, displayName) {
 
 /***/ }),
 
-/***/ 6860:
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96651);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(92469);
-/* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(83603);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(87136);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(25350);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(75776);
-/* harmony import */ var _state_settings_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(17534);
-/* harmony import */ var _background_krc20_ActiveUTXO__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(57360);
-/* harmony import */ var _state_accounts_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24468);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2488);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_4__]);
-_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_4__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
-
-
-
-
-
-
-
-
-const KRC20TokenInput = _ref => {
-  let {
-    type,
-    name,
-    onChange,
-    onBlur,
-    error
-  } = _ref;
-  const [ticker, setTicker] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)('');
-  const [fetchedTicker, setFetchedTicker] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)();
-  const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
-  const network = (0,_state_settings_hooks__WEBPACK_IMPORTED_MODULE_2__/* .useNetworkType */ .qS)();
-  const address = (0,_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_4__/* .useAccountAddress */ .mA)();
-  const checkTickerValid = async value => {
-    if (!value || value.length < 4) {
-      setFetchedTicker(null);
-      onChange(null);
-      return;
-    }
-    setLoading(true);
-    try {
-      const result = await (0,_background_krc20_ActiveUTXO__WEBPACK_IMPORTED_MODULE_3__/* .get_krc20_issue_info */ .Oy)(network, value);
-      console.log('result', result);
-      if (!result || !result.mod || type === 'issue' && result.mod !== 'issue' || result.to !== address) {
-        setFetchedTicker(null);
-        onChange(null);
-        return;
-      }
-      setFetchedTicker(result);
-      return onChange(result);
-    } catch (error) {
-      onChange(null);
-      setFetchedTicker(null);
-      console.error('Error fetching ticker:', error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  // useEffect(() => {
-  //   if (!ticker || ticker.length < 4) {
-  //     setFetchedTicker(null)
-  //     onChange(null)
-  //     return 
-  //   }
-  //   checkTickerValid();
-  // }, [ticker]);
-
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .c, {
-    type: "text",
-    value: ticker,
-    name: name || 'ticker',
-    placeholder: "Ticker",
-    fullWidth: true,
-    autoComplete: "off",
-    size: "small",
-    className: "!pr-0",
-    endAdornment: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .c, {
-      className: "!text-sm !text-black",
-      children: !(0,lodash__WEBPACK_IMPORTED_MODULE_1__.isEmpty)(fetchedTicker) && fetchedTicker.state !== "unused" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_icons_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .c, {
-        color: "primary"
-      }) : loading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .c, {
-        color: "primary",
-        size: 20
-      }) : 'Unused'
-    }),
-    onBlur: onBlur,
-    onChange: e => {
-      const nonDigitOnlyRegex = /^\D*$/; // 匹配完全不含数字的字符串
-      const digitsRegex = /\d+/g; // 匹配所有数字部分
-      const value = e.target.value;
-      // if (!nonDigitOnlyRegex.test(value)) {
-      //   value = e.target.value.replace(digitsRegex, '')
-      // }
-      setTicker(value);
-      checkTickerValid(value);
-      // saveStateToLocalStorage();  // 保存ticker状态
-    },
-    error: error // {!ticker || ticker.length < 4 || isEmpty(fetchedTicker) || fetchedTicker.state === "unused"}
-  });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (KRC20TokenInput);
-__webpack_async_result__();
-} catch(e) { __webpack_async_result__(e); } });
-
-/***/ }),
-
-/***/ 27172:
+/***/ 6552:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */   "default": () => (/* binding */ ChangePasswordScreen)
 /* harmony export */ });
 /* harmony import */ var _ui_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(83120);
-/* harmony import */ var _MainRoute__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77980);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(37656);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(70884);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(87136);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(96651);
-/* harmony import */ var _mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(75776);
-/* harmony import */ var _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(60172);
-/* harmony import */ var _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24468);
-/* harmony import */ var _ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(17534);
-/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(40256);
-/* harmony import */ var _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(6860);
-/* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(96522);
-/* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(55043);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(2488);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_components__WEBPACK_IMPORTED_MODULE_0__, _MainRoute__WEBPACK_IMPORTED_MODULE_1__, _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_3__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_4__, _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_7__]);
-([_ui_components__WEBPACK_IMPORTED_MODULE_0__, _MainRoute__WEBPACK_IMPORTED_MODULE_1__, _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_3__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_4__, _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _ui_components_ActionComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(23848);
+/* harmony import */ var _ui_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(48818);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(96651);
+/* harmony import */ var react_i18next__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(80864);
+/* harmony import */ var _MainRoute__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(77980);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(87136);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(25350);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(77320);
+/* harmony import */ var _mui_icons_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(21132);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2488);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_components__WEBPACK_IMPORTED_MODULE_0__, _MainRoute__WEBPACK_IMPORTED_MODULE_4__]);
+([_ui_components__WEBPACK_IMPORTED_MODULE_0__, _MainRoute__WEBPACK_IMPORTED_MODULE_4__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars */
+
+
+
+// import Visibility from '@mui/icons-material/Visibility';
+// import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 
 
@@ -607,152 +532,136 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_
 
 
 
-
-
-
-
-
-
-
-
-const Burn = () => {
-  const navigate = (0,_MainRoute__WEBPACK_IMPORTED_MODULE_1__/* .useNavigate */ .i)();
-  const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(false);
+function ChangePasswordScreen() {
   const {
-    privateKey
-  } = (0,_ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_4__/* .useUserPrivateKey */ .yK)();
-  const networkType = (0,_ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_5__/* .useNetworkType */ .qS)();
-  const [tickerInfo, setTickerInfo] = (0,react__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
-  const address = (0,_ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_4__/* .useAccountAddress */ .mA)();
-  const selfBalance = (0,react__WEBPACK_IMPORTED_MODULE_2__.useMemo)(() => {
-    var _tickerInfo$holder, _tickerInfo$holder$fi;
-    const balance = (tickerInfo === null || tickerInfo === void 0 ? void 0 : (_tickerInfo$holder = tickerInfo.holder) === null || _tickerInfo$holder === void 0 ? void 0 : (_tickerInfo$holder$fi = _tickerInfo$holder.find(item => {
-      return item.address === address;
-    })) === null || _tickerInfo$holder$fi === void 0 ? void 0 : _tickerInfo$holder$fi.amount) || 0;
-    return balance / 10 ** ((tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.dec) || 1);
-  }, [tickerInfo]);
-  const formik = (0,formik__WEBPACK_IMPORTED_MODULE_10__/* .useFormik */ .KO)({
-    initialValues: {
-      amount: null,
-      tickerInfo: null
-    },
-    validationSchema: yup__WEBPACK_IMPORTED_MODULE_8__/* .object */ .kt().shape({
-      amount: yup__WEBPACK_IMPORTED_MODULE_8__/* .number */ .CQ().required('Please enter valid burn amount').positive('Burn amount must be greater than zero').max(selfBalance, "Burn amount exceeds max balance limit (".concat(selfBalance, ")")),
-      tickerInfo: yup__WEBPACK_IMPORTED_MODULE_8__/* .object */ .kt().required('Please enter valid ticker')
-    }),
-    onSubmit: async values => {
-      console.log('onSubmit values', values, loading);
-      if (loading) return;
-      setLoading(true);
-      try {
-        var _res;
-        const networkName = networkType === _shared_types__WEBPACK_IMPORTED_MODULE_6__/* .NetworkType */ .U5.Mainnet ? 'mainnet' : networkType === _shared_types__WEBPACK_IMPORTED_MODULE_6__/* .NetworkType */ .U5.Testnet ? 'testnet-10' : 'devnet';
-        let res;
-        if (tickerInfo.mod === 'issue') {
-          res = await (0,_background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_3__/* .krc20_burn_issue */ .mE)(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex, networkName, tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.ca, 0.02, (values.amount || 0) * 10 ** tickerInfo.dec);
-        } else {
-          res = await (0,_background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_3__/* .krc20_burn */ .aS)(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex, networkName, tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.tick, 0.02, (values.amount || 0) * 10 ** tickerInfo.dec);
-        }
-        if ((_res = res) !== null && _res !== void 0 && _res.status) {
-          const rawtxinfo = {
-            "to": address,
-            "amountSompi": (values.amount || 0) * 10 ** tickerInfo.dec,
-            // (parseInt(tickerInfo.lim) * (values.amount || 0) / (new Big(10).pow(8 - tickerInfo.dec)).toNumber()),
-            "tick": (tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.tick) || (tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.name)
-          };
-          console.log('rawtxinfo', rawtxinfo);
-          navigate('TxSuccessScreen', {
-            txid: "Multi-Transaction",
-            rawtx: rawtxinfo,
-            type: "Burn"
-          });
-        }
-      } catch (error) {
-        console.log('handleBurn error', error);
-      } finally {
-        setLoading(false);
-      }
+    t
+  } = (0,react_i18next__WEBPACK_IMPORTED_MODULE_6__/* .useTranslation */ .G)();
+  const navigate = (0,_MainRoute__WEBPACK_IMPORTED_MODULE_4__/* .useNavigate */ .i)();
+  const [originPassword, setOriginPassword] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)('');
+  const [newPassword, setNewPassword] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)('');
+  const [confirmPassword, setConfirmPassword] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)('');
+  const [disabled, setDisabled] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(true);
+  const [showOriginPassword, setShowOriginPassword] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
+  const [showNewPassword, setShowNewPassword] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
+  const [showConfirmPassword, setShowConfirmPassword] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
+  const wallet = (0,_ui_utils__WEBPACK_IMPORTED_MODULE_2__/* .useWallet */ .e6)();
+  const tools = (0,_ui_components_ActionComponent__WEBPACK_IMPORTED_MODULE_1__/* .useTools */ .w)();
+  (0,react__WEBPACK_IMPORTED_MODULE_3__.useEffect)(() => {
+    if (originPassword.length > 0 && newPassword.length >= 5 && newPassword === confirmPassword && originPassword !== newPassword && !/\s/.test(newPassword)) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
     }
-  });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Layout */ ._W, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Header */ .ek, {
-      onBack: () => navigate('ToolScreen', null, true),
-      parentName: "ToolScreen",
-      title: 'Burn Krc20',
-      RightComponent: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .NodeStatus */ .s9, {})
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Content */ .kP, {
+  }, [originPassword, newPassword, confirmPassword]);
+  const verify = async () => {
+    try {
+      await wallet.changePassword(originPassword, newPassword);
+      (0,_ui_utils__WEBPACK_IMPORTED_MODULE_2__/* .updatePasswordToApp */ .oN)(newPassword);
+      tools.toastSuccess(t('Success'));
+      navigate('MainScreen');
+    } catch (err) {
+      console.log(err);
+      tools.toastError(err.message);
+    }
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Layout */ ._W, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Header */ .ek, {
+      onBack: () => {
+        window.history.go(-1);
+      },
+      title: t('Change Password'),
+      parentName: "SettingsTabScreen"
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Content */ .kP, {
       classname: "!px-4",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .c, {
-        className: "space-y-4",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .c, {
-          className: "space-y-1",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .c, {
-            children: "Ticker"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .c, {
-            name: "tickerInfo",
-            onBlur: formik.handleBlur,
-            onChange: value => {
-              console.log('value', value);
-              formik.setFieldValue('tickerInfo', value, true);
-              setTickerInfo(value);
-            },
-            error: Boolean(formik.errors.tickerInfo)
-          }), formik.errors.tickerInfo ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .c, {
-            color: "error.main",
-            children: formik.errors.tickerInfo
-          }) : null]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .c, {
-          className: "space-y-1",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .c, {
-            children: "Burn Amount"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .c, {
-            name: "amount",
-            placeholder: "Burn Amount",
-            value: formik.values.amount,
-            onChange: e => {
-              let value = parseInt(e.target.value, 10);
-              if (isNaN(value)) {
-                value = null;
-              } else {
-                value = Math.max(1, value);
-              }
-              formik.setFieldValue('amount', value);
-            },
-            onBlur: formik.handleBlur,
-            error: formik.touched.amount && Boolean(formik.errors.amount),
-            type: "number",
-            className: "w-full"
-          }), formik.touched.amount && formik.errors.amount ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .c, {
-            color: "error.main",
-            children: formik.errors.amount
-          }) : null]
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .c, {
-          className: "!mt-1",
-          textAlign: 'center',
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)("span", {
-            className: "text-sm text-gray-400",
-            children: ["Balance: ", selfBalance, " ", (tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.name) || (tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.tick)]
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Column */ .ou, {
+        gap: "xl",
+        style: {
+          marginTop: 0
+        },
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .c
+        // label={t('Current Password')}
+        , {
+          type: showOriginPassword ? 'text' : 'password',
+          value: originPassword,
+          onChange: e => {
+            const {
+              target
+            } = e;
+            const regex = /[\u4e00-\u9fa5]/g;
+            setOriginPassword(target.value.replace(regex, ''));
+          },
+          autoFocus: true,
+          fullWidth: true,
+          placeholder: "Current Password",
+          endAdornment: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .c, {
+            onClick: () => setShowOriginPassword(!showOriginPassword),
+            edge: "end",
+            children: showOriginPassword ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_icons_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .c, {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_icons_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .c, {})
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .c, {
-          className: "space-y-1 mt-2",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Button */ .q, {
-            variant: "contained",
-            color: "primary",
-            disabled: loading,
-            className: "!rounded-lg !h-[42px] w-full",
-            onClick: () => formik.handleSubmit(),
-            children: [loading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .c, {
-              size: 16,
-              color: "inherit",
-              className: "mr-1"
-            }), "Burn"]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .c
+        // label={t('New Password')}
+        , {
+          type: showNewPassword ? 'text' : 'password',
+          value: newPassword,
+          placeholder: "New Password",
+          onChange: e => {
+            const {
+              target
+            } = e;
+            const regex = /[\u4e00-\u9fa5]/g;
+            setNewPassword(target.value.replace(regex, ''));
+          },
+          onBlur: e => {
+            if (newPassword.length < 5) {
+              return tools.toastWarning(t('at least five characters'));
+            }
+            if (newPassword.length > 0 && confirmPassword.length > 0 && newPassword !== confirmPassword) {
+              return tools.toastWarning(t('Entered passwords differ'));
+            }
+            if (newPassword === originPassword) {
+              return tools.toastWarning(t('New password cannot be the same as the old password'));
+            }
+            if (/\s/.test(newPassword)) {
+              return tools.toastWarning(t('Password cannot contain spaces'));
+            }
+          },
+          fullWidth: true,
+          endAdornment: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .c, {
+            onClick: () => setShowNewPassword(!showNewPassword),
+            edge: "end",
+            children: showNewPassword ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_icons_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .c, {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_icons_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .c, {})
           })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_7__/* ["default"] */ .c
+        // label={t('Confirm New Password')}
+        , {
+          type: showConfirmPassword ? 'text' : 'password',
+          value: confirmPassword,
+          placeholder: "Confirm New Password",
+          onChange: e => setConfirmPassword(e.target.value),
+          onBlur: e => {
+            if (newPassword.length > 0 && confirmPassword.length > 0 && newPassword !== confirmPassword) {
+              tools.toastWarning('Entered passwords differ');
+            }
+          },
+          fullWidth: true,
+          endAdornment: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .c, {
+            onClick: () => setShowConfirmPassword(prev => !prev),
+            edge: "end",
+            children: showConfirmPassword ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_icons_material__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .c, {}) : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_icons_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .c, {})
+          })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Button */ .q, {
+          className: "!rounded-lg !h-11",
+          disabled: disabled,
+          variant: "contained",
+          color: "primary",
+          onClick: verify,
+          fullWidth: true,
+          children: t('Change Password')
         })]
       })
     })]
   });
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Burn);
+}
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
 

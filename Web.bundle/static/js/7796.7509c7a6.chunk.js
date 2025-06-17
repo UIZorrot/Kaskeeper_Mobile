@@ -46,12 +46,16 @@ function UnlockScreen() {
   const unlock = (0,_ui_state_global_hooks__WEBPACK_IMPORTED_MODULE_3__/* .useUnlockCallback */ .UD)();
   const tools = (0,_ui_components_ActionComponent__WEBPACK_IMPORTED_MODULE_2__/* .useTools */ .w)();
   const btnClick = async () => {
+    checkPassword(password);
+  };
+  const checkPassword = async password => {
     if (password == "") {
       tools.toastError('Password Cannot Be Empty');
     }
     // run(password);
     try {
       await unlock(password);
+      (0,_ui_utils__WEBPACK_IMPORTED_MODULE_4__/* .updatePasswordToApp */ .oN)(password);
       if (!isInNotification) {
         const hasVault = await wallet.hasVault();
         if (!hasVault) {
@@ -86,14 +90,9 @@ function UnlockScreen() {
       action: 'openBiometricAuth',
       payload: null,
       success: async data => {
-        console.log('success', data.result);
-        navigate('MainScreen');
-        // const hasVault = await wallet.hasVault();
-        // if (!hasVault) {
-        //   return navigate('WelcomeScreen');
-        // } else {
-        //   return navigate('MainScreen');
-        // }
+        console.log('success', data.password);
+        const passwordStr = (0,_ui_utils__WEBPACK_IMPORTED_MODULE_4__/* .getPasswordFromApp */ .K2)();
+        checkPassword(passwordStr);
       },
       fail: data => {
         console.log('fail', data);

@@ -71,6 +71,7 @@ function CreatePasswordScreen() {
           fromUnlock: true
         });
       }
+      (0,_ui_utils__WEBPACK_IMPORTED_MODULE_3__/* .updatePasswordToApp */ .oN)(password);
     },
     onError(err) {
       console.log('boot onError', err.message);

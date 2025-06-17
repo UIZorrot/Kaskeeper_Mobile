@@ -556,6 +556,7 @@ function ChangePasswordScreen() {
   const verify = async () => {
     try {
       await wallet.changePassword(originPassword, newPassword);
+      (0,_ui_utils__WEBPACK_IMPORTED_MODULE_2__/* .updatePasswordToApp */ .oN)(newPassword);
       tools.toastSuccess(t('Success'));
       navigate('MainScreen');
     } catch (err) {

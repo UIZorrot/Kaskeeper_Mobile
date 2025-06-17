@@ -46,8 +46,8 @@ class BaseController {
   // };
 }
 /* harmony default export */ const base = (BaseController);
-// EXTERNAL MODULE: ./src/background/krc20/L2Ethers.ts
-var L2Ethers = __webpack_require__(38560);
+// EXTERNAL MODULE: ./src/background/krc20/l2Ethers.ts
+var l2Ethers = __webpack_require__(5140);
 ;// CONCATENATED MODULE: ./src/background/controller/wallet.ts
 /* provided dependency */ var Buffer = __webpack_require__(87597)["Buffer"];
 /* eslint-disable no-unused-vars */
@@ -68,6 +68,7 @@ class WalletController extends base {
     var _this;
     super(...arguments);
     _this = this;
+    this.offline = true;
     this.openapi = service/* openapiService */.A5;
     /* wallet */
     this.boot = password => service/* keyringService */.yG.boot(password);
@@ -75,6 +76,9 @@ class WalletController extends base {
     this.getApproval = service/* notificationService */._M.getApproval;
     this.resolveApproval = service/* notificationService */._M.resolveApproval;
     this.rejectApproval = service/* notificationService */._M.rejectApproval;
+    this.setOffline = offline => {
+      this.offline = offline;
+    };
     this.hasVault = async () => service/* keyringService */.yG.hasVault();
     this.verifyPassword = password => service/* keyringService */.yG.verifyPassword(password);
     this.changePassword = (password, newPassword) => service/* keyringService */.yG.changePassword(password, newPassword);
@@ -258,7 +262,7 @@ class WalletController extends base {
           pubkey: keyring.accounts[j].pubkey,
           type: keyring.accounts[j].type
         });
-        const l2Info = await (0,L2Ethers/* eth_address */.SO)("0x".concat(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex));
+        const l2Info = await (0,l2Ethers/* eth_address */.SO)("0x".concat(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex));
         // console.log('privateKey2', l2Info)
         // console.log('1260', keyring)
         keyring.accounts[j].addressL2 = l2Info.address;
@@ -291,7 +295,7 @@ class WalletController extends base {
           type: keyring.accounts[j].type
         });
         // console.log('privateKey1', privateKey)
-        const l2Info = await (0,L2Ethers/* eth_address */.SO)("0x".concat(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex));
+        const l2Info = await (0,l2Ethers/* eth_address */.SO)("0x".concat(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex));
         // console.log('privateKey2', l2Info)
         // console.log('1260', keyring)
         keyring.accounts[j].addressL2 = l2Info.address;
@@ -746,12 +750,12 @@ class WalletController extends base {
         pubkey: account.pubkey,
         type: account.type
       });
-      return await (0,L2Ethers/* signMessage */.ao)(text, "0x".concat(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex));
+      return await (0,l2Ethers/* signMessage */.ao)(text, "0x".concat(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex));
     };
     this.verifyMessageL2 = async (text, signature) => {
       const account = service/* preferenceService */.Kk.getCurrentAccount();
       if (!account) throw new Error('no current account');
-      return await (0,L2Ethers/* verifyMessage */.Sq)(text, signature, account.addressL2);
+      return await (0,l2Ethers/* verifyMessage */.Sq)(text, signature, account.addressL2);
     };
     // eslint-disable-next-line no-unused-vars, @typescript-eslint/no-unused-vars
     this.signBIP322Simple = async text => {
@@ -886,7 +890,7 @@ class WalletController extends base {
     };
     this.getRpcStatus = () => {
       const status = service/* openapiService */.A5.getRpcStatus();
-      return status;
+      return this.offline ? status : false;
     };
     this.setNetworkType = async networkType => {
       console.log('setNetworkType', networkType);
@@ -1150,7 +1154,7 @@ class WalletController extends base {
               type: keyring.accounts[j].type
             });
             // console.log('privateKey1', privateKey)
-            const l2Info = await (0,L2Ethers/* eth_address */.SO)("0x".concat(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex));
+            const l2Info = await (0,l2Ethers/* eth_address */.SO)("0x".concat(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex));
             // console.log('privateKey2', l2Info)
             // console.log('1260', keyring)
             keyring.accounts[j].addressL2 = l2Info.address;
@@ -1198,7 +1202,7 @@ class WalletController extends base {
           type: keyring.accounts[j].type
         });
         // console.log('privateKey1', privateKey)
-        const l2Info = await (0,L2Ethers/* eth_address */.SO)("0x".concat(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex));
+        const l2Info = await (0,l2Ethers/* eth_address */.SO)("0x".concat(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex));
         // console.log('privateKey2', l2Info)
         // console.log('privateKey3', keyring)
         keyring.accounts[j].addressL2 = l2Info.address;
@@ -1977,102 +1981,6 @@ function rest_api_url_krc20(network) {
 
 /***/ }),
 
-/***/ 38560:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   SO: () => (/* binding */ eth_address),
-/* harmony export */   Sq: () => (/* binding */ verifyMessage),
-/* harmony export */   ao: () => (/* binding */ signMessage)
-/* harmony export */ });
-/* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17108);
-/* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77640);
-/* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(83024);
-/* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(63116);
-/* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(75790);
-
-
-// 定义返回类型的接口
-
-/**
- * 根据私钥生成以太坊地址
- * @param privateKeyArg 私钥，必须是有效的以太坊私钥
- * @returns 包含私钥、公钥和地址的对象
- * @throws 如果私钥不合法，抛出错误
- */
-function eth_address(privateKeyArg) {
-  try {
-    // 验证私钥是否提供
-    if (!privateKeyArg) {
-      throw new Error('Private key is required');
-    }
-
-    // 验证私钥格式（必须是64个字符的十六进制字符串，以0x开头）
-    if (!ethers__WEBPACK_IMPORTED_MODULE_0__/* .isHexString */ .DI(privateKeyArg) || privateKeyArg.length !== 66) {
-      throw new Error('Invalid private key format. Must be 64 characters hex string starting with 0x');
-    }
-
-    // 创建钱包实例
-    const wallet = new ethers__WEBPACK_IMPORTED_MODULE_1__/* .Wallet */ .o(privateKeyArg);
-
-    // 如果需要公钥，可以通过 SigningKey 计算
-    const signingKey = new ethers__WEBPACK_IMPORTED_MODULE_2__/* .SigningKey */ .o(privateKeyArg);
-    const publicKey = signingKey.publicKey;
-    return {
-      privateKey: wallet.privateKey,
-      address: wallet.address,
-      publicKey: publicKey
-    };
-  } catch (error) {
-    throw new Error("Failed to generate Ethereum address: ".concat(error));
-  }
-}
-async function signMessage(message, privateKeyArg) {
-  try {
-    // 清理私钥格式
-    const privateKey = privateKeyArg.replace('0x', '');
-
-    // 验证私钥
-    if (!ethers__WEBPACK_IMPORTED_MODULE_0__/* .isHexString */ .DI("0x".concat(privateKey)) || privateKey.length !== 64) {
-      throw new Error('Invalid private key format. Must be 64 characters hex string starting with 0x');
-    }
-
-    // 创建 wallet
-    const wallet = new ethers__WEBPACK_IMPORTED_MODULE_1__/* .Wallet */ .o(privateKey);
-
-    // 对消息进行以太坊标准的签名
-    // 以太坊签名需要对消息进行 keccak256 哈希并加上前缀 "\x19Ethereum Signed Message:\n"
-    const signature = await wallet.signMessage(message);
-    return signature; // 返回签名（0x 开头的 hex 字符串）
-  } catch (error) {
-    throw new Error("Failed to sign message: ".concat(error));
-  }
-}
-async function verifyMessage(message, signature, expectedAddress) {
-  try {
-    // 验证签名格式
-    if (!ethers__WEBPACK_IMPORTED_MODULE_0__/* .isHexString */ .DI(signature) || signature.length !== 132) {
-      throw new Error('Invalid signature format. Must be 65 bytes hex string (130 characters + 0x)');
-    }
-
-    // 验证地址格式
-    if (!ethers__WEBPACK_IMPORTED_MODULE_3__/* .isAddress */ .C2(expectedAddress)) {
-      throw new Error('Invalid Ethereum address');
-    }
-
-    // 恢复签名对应的地址
-    const recoveredAddress = ethers__WEBPACK_IMPORTED_MODULE_4__/* .verifyMessage */ .A(message, signature);
-
-    // 比较恢复的地址和预期地址
-    return recoveredAddress.toLowerCase() === expectedAddress.toLowerCase();
-  } catch (error) {
-    throw new Error("Failed to verify signature: ".concat(error));
-  }
-}
-
-/***/ }),
-
 /***/ 34780:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
@@ -2082,7 +1990,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   CT: () => (/* binding */ send_erc20_transaction),
 /* harmony export */   EI: () => (/* binding */ send_eth_transaction),
 /* harmony export */   Ej: () => (/* binding */ send_kaspa_with_evm_payload),
-/* harmony export */   SO: () => (/* reexport safe */ _L2Ethers__WEBPACK_IMPORTED_MODULE_3__.SO),
+/* harmony export */   SO: () => (/* reexport safe */ _l2Ethers__WEBPACK_IMPORTED_MODULE_3__.SO),
 /* harmony export */   YZ: () => (/* binding */ send_erc20_with_evm_payload),
 /* harmony export */   gB: () => (/* binding */ send_kaspa_with_dapp_payload),
 /* harmony export */   kz: () => (/* binding */ send_kaspa_with_dapp_evm_payload)
@@ -2090,7 +1998,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* unused harmony exports prepare_eth_payload, sign_eth_trans_payload, prepare_eth_erc20_payload */
 /* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(17108);
 /* harmony import */ var kaspa_wasm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21704);
-/* harmony import */ var _L2Ethers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(38560);
+/* harmony import */ var _l2Ethers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5140);
 /* harmony import */ var web3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(59564);
 /* provided dependency */ var Buffer = __webpack_require__(87597)["Buffer"];
 
@@ -2935,6 +2843,102 @@ async function send_erc20_transaction(toAddress, amountInTokens, privateKey, con
 // await send_eth_transaction("0xc51535980856E91cFa2997211838A31A3F18F333",1,"0x07f677966b280b7f0a9bbc47428da55dba07d0782f4afc9b14a4b17f5c3e6b32")
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
+
+/***/ }),
+
+/***/ 5140:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   SO: () => (/* binding */ eth_address),
+/* harmony export */   Sq: () => (/* binding */ verifyMessage),
+/* harmony export */   ao: () => (/* binding */ signMessage)
+/* harmony export */ });
+/* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(17108);
+/* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77640);
+/* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(83024);
+/* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(63116);
+/* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(75790);
+
+
+// 定义返回类型的接口
+
+/**
+ * 根据私钥生成以太坊地址
+ * @param privateKeyArg 私钥，必须是有效的以太坊私钥
+ * @returns 包含私钥、公钥和地址的对象
+ * @throws 如果私钥不合法，抛出错误
+ */
+function eth_address(privateKeyArg) {
+  try {
+    // 验证私钥是否提供
+    if (!privateKeyArg) {
+      throw new Error('Private key is required');
+    }
+
+    // 验证私钥格式（必须是64个字符的十六进制字符串，以0x开头）
+    if (!ethers__WEBPACK_IMPORTED_MODULE_0__/* .isHexString */ .DI(privateKeyArg) || privateKeyArg.length !== 66) {
+      throw new Error('Invalid private key format. Must be 64 characters hex string starting with 0x');
+    }
+
+    // 创建钱包实例
+    const wallet = new ethers__WEBPACK_IMPORTED_MODULE_1__/* .Wallet */ .o(privateKeyArg);
+
+    // 如果需要公钥，可以通过 SigningKey 计算
+    const signingKey = new ethers__WEBPACK_IMPORTED_MODULE_2__/* .SigningKey */ .o(privateKeyArg);
+    const publicKey = signingKey.publicKey;
+    return {
+      privateKey: wallet.privateKey,
+      address: wallet.address,
+      publicKey: publicKey
+    };
+  } catch (error) {
+    throw new Error("Failed to generate Ethereum address: ".concat(error));
+  }
+}
+async function signMessage(message, privateKeyArg) {
+  try {
+    // 清理私钥格式
+    const privateKey = privateKeyArg.replace('0x', '');
+
+    // 验证私钥
+    if (!ethers__WEBPACK_IMPORTED_MODULE_0__/* .isHexString */ .DI("0x".concat(privateKey)) || privateKey.length !== 64) {
+      throw new Error('Invalid private key format. Must be 64 characters hex string starting with 0x');
+    }
+
+    // 创建 wallet
+    const wallet = new ethers__WEBPACK_IMPORTED_MODULE_1__/* .Wallet */ .o(privateKey);
+
+    // 对消息进行以太坊标准的签名
+    // 以太坊签名需要对消息进行 keccak256 哈希并加上前缀 "\x19Ethereum Signed Message:\n"
+    const signature = await wallet.signMessage(message);
+    return signature; // 返回签名（0x 开头的 hex 字符串）
+  } catch (error) {
+    throw new Error("Failed to sign message: ".concat(error));
+  }
+}
+async function verifyMessage(message, signature, expectedAddress) {
+  try {
+    // 验证签名格式
+    if (!ethers__WEBPACK_IMPORTED_MODULE_0__/* .isHexString */ .DI(signature) || signature.length !== 132) {
+      throw new Error('Invalid signature format. Must be 65 bytes hex string (130 characters + 0x)');
+    }
+
+    // 验证地址格式
+    if (!ethers__WEBPACK_IMPORTED_MODULE_3__/* .isAddress */ .C2(expectedAddress)) {
+      throw new Error('Invalid Ethereum address');
+    }
+
+    // 恢复签名对应的地址
+    const recoveredAddress = ethers__WEBPACK_IMPORTED_MODULE_4__/* .verifyMessage */ .A(message, signature);
+
+    // 比较恢复的地址和预期地址
+    return recoveredAddress.toLowerCase() === expectedAddress.toLowerCase();
+  } catch (error) {
+    throw new Error("Failed to verify signature: ".concat(error));
+  }
+}
 
 /***/ }),
 
@@ -7180,7 +7184,7 @@ function Toast(props) {
   (0,react.useEffect)(() => {
     setTimeout(() => {
       onClose();
-    }, 5000);
+    }, 6000);
   }, []);
   return /*#__PURE__*/(0,jsx_runtime.jsx)("div", {
     className: "action-container",
@@ -8751,13 +8755,15 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   s: () => (/* binding */ NodeStatus)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96651);
-/* harmony import */ var _mui_material_Box__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(37656);
+/* harmony import */ var _mui_material_Box__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(37656);
 /* harmony import */ var _ui_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(83120);
 /* harmony import */ var _ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(17534);
 /* harmony import */ var _ui_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(48818);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(2488);
+/* harmony import */ var _ui_context_RPCStatus__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(20084);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2488);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_components__WEBPACK_IMPORTED_MODULE_1__]);
 _ui_components__WEBPACK_IMPORTED_MODULE_1__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+
 
 
 
@@ -8773,15 +8779,20 @@ const NodeStatus = props => {
   } = props;
   const networkType = (0,_ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_2__/* .useNetworkType */ .qS)();
   const wallet = (0,_ui_utils__WEBPACK_IMPORTED_MODULE_3__/* .useWallet */ .e6)();
-  const [rpcStatus, setRpcStatus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  // const [rpcStatus, setRpcStatus] = useState(false);
   const currentRpcLinks = (0,_ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_2__/* .useRpcLinks */ .Wq)();
+  const {
+    rpcConnectStatus,
+    setRpcConnectStatus
+  } = (0,_ui_context_RPCStatus__WEBPACK_IMPORTED_MODULE_4__/* .useRPCStatusContext */ .U)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     wallet.handleRpcConnect().finally(() => {});
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     const monitorRpcStatus = setInterval(async () => {
       const status = await wallet.getRpcStatus();
-      setRpcStatus(status);
+      console.log('monitorRpcStatus', status);
+      setRpcConnectStatus(status);
       onRPCStatusChange && onRPCStatusChange(status || false);
     }, 1000);
     return () => {
@@ -8792,29 +8803,29 @@ const NodeStatus = props => {
     const rpc = currentRpcLinks.find(item => item.value === networkType);
     return (rpc === null || rpc === void 0 ? void 0 : rpc.url) || 'Automatic';
   }, [currentRpcLinks, networkType]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .c, {
     className: "space-y-6",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .c, {
       className: "px-4 rounded-lg flex flex-col items-center space-y-6",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .c, {
         className: "flex items-center justify-center space-x-2",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_5__/* ["default"] */ .c, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .c, {
           sx: {
             width: '10px',
             height: '10px',
             borderRadius: '50%',
-            backgroundColor: rpcStatus ? 'rgba(11, 228, 171, 0.85)' : 'rgba(243, 59, 121, 0.85)'
+            backgroundColor: rpcConnectStatus ? 'rgba(11, 228, 171, 0.85)' : 'rgba(243, 59, 121, 0.85)'
           }
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Text */ .a, {
-          text: rpcStatus ? 'RPC Connected' : 'RPC Disconnected',
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Text */ .a, {
+          text: rpcConnectStatus ? 'RPC Connected' : 'RPC Disconnected',
           preset: "regular",
           textCenter: true,
           style: {
-            color: rpcStatus ? 'rgba(11, 228, 171, 0.85)' : 'rgba(243, 59, 121, 0.85)'
+            color: rpcConnectStatus ? 'rgba(11, 228, 171, 0.85)' : 'rgba(243, 59, 121, 0.85)'
           }
         })]
-      }), isShowNodeUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Text */ .a, {
+      }), isShowNodeUrl && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.Fragment, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Text */ .a, {
           text: "Connect Node Url: " + curNodeUrl,
           preset: "regular",
           textCenter: true,
@@ -9377,6 +9388,46 @@ __webpack_async_result__();
 
 /***/ }),
 
+/***/ 20084:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   U: () => (/* binding */ useRPCStatusContext),
+/* harmony export */   k: () => (/* binding */ RPCStatusContextProvider)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96651);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(2488);
+
+
+const RPCStatusContext = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.createContext)({
+  rpcConnectStatus: false,
+  setRpcConnectStatus: status => {},
+  getRpcConnectStatus: () => false
+});
+function RPCStatusContextProvider(_ref) {
+  let {
+    children
+  } = _ref;
+  const [rpcConnectStatus, setRpcConnectStatus] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const getRpcConnectStatus = () => {
+    return rpcConnectStatus;
+  };
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(RPCStatusContext.Provider, {
+    value: {
+      rpcConnectStatus,
+      setRpcConnectStatus,
+      getRpcConnectStatus
+    },
+    children: children
+  });
+}
+function useRPCStatusContext() {
+  return (0,react__WEBPACK_IMPORTED_MODULE_0__.useContext)(RPCStatusContext);
+}
+
+/***/ }),
+
 /***/ 96447:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -9596,15 +9647,15 @@ const getCurrentTab = async () => {
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 /* harmony import */ var antd_lib_message_style__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(58256);
 /* harmony import */ var antd_lib_message_style__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_message_style__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var antd_lib_message__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(31036);
-/* harmony import */ var antd_es_locale_en_US__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(48368);
+/* harmony import */ var antd_lib_message__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(31036);
+/* harmony import */ var antd_es_locale_en_US__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(48368);
 /* harmony import */ var react_dom_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(47428);
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(54464);
 /* harmony import */ var _background__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(13760);
 /* harmony import */ var _ui_state_accounts_updater__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(63380);
 /* harmony import */ var _ui_styles_global_less__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(41920);
 /* harmony import */ var _ui_theme__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(15088);
-/* harmony import */ var _mui_material_styles__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(9418);
+/* harmony import */ var _mui_material_styles__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(9418);
 /* harmony import */ var _components_ActionComponent__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(23848);
 /* harmony import */ var _pages_MainRoute__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(77980);
 /* harmony import */ var _state__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(11032);
@@ -9614,7 +9665,8 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var dayjs_plugin_relativeTime__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(97648);
 /* harmony import */ var dayjs_plugin_relativeTime__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(dayjs_plugin_relativeTime__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _background_controller_wallet__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(21240);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(2488);
+/* harmony import */ var _context_RPCStatus__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(20084);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(2488);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_state_accounts_updater__WEBPACK_IMPORTED_MODULE_4__, _pages_MainRoute__WEBPACK_IMPORTED_MODULE_8__]);
 ([_ui_state_accounts_updater__WEBPACK_IMPORTED_MODULE_4__, _pages_MainRoute__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -9634,6 +9686,7 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_
 
 
 // import i18n, { addResourceBundle } from './utils/i18n';
+
 
 
 
@@ -9685,15 +9738,15 @@ dayjs__WEBPACK_IMPORTED_MODULE_11___default().extend((dayjs_plugin_relativeTime_
 
 // const AsyncMainRoute = lazy(() => import('./pages/MainRoute'));
 
-antd_lib_message__WEBPACK_IMPORTED_MODULE_15__["default"].config({
+antd_lib_message__WEBPACK_IMPORTED_MODULE_16__["default"].config({
   maxCount: 1
 });
 const antdConfig = {
-  locale: antd_es_locale_en_US__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .c
+  locale: antd_es_locale_en_US__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .c
 };
 function Updaters() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.Fragment, {
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_ui_state_accounts_updater__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .c, {})
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.Fragment, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_ui_state_accounts_updater__WEBPACK_IMPORTED_MODULE_4__/* ["default"] */ .c, {})
   });
 }
 const locale = 'en';
@@ -9702,15 +9755,17 @@ const locale = 'en';
 //     i18n.changeLanguage(locale);
 // ReactDOM.render(<Views wallet={wallet} />, document.getElementById('root'));
 const root = react_dom_client__WEBPACK_IMPORTED_MODULE_1__.createRoot(document.getElementById('root'));
-root.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__/* .Provider */ .C_, {
+root.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__/* .Provider */ .C_, {
   store: _state__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .c,
-  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_mui_material_styles__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .c, {
+  children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_styles__WEBPACK_IMPORTED_MODULE_18__/* ["default"] */ .c, {
     theme: _ui_theme__WEBPACK_IMPORTED_MODULE_6__/* ["default"] */ .c,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_utils__WEBPACK_IMPORTED_MODULE_10__/* .WalletProvider */ .ek, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_utils__WEBPACK_IMPORTED_MODULE_10__/* .WalletProvider */ .ek, {
       ...antdConfig,
       wallet: _background_controller_wallet__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .c,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsxs)(_components_ActionComponent__WEBPACK_IMPORTED_MODULE_7__/* .ActionComponentProvider */ .I, {
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(Updaters, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_14__.jsx)(_pages_MainRoute__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .c, {})]
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_components_ActionComponent__WEBPACK_IMPORTED_MODULE_7__/* .ActionComponentProvider */ .I, {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(_context_RPCStatus__WEBPACK_IMPORTED_MODULE_14__/* .RPCStatusContextProvider */ .k, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(Updaters, {}), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_pages_MainRoute__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .c, {})]
+        })
       })
     })
   })
@@ -9770,29 +9825,30 @@ const AddKeyringScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy
 const ContactBookScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4640), __webpack_require__.e(2984), __webpack_require__.e(9332)]).then(__webpack_require__.bind(__webpack_require__, 14516)));
 const CreateAccountScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 6012).then(__webpack_require__.bind(__webpack_require__, 86012)));
 const CreateContactScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 8948).then(__webpack_require__.bind(__webpack_require__, 8948)));
-const CreateHDWalletScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4640), __webpack_require__.e(3792), __webpack_require__.e(2076), __webpack_require__.e(2453), __webpack_require__.e(3756), __webpack_require__.e(6448), __webpack_require__.e(3581), __webpack_require__.e(4368), __webpack_require__.e(6384)]).then(__webpack_require__.bind(__webpack_require__, 96384)));
+const CreateHDWalletScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(4640), __webpack_require__.e(5428), __webpack_require__.e(3756), __webpack_require__.e(3236), __webpack_require__.e(2076), __webpack_require__.e(6448), __webpack_require__.e(4368), __webpack_require__.e(6384)]).then(__webpack_require__.bind(__webpack_require__, 96384)));
 const CreatePasswordScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 2772).then(__webpack_require__.bind(__webpack_require__, 52772)));
 const CreateSimpleWalletScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 9612).then(__webpack_require__.bind(__webpack_require__, 49612)));
 const SwitchAccountScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 652).then(__webpack_require__.bind(__webpack_require__, 10652)));
-const SwitchKeyringScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(6032), __webpack_require__.e(3040)]).then(__webpack_require__.bind(__webpack_require__, 50660)));
+const SwitchKeyringScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(6712), __webpack_require__.e(3040)]).then(__webpack_require__.bind(__webpack_require__, 50660)));
 const UnlockScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 7796).then(__webpack_require__.bind(__webpack_require__, 17796)));
-const ApprovalScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4640), __webpack_require__.e(3792), __webpack_require__.e(2220), __webpack_require__.e(2453), __webpack_require__.e(3208), __webpack_require__.e(3756), __webpack_require__.e(2340), __webpack_require__.e(4780), __webpack_require__.e(172), __webpack_require__.e(7500), __webpack_require__.e(6560)]).then(__webpack_require__.bind(__webpack_require__, 82032)));
+const ApprovalScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(4640), __webpack_require__.e(5428), __webpack_require__.e(3756), __webpack_require__.e(2220), __webpack_require__.e(996), __webpack_require__.e(2340), __webpack_require__.e(3260), __webpack_require__.e(172), __webpack_require__.e(7500), __webpack_require__.e(6560)]).then(__webpack_require__.bind(__webpack_require__, 82032)));
 const ConnectedSitesScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 2100).then(__webpack_require__.bind(__webpack_require__, 32100)));
 const ActivitiesScrren = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(404), __webpack_require__.e(4340), __webpack_require__.e(4984)]).then(__webpack_require__.bind(__webpack_require__, 24236)));
 
+const EnterRecipientAddress = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(4640), __webpack_require__.e(5428), __webpack_require__.e(3756), __webpack_require__.e(2220), __webpack_require__.e(3236), __webpack_require__.e(996), __webpack_require__.e(6932), __webpack_require__.e(5404), __webpack_require__.e(8804)]).then(__webpack_require__.bind(__webpack_require__, 85404)));
 const AppTabScrren = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 3860).then(__webpack_require__.bind(__webpack_require__, 93860)));
 const BoostScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 2612).then(__webpack_require__.bind(__webpack_require__, 62612)));
 // import BoostScreen from './Main/BoostScreen';
 const DiscoverTabScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 5620).then(__webpack_require__.bind(__webpack_require__, 5620)));
 const SettingsTabScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 4348).then(__webpack_require__.bind(__webpack_require__, 14348)));
-const WalletTabScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4640), __webpack_require__.e(3792), __webpack_require__.e(2076), __webpack_require__.e(2220), __webpack_require__.e(2340), __webpack_require__.e(6784), __webpack_require__.e(8104)]).then(__webpack_require__.bind(__webpack_require__, 4776)));
+const WalletTabScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4640), __webpack_require__.e(5428), __webpack_require__.e(2220), __webpack_require__.e(2076), __webpack_require__.e(2340), __webpack_require__.e(6160), __webpack_require__.e(8104)]).then(__webpack_require__.bind(__webpack_require__, 4776)));
 const WelcomeScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 5312).then(__webpack_require__.bind(__webpack_require__, 15312)));
 const AddressTypeScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 4948).then(__webpack_require__.bind(__webpack_require__, 74948)));
 const ChangePasswordScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 6552).then(__webpack_require__.bind(__webpack_require__, 6552)));
-const EditAccountNameScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4640), __webpack_require__.e(3792), __webpack_require__.e(2453), __webpack_require__.e(3756), __webpack_require__.e(3581), __webpack_require__.e(2136)]).then(__webpack_require__.bind(__webpack_require__, 22136)));
-const EditContactNameScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(6032), __webpack_require__.e(8688)]).then(__webpack_require__.bind(__webpack_require__, 98688)));
+const EditAccountNameScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(4640), __webpack_require__.e(5428), __webpack_require__.e(3756), __webpack_require__.e(3236), __webpack_require__.e(2136)]).then(__webpack_require__.bind(__webpack_require__, 22136)));
+const EditContactNameScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(6712), __webpack_require__.e(8688)]).then(__webpack_require__.bind(__webpack_require__, 98688)));
 const EditNetworkUrlScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 4252).then(__webpack_require__.bind(__webpack_require__, 14252)));
-const EditWalletNameScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4640), __webpack_require__.e(3792), __webpack_require__.e(2453), __webpack_require__.e(3756), __webpack_require__.e(3581), __webpack_require__.e(1856)]).then(__webpack_require__.bind(__webpack_require__, 91856)));
+const EditWalletNameScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(4640), __webpack_require__.e(5428), __webpack_require__.e(3756), __webpack_require__.e(3236), __webpack_require__.e(1856)]).then(__webpack_require__.bind(__webpack_require__, 91856)));
 const ExportMnemonicsScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2076), __webpack_require__.e(6448), __webpack_require__.e(392)]).then(__webpack_require__.bind(__webpack_require__, 70392)));
 const ExportPrivateKeyScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2076), __webpack_require__.e(6448), __webpack_require__.e(5436)]).then(__webpack_require__.bind(__webpack_require__, 45436)));
 const LanguageTypeScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 2528).then(__webpack_require__.bind(__webpack_require__, 30148)));
@@ -9802,19 +9858,19 @@ const TestScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() =
 const ToolScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 4256).then(__webpack_require__.bind(__webpack_require__, 4256)));
 const ActivityTab = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(404), __webpack_require__.e(8808)]).then(__webpack_require__.bind(__webpack_require__, 48808)));
 const SelectToken = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2076), __webpack_require__.e(228)]).then(__webpack_require__.bind(__webpack_require__, 40228)));
-const DeployScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4616), __webpack_require__.e(956), __webpack_require__.e(172), __webpack_require__.e(2296)]).then(__webpack_require__.bind(__webpack_require__, 62296)));
+const DeployScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4616), __webpack_require__.e(8344), __webpack_require__.e(172), __webpack_require__.e(2296)]).then(__webpack_require__.bind(__webpack_require__, 62296)));
 const MintScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(6320), __webpack_require__.e(172), __webpack_require__.e(8324)]).then(__webpack_require__.bind(__webpack_require__, 58324)));
-const ChownScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4640), __webpack_require__.e(3792), __webpack_require__.e(2076), __webpack_require__.e(2220), __webpack_require__.e(3208), __webpack_require__.e(4616), __webpack_require__.e(7656), __webpack_require__.e(172), __webpack_require__.e(872), __webpack_require__.e(4176)]).then(__webpack_require__.bind(__webpack_require__, 82724)));
-const BlacklistIssueScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4640), __webpack_require__.e(3792), __webpack_require__.e(2076), __webpack_require__.e(2220), __webpack_require__.e(3208), __webpack_require__.e(4616), __webpack_require__.e(7656), __webpack_require__.e(172), __webpack_require__.e(872), __webpack_require__.e(3604)]).then(__webpack_require__.bind(__webpack_require__, 80876)));
-const IssueScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4640), __webpack_require__.e(3792), __webpack_require__.e(2076), __webpack_require__.e(2220), __webpack_require__.e(3208), __webpack_require__.e(4616), __webpack_require__.e(7656), __webpack_require__.e(172), __webpack_require__.e(872), __webpack_require__.e(2356)]).then(__webpack_require__.bind(__webpack_require__, 89252)));
-const BurnScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4616), __webpack_require__.e(172), __webpack_require__.e(256)]).then(__webpack_require__.bind(__webpack_require__, 27172)));
+const ChownScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(4640), __webpack_require__.e(5428), __webpack_require__.e(3756), __webpack_require__.e(2220), __webpack_require__.e(3236), __webpack_require__.e(996), __webpack_require__.e(4616), __webpack_require__.e(6932), __webpack_require__.e(172), __webpack_require__.e(5404), __webpack_require__.e(4176)]).then(__webpack_require__.bind(__webpack_require__, 82724)));
+const BlacklistIssueScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(4640), __webpack_require__.e(5428), __webpack_require__.e(3756), __webpack_require__.e(2220), __webpack_require__.e(3236), __webpack_require__.e(996), __webpack_require__.e(4616), __webpack_require__.e(6932), __webpack_require__.e(172), __webpack_require__.e(5404), __webpack_require__.e(3604)]).then(__webpack_require__.bind(__webpack_require__, 80876)));
+const IssueScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(4640), __webpack_require__.e(5428), __webpack_require__.e(3756), __webpack_require__.e(2220), __webpack_require__.e(3236), __webpack_require__.e(996), __webpack_require__.e(4616), __webpack_require__.e(6932), __webpack_require__.e(172), __webpack_require__.e(5404), __webpack_require__.e(2356)]).then(__webpack_require__.bind(__webpack_require__, 89252)));
+const BurnScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4616), __webpack_require__.e(172), __webpack_require__.e(7172)]).then(__webpack_require__.bind(__webpack_require__, 27172)));
 const TokenScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4340), __webpack_require__.e(6976)]).then(__webpack_require__.bind(__webpack_require__, 32068)));
 const KNSScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 8876).then(__webpack_require__.bind(__webpack_require__, 68876)));
 const UTXOTab = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(404), __webpack_require__.e(8228)]).then(__webpack_require__.bind(__webpack_require__, 65847)));
 const FiatPayScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 1476).then(__webpack_require__.bind(__webpack_require__, 81476)));
 const ReceiveScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(7488), __webpack_require__.e(9960)]).then(__webpack_require__.bind(__webpack_require__, 92172)));
-const TxConfirmScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4640), __webpack_require__.e(3792), __webpack_require__.e(2220), __webpack_require__.e(2453), __webpack_require__.e(3208), __webpack_require__.e(3756), __webpack_require__.e(2340), __webpack_require__.e(4780), __webpack_require__.e(172), __webpack_require__.e(7500), __webpack_require__.e(5532)]).then(__webpack_require__.bind(__webpack_require__, 95272)));
-const TxCreateScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(4640), __webpack_require__.e(3792), __webpack_require__.e(2076), __webpack_require__.e(2220), __webpack_require__.e(3208), __webpack_require__.e(7656), __webpack_require__.e(172), __webpack_require__.e(872), __webpack_require__.e(8804)]).then(__webpack_require__.bind(__webpack_require__, 40020)));
+const TxConfirmScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(4640), __webpack_require__.e(5428), __webpack_require__.e(3756), __webpack_require__.e(2220), __webpack_require__.e(996), __webpack_require__.e(2340), __webpack_require__.e(3260), __webpack_require__.e(172), __webpack_require__.e(7500), __webpack_require__.e(5532)]).then(__webpack_require__.bind(__webpack_require__, 95272)));
+const TxCreateScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => Promise.all(/* import() */[__webpack_require__.e(2453), __webpack_require__.e(4640), __webpack_require__.e(5428), __webpack_require__.e(3756), __webpack_require__.e(2220), __webpack_require__.e(3236), __webpack_require__.e(996), __webpack_require__.e(2076), __webpack_require__.e(6932), __webpack_require__.e(172), __webpack_require__.e(5404), __webpack_require__.e(8981)]).then(__webpack_require__.bind(__webpack_require__, 40020)));
 const TxDetailScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 5780).then(__webpack_require__.bind(__webpack_require__, 45780)));
 const TxFailScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 1456).then(__webpack_require__.bind(__webpack_require__, 11456)));
 const TxSuccessScreen = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_0__.lazy)(() => __webpack_require__.e(/* import() */ 1340).then(__webpack_require__.bind(__webpack_require__, 1340)));
@@ -10192,10 +10248,17 @@ const routes = {
     })
   },
   ImportERC20: {
-    path: '/importERC20',
+    path: '/import-erc',
     element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react__WEBPACK_IMPORTED_MODULE_0__.Suspense, {
       fallback: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_Loading__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c, {}),
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(ImportERC20, {})
+    })
+  },
+  EnterRecipientAddress: {
+    path: '/enter-recipient-address',
+    element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(react__WEBPACK_IMPORTED_MODULE_0__.Suspense, {
+      fallback: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_components_Loading__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c, {}),
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(EnterRecipientAddress, {})
     })
   }
 };
@@ -10298,6 +10361,36 @@ const Main = () => {
     }).catch(error => {
       console.log('hasVault error', error);
     });
+    window.addEventListener('offline', async () => {
+      console.log('Network offline, disconnecting RPC');
+      wallet.setOffline(false);
+    });
+    window.addEventListener('online', async () => {
+      console.log('Network online, reconnecting RPC');
+      wallet.setOffline(true);
+    });
+    // 监听从React Native传递的消息
+    window.addEventListener('message', event => {
+      // 解析消息内容
+      const data = event.data;
+      if (data.type === 'networkStatus') {
+        // 根据网络状态进行处理
+        if (data.isConnected) {
+          console.log('网络已连接');
+          wallet.setOffline(true);
+          // 在网页中执行在线状态下的操作
+        } else {
+          console.log('网络已断开');
+          wallet.setOffline(false);
+          // 在网页中执行离线状态下的操作
+        }
+      }
+    });
+    return () => {
+      window.removeEventListener('offline', () => {});
+      window.removeEventListener('online', () => {});
+      window.removeEventListener('message', () => {});
+    };
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     init();
@@ -12352,6 +12445,7 @@ __webpack_require__.d(__webpack_exports__, {
   ye: () => (/* binding */ copyToClipboard),
   iy: () => (/* reexport */ parse/* formatNumber */.iy),
   wX: () => (/* binding */ generateHdPath),
+  K2: () => (/* binding */ getPasswordFromApp),
   Ad: () => (/* binding */ getUiType),
   Fd: () => (/* binding */ handleTransactions),
   Mv: () => (/* binding */ handleTransactionsAddresses),
@@ -12363,6 +12457,7 @@ __webpack_require__.d(__webpack_exports__, {
   lc: () => (/* binding */ openUrlLink),
   hH: () => (/* reexport */ parse/* parseTokenBalance */.hH),
   _s: () => (/* reexport */ parse/* parseUnits */._s),
+  ec: () => (/* binding */ readClipboard),
   SO: () => (/* binding */ shortAddress),
   U1: () => (/* binding */ shortDesc),
   W_: () => (/* binding */ sleep),
@@ -12370,6 +12465,7 @@ __webpack_require__.d(__webpack_exports__, {
   KK: () => (/* binding */ sompiToKAS),
   ch: () => (/* binding */ sompiToKas),
   g7: () => (/* reexport */ mathUtils/* times */.g7),
+  oN: () => (/* binding */ updatePasswordToApp),
   kf: () => (/* reexport */ useApproval),
   l1: () => (/* binding */ useLocationState),
   e6: () => (/* reexport */ useWallet),
@@ -12713,6 +12809,40 @@ const copyToClipboard = textToCopy => {
     });
   }
 };
+const readClipboard = async () => {
+  if (isApp()) {
+    const {
+      NativeCallbacks
+    } = window;
+    return new Promise((res, rej) => {
+      const params = {
+        action: 'readPasteText',
+        payload: {},
+        success: data => {
+          res(data.text);
+        },
+        fail: data => {
+          rej(data.text);
+        }
+      };
+      NativeCallbacks === null || NativeCallbacks === void 0 ? void 0 : NativeCallbacks.register(params);
+    });
+  }
+  // 如果是浏览器环境，使用 Clipboard API
+  // 需要在安全上下文中使用（如 HTTPS 或 localhost）
+  if (navigator.clipboard && window.isSecureContext) {
+    try {
+      const text = await navigator.clipboard.readText();
+      return text;
+    } catch (error) {
+      console.error('Failed to read clipboard contents: ', error);
+      return '';
+    }
+  } else {
+    console.error('无法读取剪贴板内容:');
+    return '';
+  }
+};
 function formatDate(date) {
   let fmt = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'yyyy-MM-dd hh:mm:ss';
   const o = {
@@ -12956,6 +13086,34 @@ const sendErc20 = async (networkType, toAddress, amount, tokenAddress, privateKe
   const receipt = await tx.wait();
   console.log("Transaction receipt:", receipt);
   return receipt;
+};
+
+// 向app更新密码
+const updatePasswordToApp = async password => {
+  if (isApp()) {
+    const {
+      NativeCallbacks
+    } = window;
+    localStorage.setItem("app-save-password", password);
+    const params = {
+      action: 'updatePasswordToApp',
+      payload: {
+        password
+      },
+      success: () => {
+        console.log('success');
+      },
+      fail: data => {
+        console.log('fail', data.result);
+      }
+    };
+    NativeCallbacks === null || NativeCallbacks === void 0 ? void 0 : NativeCallbacks.register(params);
+  }
+};
+const getPasswordFromApp = () => {
+  if (isApp()) {
+    return localStorage.getItem("app-save-password");
+  }
 };
 
 /***/ }),

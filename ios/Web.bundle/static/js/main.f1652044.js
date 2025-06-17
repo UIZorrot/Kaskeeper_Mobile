@@ -10369,6 +10369,28 @@ const Main = () => {
       console.log('Network online, reconnecting RPC');
       wallet.setOffline(true);
     });
+    // 监听从React Native传递的消息
+    window.addEventListener('message', event => {
+      // 解析消息内容
+      const data = event.data;
+      if (data.type === 'networkStatus') {
+        // 根据网络状态进行处理
+        if (data.isConnected) {
+          console.log('网络已连接');
+          wallet.setOffline(true);
+          // 在网页中执行在线状态下的操作
+        } else {
+          console.log('网络已断开');
+          wallet.setOffline(false);
+          // 在网页中执行离线状态下的操作
+        }
+      }
+    });
+    return () => {
+      window.removeEventListener('offline', () => {});
+      window.removeEventListener('online', () => {});
+      window.removeEventListener('message', () => {});
+    };
   }, []);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     init();
@@ -12423,6 +12445,7 @@ __webpack_require__.d(__webpack_exports__, {
   ye: () => (/* binding */ copyToClipboard),
   iy: () => (/* reexport */ parse/* formatNumber */.iy),
   wX: () => (/* binding */ generateHdPath),
+  K2: () => (/* binding */ getPasswordFromApp),
   Ad: () => (/* binding */ getUiType),
   Fd: () => (/* binding */ handleTransactions),
   Mv: () => (/* binding */ handleTransactionsAddresses),
@@ -12442,6 +12465,7 @@ __webpack_require__.d(__webpack_exports__, {
   KK: () => (/* binding */ sompiToKAS),
   ch: () => (/* binding */ sompiToKas),
   g7: () => (/* reexport */ mathUtils/* times */.g7),
+  oN: () => (/* binding */ updatePasswordToApp),
   kf: () => (/* reexport */ useApproval),
   l1: () => (/* binding */ useLocationState),
   e6: () => (/* reexport */ useWallet),
@@ -13062,6 +13086,34 @@ const sendErc20 = async (networkType, toAddress, amount, tokenAddress, privateKe
   const receipt = await tx.wait();
   console.log("Transaction receipt:", receipt);
   return receipt;
+};
+
+// 向app更新密码
+const updatePasswordToApp = async password => {
+  if (isApp()) {
+    const {
+      NativeCallbacks
+    } = window;
+    localStorage.setItem("app-save-password", password);
+    const params = {
+      action: 'updatePasswordToApp',
+      payload: {
+        password
+      },
+      success: () => {
+        console.log('success');
+      },
+      fail: data => {
+        console.log('fail', data.result);
+      }
+    };
+    NativeCallbacks === null || NativeCallbacks === void 0 ? void 0 : NativeCallbacks.register(params);
+  }
+};
+const getPasswordFromApp = () => {
+  if (isApp()) {
+    return localStorage.getItem("app-save-password");
+  }
 };
 
 /***/ }),

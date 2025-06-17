@@ -20,22 +20,23 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(17534);
 /* harmony import */ var _ui_state_transactions_reducer__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(96900);
 /* harmony import */ var _ui_types__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(95215);
-/* harmony import */ var _mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(83603);
-/* harmony import */ var _mui_material_Box__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(37656);
-/* harmony import */ var _mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(75776);
-/* harmony import */ var _mui_material_LinearProgress__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(89600);
-/* harmony import */ var _mui_material_OutlinedInput__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(87136);
-/* harmony import */ var _mui_material_styles__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(92792);
-/* harmony import */ var _mui_material_Typography__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(70884);
+/* harmony import */ var _mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(83603);
+/* harmony import */ var _mui_material_Box__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(37656);
+/* harmony import */ var _mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(75776);
+/* harmony import */ var _mui_material_LinearProgress__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(89600);
+/* harmony import */ var _mui_material_OutlinedInput__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(87136);
+/* harmony import */ var _mui_material_styles__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(92792);
+/* harmony import */ var _mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(70884);
 /* harmony import */ var bignumber_js__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(32496);
 /* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(5320);
 /* harmony import */ var dayjs__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(dayjs__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var kaspa_wasm__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(21704);
+/* harmony import */ var kaspa_wasm__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(21704);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(92469);
 /* harmony import */ var lodash__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(lodash__WEBPACK_IMPORTED_MODULE_13__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(96651);
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(33220);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(2488);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(33220);
+/* harmony import */ var _ui_context_RPCStatus__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(20084);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(2488);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_0__, _ui_components__WEBPACK_IMPORTED_MODULE_1__, _ui_context_AccountContext__WEBPACK_IMPORTED_MODULE_3__, _ui_pages_MainRoute__WEBPACK_IMPORTED_MODULE_4__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_5__]);
 ([_background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_0__, _ui_components__WEBPACK_IMPORTED_MODULE_1__, _ui_context_AccountContext__WEBPACK_IMPORTED_MODULE_3__, _ui_pages_MainRoute__WEBPACK_IMPORTED_MODULE_4__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_5__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
@@ -64,11 +65,12 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_bac
 
 
 
+
 // 自定义按钮样式
 
 
 
-const StyledButton = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .cp)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Button */ .q)(_ref => {
+const StyledButton = (0,_mui_material_styles__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .cp)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Button */ .q)(_ref => {
   let {
     theme
   } = _ref;
@@ -85,7 +87,7 @@ function Mint() {
     setActiveToken,
     refetchList
   } = (0,_ui_context_AccountContext__WEBPACK_IMPORTED_MODULE_3__/* .useAccountContext */ .wB)();
-  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_17__/* .useLocation */ .IT)();
+  const location = (0,react_router_dom__WEBPACK_IMPORTED_MODULE_18__/* .useLocation */ .IT)();
   const activeToken = (_location$state = location.state) === null || _location$state === void 0 ? void 0 : _location$state.activeToken;
   console.log('activeToken', activeToken);
   const [ticker, setTicker] = (0,react__WEBPACK_IMPORTED_MODULE_14__.useState)(activeToken === null || activeToken === void 0 ? void 0 : activeToken.tick);
@@ -108,6 +110,9 @@ function Mint() {
   const [fee, setFee] = (0,react__WEBPACK_IMPORTED_MODULE_14__.useState)(0.01); // 新增：手续费
   const [progressText, setprogressText] = (0,react__WEBPACK_IMPORTED_MODULE_14__.useState)("");
   const balance = (0,_ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_5__/* .useAccountBalance */ .Id)();
+  const {
+    rpcConnectStatus
+  } = (0,_ui_context_RPCStatus__WEBPACK_IMPORTED_MODULE_15__/* .useRPCStatusContext */ .U)();
 
   // 在组件加载时从localStorage恢复状态
   (0,react__WEBPACK_IMPORTED_MODULE_14__.useEffect)(() => {
@@ -140,7 +145,7 @@ function Mint() {
     let result;
     try {
       var _jsonData$result;
-      if (network == kaspa_wasm__WEBPACK_IMPORTED_MODULE_18__.NetworkType.Mainnet) {
+      if (network == kaspa_wasm__WEBPACK_IMPORTED_MODULE_19__.NetworkType.Mainnet) {
         result = await fetch("https://api.kasplex.org/v1/krc20/token/".concat(ticker));
       } else {
         result = await fetch("https://tn10api.kasplex.org/v1/krc20/token/".concat(ticker));
@@ -164,7 +169,7 @@ function Mint() {
     setprogressText("Refund Token ..");
     setSendback(true);
     try {
-      const networkName = network === kaspa_wasm__WEBPACK_IMPORTED_MODULE_18__.NetworkType.Mainnet ? 'mainnet' : network === kaspa_wasm__WEBPACK_IMPORTED_MODULE_18__.NetworkType.Testnet ? 'testnet-10' : '';
+      const networkName = network === kaspa_wasm__WEBPACK_IMPORTED_MODULE_19__.NetworkType.Mainnet ? 'mainnet' : network === kaspa_wasm__WEBPACK_IMPORTED_MODULE_19__.NetworkType.Testnet ? 'testnet-10' : '';
       const result = await (0,_background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_0__/* .krc20_mint_back */ .Wy)(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex, networkName, ticker, fee);
       if (!result.status) {
         setSending(false);
@@ -200,7 +205,7 @@ function Mint() {
     }
     setprogressText("Minting in progress ..");
     setSending(true);
-    setCompletedMints(0); // 重置完成次数
+    setCompletedMints(() => 0); // 重置完成次数
     setErrorOccurred(false); // 重置错误状态
     setIsMinting(true); // 开始显示进度条
 
@@ -208,13 +213,13 @@ function Mint() {
     try {
       let MintsNum = 0;
       for (let i = 0; i < mintCount; i++) {
-        const networkName = network === kaspa_wasm__WEBPACK_IMPORTED_MODULE_18__.NetworkType.Mainnet ? 'mainnet' : network === kaspa_wasm__WEBPACK_IMPORTED_MODULE_18__.NetworkType.Testnet ? 'testnet-10' : '';
+        const networkName = network === kaspa_wasm__WEBPACK_IMPORTED_MODULE_19__.NetworkType.Mainnet ? 'mainnet' : network === kaspa_wasm__WEBPACK_IMPORTED_MODULE_19__.NetworkType.Testnet ? 'testnet-10' : '';
         let retryCount = 0;
         const maxRetries = 5;
         let result;
 
         // 重试循环
-        while (retryCount < maxRetries) {
+        while (retryCount < maxRetries && completedMints < mintCount) {
           result = await (0,_background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_0__/* .krc20_mint_once */ .yo)(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex, networkName, ticker, fee, mintCount - MintsNum);
           if (result.status) {
             var _result;
@@ -238,13 +243,14 @@ function Mint() {
             break; // 成功后跳出重试循环
           } else {
             retryCount++;
+            console.log("Minting failed, retrying... (".concat(i + 1, ": ").concat(retryCount, "/").concat(maxRetries, ")"));
             if (retryCount === maxRetries) {
               var _result2;
               // 达到最大重试次数后的失败处理
               setErrorOccurred(true);
-              setSending(false);
-              setIsMinting(false);
-              tools.toastError("".concat(result.msg, " (Failed after ").concat(maxRetries, " retries)"));
+              // setSending(false);
+              // mint第几个token失败
+              tools.toastError("Failed after ".concat(maxRetries, " retries. Please try again later."));
               dispatch(_ui_state_transactions_reducer__WEBPACK_IMPORTED_MODULE_9__/* .transactionsActions */ .C4.updateNativeTxs({
                 from: address,
                 info: {
@@ -266,15 +272,20 @@ function Mint() {
         }
       }
       // 如果没有错误并且所有 mint 完成，跳转到成功页面
+      setSending(false);
+      // 结束进度条显示
+      setIsMinting(false);
+      // 清除进度文本
+      setprogressText("");
+      if (MintsNum < mintCount) {
+        const errorNum = mintCount - MintsNum;
+        setMintCount(() => errorNum); // 更新 mintCount 为剩余未完成的数量
+        return tools.toastError("Minting completed with ".concat(errorNum, " errors. Please try again."));
+      }
       if (MintsNum === mintCount) {
-        setSending(false);
-        setIsMinting(false); // 结束进度条显示
         setActiveToken(null);
-        setprogressText("");
         await handleMintBack();
         refetchList();
-        console.log(parseInt(fetchedTicker.lim) * mintCount);
-        console.log(fetchedTicker === null || fetchedTicker === void 0 ? void 0 : fetchedTicker.dec);
         const rawtxinfo = {
           "to": address,
           "amountSompi": parseInt(fetchedTicker.lim) * mintCount / new bignumber_js__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .c(10).pow(8 - fetchedTicker.dec).toNumber(),
@@ -321,29 +332,29 @@ function Mint() {
     setFee(feeValue); // 更新手续费状态
     // saveStateToLocalStorage();  // 保存fee状态
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Layout */ ._W, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Header */ .ek, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Layout */ ._W, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Header */ .ek, {
       title: "Mint ".concat((activeToken === null || activeToken === void 0 ? void 0 : activeToken.tick) || ''),
       onBack: () => navigate('ToolScreen', null, true),
       parentName: "ToolScreen",
-      RightComponent: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .NodeStatus */ .s9, {})
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Content */ .kP, {
+      RightComponent: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .NodeStatus */ .s9, {})
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Content */ .kP, {
       classname: "!px-4 !pb-0",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .c, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
         className: "space-y-4",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
           variant: "body2",
           color: "textSecondary",
           children: "It takes 1 KAS as commission each time (no matter how many KRC20 you mint), each mint takes at least 1 KAS as gasfee. If the mint process be interrupted, you can restart the minting process, and the commission will not be charged until you reach the last limit."
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
           variant: "body2",
           color: "textSecondary",
           children: "Beware, if you have UTXO compound recently, you have to wait the compound success, otherwise the minting may failed."
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .c, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
           className: "space-y-2",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
             children: "Ticker"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_OutlinedInput__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_OutlinedInput__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .c, {
             type: "text",
             value: ticker,
             name: "ticker",
@@ -351,9 +362,9 @@ function Mint() {
             fullWidth: true,
             autoComplete: "off",
             size: "small",
-            endAdornment: !(0,lodash__WEBPACK_IMPORTED_MODULE_13__.isEmpty)(fetchedTicker) && fetchedTicker.state === "deployed" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .c, {
+            endAdornment: !(0,lodash__WEBPACK_IMPORTED_MODULE_13__.isEmpty)(fetchedTicker) && fetchedTicker.state === "deployed" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_icons_material_CheckCircleOutline__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .c, {
               color: "primary"
-            }) : loading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .c, {
+            }) : loading ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .c, {
               color: "primary",
               size: 20
             }) : 'Unused',
@@ -372,31 +383,34 @@ function Mint() {
               setTicker(e.target.value);
               // saveStateToLocalStorage();  // 保存ticker状态
             },
-            error: !ticker || ticker.length < 4 || (0,lodash__WEBPACK_IMPORTED_MODULE_13__.isEmpty)(fetchedTicker) || fetchedTicker.state !== "deployed"
-          }), !ticker || ticker.length < 4 || (0,lodash__WEBPACK_IMPORTED_MODULE_13__.isEmpty)(fetchedTicker) || fetchedTicker.state !== "deployed" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
+            error: !rpcConnectStatus || !ticker || ticker.length < 4 || (0,lodash__WEBPACK_IMPORTED_MODULE_13__.isEmpty)(fetchedTicker) || fetchedTicker.state !== "deployed"
+          }), rpcConnectStatus ? !ticker || ticker.length < 4 || (0,lodash__WEBPACK_IMPORTED_MODULE_13__.isEmpty)(fetchedTicker) || fetchedTicker.state !== "deployed" ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
             color: "error",
             children: "Invalid ticker"
-          }) : '']
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .c, {
+          }) : null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
+            color: "error",
+            children: "RPC Disconnected"
+          })]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
           className: "space-y-2",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
             children: "Mint Count"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_OutlinedInput__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_OutlinedInput__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .c, {
             type: "number",
             size: "small",
             value: mintCount,
             onChange: handleMintCountChange,
             fullWidth: true,
             placeholder: "Enter number of mints"
-          }), !mintCount || mintCount < 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
+          }), !mintCount || mintCount < 1 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
             color: "error",
             children: "Invalid Count"
           }) : '']
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .c, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
           className: "space-y-2",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
             children: "Priority Fee (KAS)"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_OutlinedInput__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_OutlinedInput__WEBPACK_IMPORTED_MODULE_22__/* ["default"] */ .c, {
             type: "number",
             value: fee,
             name: "fee",
@@ -405,38 +419,38 @@ function Mint() {
             fullWidth: true,
             autoComplete: "off",
             onChange: handleFeeChange
-          }), !fee || fee < 0.01 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
+          }), !fee || fee < 0.01 ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
             color: "error",
             children: "Invalid Fee(The fee must be greater than 0.01)"
           }) : '']
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
           className: "!mt-1",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)("span", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)("span", {
             className: "text-xs text-gray-400",
             children: "If mint fails, increase the Priority Fee and try again"
           })
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
           className: "!mt-2",
           textAlign: 'center',
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)("span", {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)("span", {
             className: "text-xs text-gray-400",
             children: ["Total Fee: ", totalFee, " KAS"]
           })
-        }), isMinting && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.Fragment, {
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
+        }), isMinting && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.Fragment, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
             variant: "body2",
             sx: {
               marginTop: 1
             },
             children: [completedMints, " / ", mintCount, " Minted"]
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_LinearProgress__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .c, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_LinearProgress__WEBPACK_IMPORTED_MODULE_25__/* ["default"] */ .c, {
             variant: "determinate",
             value: completedMints / mintCount * 100,
             sx: {
               marginTop: 2
             }
           })]
-        }), !!progressText && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
+        }), !!progressText && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_Typography__WEBPACK_IMPORTED_MODULE_21__/* ["default"] */ .c, {
           variant: "body2",
           sx: {
             marginTop: 1
@@ -444,32 +458,32 @@ function Mint() {
           children: progressText
         })]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .c, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_mui_material_Box__WEBPACK_IMPORTED_MODULE_20__/* ["default"] */ .c, {
       className: "m-4",
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(StyledButton, {
+      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(StyledButton, {
         fullWidth: true,
         size: "medium",
         variant: "outlined",
         onClick: handleMintBack,
-        disabled: isMinting
+        disabled: !rpcConnectStatus || isMinting
         // sx={{ mb: 1 }}
         ,
-        children: sendback ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.Fragment, {
-          children: ["Return Fund", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .c, {
+        children: sendback ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.Fragment, {
+          children: ["Return Fund", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .c, {
             size: 16,
             sx: {
               ml: 1
             }
           })]
         }) : "Return Fund"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(StyledButton, {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(StyledButton, {
         fullWidth: true,
         size: "medium",
         variant: "contained",
         onClick: handleMint,
-        disabled: isMinting,
-        children: sending ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.Fragment, {
-          children: [btnText, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_15__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_23__/* ["default"] */ .c, {
+        disabled: !rpcConnectStatus || isMinting,
+        children: sending ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.Fragment, {
+          children: [btnText, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_24__/* ["default"] */ .c, {
             size: 16,
             sx: {
               ml: 1

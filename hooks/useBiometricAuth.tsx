@@ -17,8 +17,8 @@ export function useBiometricAuth(): UseBiometricAuthResult {
     try {
       if (isBiometryAvailable) {
         const result = await rnBiometrics.simplePrompt({
-          promptMessage: '请进行面容或指纹验证',
-          cancelButtonText: 'cancel',
+          promptMessage: '请进行指纹或面容验证',
+          cancelButtonText: '取消',
         });
         return result.success
       } else {

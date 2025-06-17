@@ -10,6 +10,8 @@ import { request, PERMISSIONS, RESULTS, openSettings } from 'react-native-permis
 import { Dimensions, Keyboard, KeyboardAvoidingView, Linking, NativeModules, StyleSheet, TextInput, TouchableWithoutFeedback, useWindowDimensions } from 'react-native';
 import { useCameraPermission } from 'react-native-vision-camera';
 import Clipboard from '@react-native-clipboard/clipboard';
+import NetInfo from '@react-native-community/netinfo';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const appVersion = NativeModules.RNDeviceInfo.appVersion;
 
@@ -43,7 +45,7 @@ const Home = memo(({ navigation, route }: {
   const { hasPermission, requestPermission } = useCameraPermission()
   const { width, height } = useWindowDimensions();
   const keyboradHeight = useRef(0);
-  // const { isBiometryAvailable, biometryType, authenticate } = useBiometricAuth();
+  const { isBiometryAvailable, biometryType, authenticate } = useBiometricAuth();
 
   useEffect(() => {
     // 当全局状态更新时，执行相关操作
@@ -73,19 +75,29 @@ const Home = memo(({ navigation, route }: {
     try {
       const data = JSON.parse(event.nativeEvent.data);
       const { callbackId, action, payload } = data || {};
+
       switch (action) {
+        case 'updatePasswordToApp':
+          // 更新密码到 App内存
+          console.log('updatePasswordToApp', payload)
+          await AsyncStorage.setItem('user-password', payload.password)
+          break
         case 'openBiometricAuth':
-          // if (!isBiometryAvailable) {
-          //   return executeNativeCallback(callbackId, 'fail', {
-          //     success: false,
-          //     message: 'Biometric authentication is not available',
-          //   });
-          // }
-          // const isAuthenticated = await authenticate();
-          // executeNativeCallback(callbackId, isAuthenticated ? 'success' : 'fail', {
-          //   success: isAuthenticated,
-          //   message: isAuthenticated ? 'Biometric authentication successful' : 'Biometric authentication failed',
-          // })
+          const password = await AsyncStorage.getItem('user-password')
+          if (!password) return
+          console.log('openBiometricAuth biometryType', biometryType)
+          if (!isBiometryAvailable) {
+            return executeNativeCallback(callbackId, 'fail', {
+              success: false,
+              message: 'Biometric authentication is not available',
+            });
+          }
+          const isAuthenticated = await authenticate();
+          executeNativeCallback(callbackId, isAuthenticated ? 'success' : 'fail', {
+            success: isAuthenticated,
+            password,
+            message: isAuthenticated ? 'Biometric authentication successful' : 'Biometric authentication failed',
+          })
           break;
         case 'openScan':
           let status;
@@ -177,9 +189,6 @@ const Home = memo(({ navigation, route }: {
     }
   }, [route.params]);
 
-  console.log({ width, height }, insets)
-
-
   const [webViewHeight, setWebViewHeight] = useState(height);
   useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -199,11 +208,26 @@ const Home = memo(({ navigation, route }: {
         setWebViewHeight(height);
       }
     );
+    const unsubscribe = NetInfo.addEventListener(state => {
+      // ios 判断网络状态
+      if (webViewRef.current && Platform.OS === 'ios') {
+        console.log('网络状态变化', state, state.isWifiEnabled || state.isInternetReachable);
+        const isConnected = state.isWifiEnabled || state.isInternetReachable
+        webViewRef.current.injectJavaScript(`
+          window.postMessage({
+            type: 'networkStatus',
+            isConnected: ${isConnected}
+          });
+        `);
+      }
+    });
 
     return () => {
       keyboardDidShowListener.remove();
       keyboardDidHideListener.remove();
+      unsubscribe();
     };
+    
   }, []);
   useEffect(() => {
     const backAction = () => {
@@ -223,8 +247,6 @@ const Home = memo(({ navigation, route }: {
 
     return () => backHandler.remove();
   }, [isFocused]);
-
-
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -256,7 +278,7 @@ const Home = memo(({ navigation, route }: {
           key={'webView'}
           source={{
             uri: htmlFilePath,
-            // uri: 'http://192.168.110.196:4300',
+            // uri: 'http://192.168.110.196:4300/#/account/unlock',
           }}
           onError={(error) => {
             console.log('onError', error);
