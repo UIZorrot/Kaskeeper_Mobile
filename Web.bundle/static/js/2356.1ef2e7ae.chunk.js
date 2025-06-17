@@ -1,5 +1,5 @@
 "use strict";
-(self["webpackChunkKaspaWallet"] = self["webpackChunkKaspaWallet"] || []).push([[4176,8804],{
+(self["webpackChunkKaspaWallet"] = self["webpackChunkKaspaWallet"] || []).push([[2356,8804],{
 
 /***/ 25350:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -346,34 +346,34 @@ __webpack_async_result__();
 
 /***/ }),
 
-/***/ 82724:
+/***/ 89252:
 /***/ ((module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __webpack_async_result__) => { try {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   checkL1Address: () => (/* binding */ checkL1Address),
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _ui_components__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(83120);
-/* harmony import */ var _MainRoute__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(77980);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96651);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(37656);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(70884);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(87136);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(25350);
-/* harmony import */ var _mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(75776);
-/* harmony import */ var _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(60172);
-/* harmony import */ var _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(24468);
-/* harmony import */ var _ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(17534);
-/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(40256);
-/* harmony import */ var _Wallet_TxCreateScreen__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(40020);
-/* harmony import */ var _ui_images_common_contacts_book_svg__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(93468);
-/* harmony import */ var _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6860);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(96651);
 /* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(96522);
-/* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(55043);
+/* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(55043);
+/* harmony import */ var _ui_components__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(83120);
+/* harmony import */ var _MainRoute__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(77980);
+/* harmony import */ var _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(24468);
+/* harmony import */ var _ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(17534);
+/* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(40256);
+/* harmony import */ var _Wallet_EnterRecipientAddress__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(85404);
+/* harmony import */ var _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(6860);
+/* harmony import */ var _mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(75776);
+/* harmony import */ var _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(60172);
+/* harmony import */ var _ui_context_RPCStatus__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(20084);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(2488);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_components__WEBPACK_IMPORTED_MODULE_0__, _MainRoute__WEBPACK_IMPORTED_MODULE_1__, _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_2__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_3__, _Wallet_TxCreateScreen__WEBPACK_IMPORTED_MODULE_6__, _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_8__]);
-([_ui_components__WEBPACK_IMPORTED_MODULE_0__, _MainRoute__WEBPACK_IMPORTED_MODULE_1__, _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_2__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_3__, _Wallet_TxCreateScreen__WEBPACK_IMPORTED_MODULE_6__, _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_8__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_components__WEBPACK_IMPORTED_MODULE_2__, _MainRoute__WEBPACK_IMPORTED_MODULE_3__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_4__, _Wallet_EnterRecipientAddress__WEBPACK_IMPORTED_MODULE_7__, _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_8__, _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_9__]);
+([_ui_components__WEBPACK_IMPORTED_MODULE_2__, _MainRoute__WEBPACK_IMPORTED_MODULE_3__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_4__, _Wallet_EnterRecipientAddress__WEBPACK_IMPORTED_MODULE_7__, _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_8__, _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -391,51 +391,59 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_
 
 
 
-const Chown = () => {
-  const navigate = (0,_MainRoute__WEBPACK_IMPORTED_MODULE_1__/* .useNavigate */ .i)();
-  const [loading, setLoading] = (0,react__WEBPACK_IMPORTED_MODULE_9__.useState)(false);
+const checkL1Address = address => {
+  const kaspaAddressPattern = /^(kaspa|kaspatest|kaspadev):[a-z0-9]{32,}$/i;
+  return kaspaAddressPattern.test(address);
+};
+const Issue = () => {
+  const navigate = (0,_MainRoute__WEBPACK_IMPORTED_MODULE_3__/* .useNavigate */ .i)();
   const {
     privateKey
-  } = (0,_ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_3__/* .useUserPrivateKey */ .yK)();
-  const networkType = (0,_ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_4__/* .useNetworkType */ .qS)();
-  const [drawerVisible, setDrawerVisible] = (0,react__WEBPACK_IMPORTED_MODULE_9__.useState)(false);
-  const [tickerInfo, setTickerInfo] = (0,react__WEBPACK_IMPORTED_MODULE_9__.useState)(null);
+  } = (0,_ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_4__/* .useUserPrivateKey */ .yK)();
+  const networkType = (0,_ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_5__/* .useNetworkType */ .qS)();
+  const [loading, setLoading] = react__WEBPACK_IMPORTED_MODULE_0__.useState(false);
+  const [drawerVisible, setDrawerVisible] = react__WEBPACK_IMPORTED_MODULE_0__.useState(false);
+  const [tickerInfo, setTickerInfo] = react__WEBPACK_IMPORTED_MODULE_0__.useState(null);
+  const {
+    rpcConnectStatus
+  } = (0,_ui_context_RPCStatus__WEBPACK_IMPORTED_MODULE_10__/* .useRPCStatusContext */ .U)();
+  const maxIssue = react__WEBPACK_IMPORTED_MODULE_0__.useMemo(() => {
+    if (!tickerInfo) return 0;
+    const amount = tickerInfo.max - tickerInfo.minted;
+    return amount / 10 ** tickerInfo.dec;
+  }, [tickerInfo]);
   const formik = (0,formik__WEBPACK_IMPORTED_MODULE_12__/* .useFormik */ .KO)({
     initialValues: {
       toAddress: '',
+      amount: null,
       tickerInfo: null
     },
-    validationSchema: yup__WEBPACK_IMPORTED_MODULE_10__/* .object */ .kt().shape({
-      toAddress: yup__WEBPACK_IMPORTED_MODULE_10__/* .string */ .Qb().required('Please enter valid Recipient').matches(/^(kaspa|kaspatest|kaspadev):[a-z0-9]{32,}$/i, 'Invalid address.'),
-      tickerInfo: yup__WEBPACK_IMPORTED_MODULE_10__/* .object */ .kt().required('Please enter valid ticker')
+    validationSchema: yup__WEBPACK_IMPORTED_MODULE_1__/* .object */ .kt().shape({
+      toAddress: yup__WEBPACK_IMPORTED_MODULE_1__/* .string */ .Qb().required('Please enter valid Recipient').matches(/^(kaspa|kaspatest|kaspadev):[a-z0-9]{32,}$/i, 'Invalid address.'),
+      amount: yup__WEBPACK_IMPORTED_MODULE_1__/* .number */ .CQ().required('Please enter valid issue amount').positive('Issue amount must be greater than zero').max(maxIssue, "Amount exceeds max issue limit (".concat(maxIssue, ")")),
+      tickerInfo: yup__WEBPACK_IMPORTED_MODULE_1__/* .object */ .kt().required('Please enter valid ticker')
     }),
     onSubmit: async values => {
       console.log('onSubmit values', values, loading);
       if (loading) return;
       setLoading(true);
       try {
-        var _res;
-        const networkName = networkType === _shared_types__WEBPACK_IMPORTED_MODULE_5__/* .NetworkType */ .U5.Mainnet ? 'mainnet' : networkType === _shared_types__WEBPACK_IMPORTED_MODULE_5__/* .NetworkType */ .U5.Testnet ? 'testnet-10' : 'devnet';
-        let res;
-        if (tickerInfo.mod === 'issue') {
-          res = await (0,_background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_2__/* .krc20_chown_issue */ .k1)(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex, networkName, tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.ca, values.toAddress, 0.02);
-        } else {
-          res = await (0,_background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_2__/* .krc20_chown */ .EN)(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex, networkName, tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.tick, values.toAddress, 0.02);
-        }
-        if ((_res = res) !== null && _res !== void 0 && _res.status) {
+        const networkName = networkType === _shared_types__WEBPACK_IMPORTED_MODULE_6__/* .NetworkType */ .U5.Mainnet ? 'mainnet' : networkType === _shared_types__WEBPACK_IMPORTED_MODULE_6__/* .NetworkType */ .U5.Testnet ? 'testnet-10' : 'devnet';
+        const res = await (0,_background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_9__/* .krc20_issue */ ._K)(privateKey === null || privateKey === void 0 ? void 0 : privateKey.hex, networkName, tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.ca, 0.02, values.toAddress, (values.amount || 0) * 10 ** tickerInfo.dec);
+        if (res !== null && res !== void 0 && res.status) {
           const rawtxinfo = {
             "to": values.toAddress,
-            // "amountSompi": 10 ** 8,
-            "tick": (tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.name) || (tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.tick)
+            "amountSompi": (values.amount || 0) * 10 ** tickerInfo.dec,
+            "tick": tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.name
           };
           navigate('TxSuccessScreen', {
             txid: "Multi-Transaction",
             rawtx: rawtxinfo,
-            type: "Chown"
+            type: "Issue"
           });
         }
       } catch (error) {
-        console.log('handleChown error', error);
+        console.log('handleIssue error', error);
       } finally {
         setLoading(false);
       }
@@ -445,13 +453,13 @@ const Chown = () => {
     formik.setFieldValue('toAddress', address);
     setDrawerVisible(false);
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Layout */ ._W, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Header */ .ek, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_2__/* .Layout */ ._W, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_2__/* .Header */ .ek, {
       onBack: () => navigate('ToolScreen', null, true),
-      title: 'Chown Krc20',
       parentName: "ToolScreen",
-      RightComponent: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .NodeStatus */ .s9, {})
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Content */ .kP, {
+      title: 'Issue Krc20',
+      RightComponent: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_2__/* .NodeStatus */ .s9, {})
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_2__/* .Content */ .kP, {
       classname: "!px-4",
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .c, {
         className: "space-y-4",
@@ -461,67 +469,94 @@ const Chown = () => {
             children: "Ticker"
           }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_8__/* ["default"] */ .c, {
             name: "tickerInfo",
+            type: 'issue',
             onBlur: formik.handleBlur,
             onChange: value => {
-              console.log('value', value);
               formik.setFieldValue('tickerInfo', value, true);
               setTickerInfo(value);
             },
-            error: Boolean(formik.errors.tickerInfo)
-          }), formik.errors.tickerInfo ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .c, {
+            error: !rpcConnectStatus || Boolean(formik.errors.tickerInfo)
+          }), rpcConnectStatus ? formik.errors.tickerInfo ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .c, {
             color: "error.main",
             children: formik.errors.tickerInfo
-          }) : null]
+          }) : null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .c, {
+            color: "error",
+            children: "RPC Disconnected"
+          })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .c, {
           className: "space-y-1",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .c, {
             children: "Recipient"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .c, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Wallet_EnterRecipientAddress__WEBPACK_IMPORTED_MODULE_7__.AddressInput, {
             name: "toAddress",
-            placeholder: "Recipient",
+            placeholder: 'Recipient Address',
             value: formik.values.toAddress,
-            onChange: formik.handleChange,
-            onBlur: formik.handleBlur,
             error: formik.touched.toAddress && Boolean(formik.errors.toAddress),
-            className: "w-full",
-            endAdornment: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .c, {
-              onClick: () => setDrawerVisible(true),
-              edge: "end",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)("img", {
-                src: _ui_images_common_contacts_book_svg__WEBPACK_IMPORTED_MODULE_7__,
-                width: 18,
-                height: 18,
-                alt: ""
-              })
-            })
+            onChange: e => {
+              formik.setFieldValue('toAddress', e.target.value);
+              formik.validateField('toAddress');
+            },
+            onBlur: formik.handleBlur
           }), formik.touched.toAddress && formik.errors.toAddress ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .c, {
             color: "error.main",
             children: formik.errors.toAddress
           }) : null]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .c, {
+          className: "space-y-1",
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .c, {
+            children: "Issue Amount"
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .c, {
+            name: "amount",
+            placeholder: "Issue Amount",
+            value: formik.values.amount,
+            onChange: e => {
+              let value = parseInt(e.target.value, 10);
+              if (isNaN(value)) {
+                value = null;
+              } else {
+                value = Math.max(1, value);
+              }
+              formik.setFieldValue('amount', value);
+            },
+            onBlur: formik.handleBlur,
+            error: formik.touched.amount && Boolean(formik.errors.amount),
+            type: "number",
+            className: "w-full"
+          }), formik.touched.amount && formik.errors.amount ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .c, {
+            color: "error.main",
+            children: formik.errors.amount
+          }) : null]
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .c, {
+          className: "!mt-1",
+          textAlign: 'center',
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)("span", {
+            className: "text-sm text-gray-400",
+            children: ["Max Issue: ", maxIssue, " ", (tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.name) || (tickerInfo === null || tickerInfo === void 0 ? void 0 : tickerInfo.tick)]
+          })
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .c, {
           className: "space-y-1 mt-2",
-          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Button */ .q, {
+          children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_2__/* .Button */ .q, {
             variant: "contained",
             color: "primary",
-            disabled: loading,
+            disabled: loading || !rpcConnectStatus,
             className: "!rounded-lg !h-[42px] w-full",
             onClick: () => formik.handleSubmit(),
-            children: [loading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .c, {
+            children: [loading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .c, {
               size: 16,
               color: "inherit",
               className: "mr-1"
-            }), "Chown"]
+            }), "Issue"]
           })
         })]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Wallet_TxCreateScreen__WEBPACK_IMPORTED_MODULE_6__.SelectAddressDrawer, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_11__.jsx)(_Wallet_EnterRecipientAddress__WEBPACK_IMPORTED_MODULE_7__.SelectAddressDrawer, {
       drawerVisible: drawerVisible,
       onClose: () => setDrawerVisible(false),
       handleAddrInput: handleAddrInput
     })]
   });
 };
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Chown);
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Issue);
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } });
 

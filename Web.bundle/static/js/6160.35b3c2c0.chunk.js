@@ -1,5 +1,5 @@
 "use strict";
-(self["webpackChunkKaspaWallet"] = self["webpackChunkKaspaWallet"] || []).push([[6784],{
+(self["webpackChunkKaspaWallet"] = self["webpackChunkKaspaWallet"] || []).push([[6160],{
 
 /***/ 41552:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
@@ -1317,7 +1317,7 @@ const IconButton = /*#__PURE__*/react.forwardRef(function IconButton(inProps, re
 
 /***/ }),
 
-/***/ 54408:
+/***/ 51408:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
 
@@ -1326,178 +1326,71 @@ var _interopRequireWildcard = (__webpack_require__(128)["default"]);
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
-exports["default"] = useEvent;
+exports.cloneElement = cloneElement;
+exports.isFragment = isFragment;
+exports.isValidElement = void 0;
+exports.replaceElement = replaceElement;
 var React = _interopRequireWildcard(__webpack_require__(96651));
-function useEvent(callback) {
-  var fnRef = React.useRef();
-  fnRef.current = callback;
-  var memoFn = React.useCallback(function () {
-    var _fnRef$current;
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    return (_fnRef$current = fnRef.current) === null || _fnRef$current === void 0 ? void 0 : _fnRef$current.call.apply(_fnRef$current, [fnRef].concat(args));
-  }, []);
-  return memoFn;
+var isValidElement = exports.isValidElement = React.isValidElement;
+function isFragment(child) {
+  return child && isValidElement(child) && child.type === React.Fragment;
 }
-
-/***/ }),
-
-/***/ 36400:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-
-var _interopRequireDefault = (__webpack_require__(11140)["default"]);
-var _interopRequireWildcard = (__webpack_require__(128)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.useLayoutUpdateEffect = exports["default"] = void 0;
-var React = _interopRequireWildcard(__webpack_require__(96651));
-var _canUseDom = _interopRequireDefault(__webpack_require__(47748));
-/**
- * Wrap `React.useLayoutEffect` which will not throw warning message in test env
- */
-var useInternalLayoutEffect =  true && (0, _canUseDom.default)() ? React.useLayoutEffect : React.useEffect;
-var useLayoutEffect = function useLayoutEffect(callback, deps) {
-  var firstMountRef = React.useRef(true);
-  useInternalLayoutEffect(function () {
-    return callback(firstMountRef.current);
-  }, deps);
-
-  // We tell react that first mount has passed
-  useInternalLayoutEffect(function () {
-    firstMountRef.current = false;
-    return function () {
-      firstMountRef.current = true;
-    };
-  }, []);
-};
-var useLayoutUpdateEffect = exports.useLayoutUpdateEffect = function useLayoutUpdateEffect(callback, deps) {
-  useLayoutEffect(function (firstMount) {
-    if (!firstMount) {
-      return callback();
-    }
-  }, deps);
-};
-var _default = exports["default"] = useLayoutEffect;
-
-/***/ }),
-
-/***/ 32613:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-
-var _interopRequireDefault = (__webpack_require__(11140)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = useMergedState;
-var _slicedToArray2 = _interopRequireDefault(__webpack_require__(67204));
-var _useEvent = _interopRequireDefault(__webpack_require__(54408));
-var _useLayoutEffect = __webpack_require__(36400);
-var _useState5 = _interopRequireDefault(__webpack_require__(64128));
-/** We only think `undefined` is empty */
-function hasValue(value) {
-  return value !== undefined;
-}
-
-/**
- * Similar to `useState` but will use props value if provided.
- * Note that internal use rc-util `useState` hook.
- */
-function useMergedState(defaultStateValue, option) {
-  var _ref = option || {},
-    defaultValue = _ref.defaultValue,
-    value = _ref.value,
-    onChange = _ref.onChange,
-    postState = _ref.postState;
-
-  // ======================= Init =======================
-  var _useState = (0, _useState5.default)(function () {
-      if (hasValue(value)) {
-        return value;
-      } else if (hasValue(defaultValue)) {
-        return typeof defaultValue === 'function' ? defaultValue() : defaultValue;
-      } else {
-        return typeof defaultStateValue === 'function' ? defaultStateValue() : defaultStateValue;
-      }
-    }),
-    _useState2 = (0, _slicedToArray2.default)(_useState, 2),
-    innerValue = _useState2[0],
-    setInnerValue = _useState2[1];
-  var mergedValue = value !== undefined ? value : innerValue;
-  var postMergedValue = postState ? postState(mergedValue) : mergedValue;
-
-  // ====================== Change ======================
-  var onChangeFn = (0, _useEvent.default)(onChange);
-  var _useState3 = (0, _useState5.default)([mergedValue]),
-    _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
-    prevValue = _useState4[0],
-    setPrevValue = _useState4[1];
-  (0, _useLayoutEffect.useLayoutUpdateEffect)(function () {
-    var prev = prevValue[0];
-    if (innerValue !== prev) {
-      onChangeFn(innerValue, prev);
-    }
-  }, [prevValue]);
-
-  // Sync value back to `undefined` when it from control to un-control
-  (0, _useLayoutEffect.useLayoutUpdateEffect)(function () {
-    if (!hasValue(value)) {
-      setInnerValue(value);
-    }
-  }, [value]);
-
-  // ====================== Update ======================
-  var triggerChange = (0, _useEvent.default)(function (updater, ignoreDestroy) {
-    setInnerValue(updater, ignoreDestroy);
-    setPrevValue([mergedValue], ignoreDestroy);
-  });
-  return [postMergedValue, triggerChange];
-}
-
-/***/ }),
-
-/***/ 64128:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-
-var _interopRequireWildcard = (__webpack_require__(128)["default"]);
-var _interopRequireDefault = (__webpack_require__(11140)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = useSafeState;
-var _slicedToArray2 = _interopRequireDefault(__webpack_require__(67204));
-var React = _interopRequireWildcard(__webpack_require__(96651));
-/**
- * Same as React.useState but `setState` accept `ignoreDestroy` param to not to setState after destroyed.
- * We do not make this auto is to avoid real memory leak.
- * Developer should confirm it's safe to ignore themselves.
- */
-function useSafeState(defaultValue) {
-  var destroyRef = React.useRef(false);
-  var _React$useState = React.useState(defaultValue),
-    _React$useState2 = (0, _slicedToArray2.default)(_React$useState, 2),
-    value = _React$useState2[0],
-    setValue = _React$useState2[1];
-  React.useEffect(function () {
-    destroyRef.current = false;
-    return function () {
-      destroyRef.current = true;
-    };
-  }, []);
-  function safeSetState(updater, ignoreDestroy) {
-    if (ignoreDestroy && destroyRef.current) {
-      return;
-    }
-    setValue(updater);
+function replaceElement(element, replacement, props) {
+  if (!isValidElement(element)) {
+    return replacement;
   }
-  return [value, safeSetState];
+  return /*#__PURE__*/React.cloneElement(element, typeof props === 'function' ? props(element.props || {}) : props);
+}
+function cloneElement(element, props) {
+  return replaceElement(element, element, props);
+}
+
+/***/ }),
+
+/***/ 19968:
+/***/ ((__unused_webpack_module, exports) => {
+
+
+
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports.tupleNum = exports.tuple = void 0;
+// https://stackoverflow.com/questions/46176165/ways-to-get-string-literal-type-of-array-values-without-enum-overhead
+var tuple = exports.tuple = function tuple() {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+  return args;
+};
+var tupleNum = exports.tupleNum = function tupleNum() {
+  for (var _len2 = arguments.length, args = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+    args[_key2] = arguments[_key2];
+  }
+  return args;
+};
+
+/***/ }),
+
+/***/ 79132:
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+
+
+var _interopRequireDefault = (__webpack_require__(11140)["default"]);
+Object.defineProperty(exports, "__esModule", ({
+  value: true
+}));
+exports["default"] = omit;
+var _objectSpread2 = _interopRequireDefault(__webpack_require__(16840));
+function omit(obj, fields) {
+  var clone = (0, _objectSpread2.default)({}, obj);
+  if (Array.isArray(fields)) {
+    fields.forEach(function (key) {
+      delete clone[key];
+    });
+  }
+  return clone;
 }
 
 /***/ })

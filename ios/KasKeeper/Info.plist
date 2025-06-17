@@ -49,5 +49,7 @@
 	<false/>
 	<key>NSCameraUsageDescription</key>
 	<string>KasKeeper needs camera access to scan QR codes</string>
+	<key>NSFaceIDUsageDescription</key>
+	<string>KasKeeper use Face ID to secure your account</string>
 </dict>
 </plist>

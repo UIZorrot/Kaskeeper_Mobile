@@ -78,6 +78,30 @@ function UnlockScreen() {
       setDisabled(true);
     }
   }, [password]);
+
+  // Register biometric auth callback
+  (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
+    var _window, _window$NativeCallbac;
+    const params = {
+      action: 'openBiometricAuth',
+      payload: null,
+      success: async data => {
+        console.log('success', data.result);
+        navigate('MainScreen');
+        // const hasVault = await wallet.hasVault();
+        // if (!hasVault) {
+        //   return navigate('WelcomeScreen');
+        // } else {
+        //   return navigate('MainScreen');
+        // }
+      },
+      fail: data => {
+        console.log('fail', data);
+        tools.toastError('biometric auth error, please use password to unlock wallet');
+      }
+    };
+    (_window = window) === null || _window === void 0 ? void 0 : (_window$NativeCallbac = _window.NativeCallbacks) === null || _window$NativeCallbac === void 0 ? void 0 : _window$NativeCallbac.register(params);
+  }, []);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Layout */ ._W, {
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Content */ .kP, {
       preset: "middle",

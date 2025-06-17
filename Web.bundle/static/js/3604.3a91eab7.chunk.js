@@ -680,27 +680,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var antd_lib_radio_style__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(88056);
 /* harmony import */ var antd_lib_radio_style__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(antd_lib_radio_style__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var antd_lib_radio__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(98736);
+/* harmony import */ var antd_lib_radio__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(98736);
 /* harmony import */ var _ui_components__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(83120);
 /* harmony import */ var _MainRoute__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(77980);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(37656);
 /* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(70884);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(87136);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(25350);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(96651);
-/* harmony import */ var _mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(75776);
+/* harmony import */ var _mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(75776);
 /* harmony import */ var _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(60172);
 /* harmony import */ var _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(24468);
 /* harmony import */ var _ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(17534);
 /* harmony import */ var _shared_types__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(40256);
-/* harmony import */ var _Wallet_TxCreateScreen__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(40020);
-/* harmony import */ var _ui_images_common_contacts_book_svg__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(93468);
-/* harmony import */ var _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(6860);
+/* harmony import */ var _Wallet_EnterRecipientAddress__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(85404);
+/* harmony import */ var _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(6860);
 /* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(96522);
-/* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(55043);
+/* harmony import */ var yup__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(55043);
+/* harmony import */ var _ui_context_RPCStatus__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(20084);
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(2488);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_components__WEBPACK_IMPORTED_MODULE_1__, _MainRoute__WEBPACK_IMPORTED_MODULE_2__, _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_4__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_5__, _Wallet_TxCreateScreen__WEBPACK_IMPORTED_MODULE_8__, _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_10__]);
-([_ui_components__WEBPACK_IMPORTED_MODULE_1__, _MainRoute__WEBPACK_IMPORTED_MODULE_2__, _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_4__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_5__, _Wallet_TxCreateScreen__WEBPACK_IMPORTED_MODULE_8__, _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_10__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_components__WEBPACK_IMPORTED_MODULE_1__, _MainRoute__WEBPACK_IMPORTED_MODULE_2__, _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_4__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_5__, _Wallet_EnterRecipientAddress__WEBPACK_IMPORTED_MODULE_8__, _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_9__]);
+([_ui_components__WEBPACK_IMPORTED_MODULE_1__, _MainRoute__WEBPACK_IMPORTED_MODULE_2__, _background_krc20_krc20action__WEBPACK_IMPORTED_MODULE_4__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_5__, _Wallet_EnterRecipientAddress__WEBPACK_IMPORTED_MODULE_8__, _ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
 
 
 
@@ -730,14 +728,17 @@ const BlacklistIssue = () => {
   const [drawerVisible, setDrawerVisible] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(false);
   const [tickerInfo, setTickerInfo] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)(null);
   const [mod, setMod] = (0,react__WEBPACK_IMPORTED_MODULE_3__.useState)('add');
+  const {
+    rpcConnectStatus
+  } = (0,_ui_context_RPCStatus__WEBPACK_IMPORTED_MODULE_11__/* .useRPCStatusContext */ .U)();
   const formik = (0,formik__WEBPACK_IMPORTED_MODULE_13__/* .useFormik */ .KO)({
     initialValues: {
       toAddress: '',
       tickerInfo: null
     },
-    validationSchema: yup__WEBPACK_IMPORTED_MODULE_11__/* .object */ .kt().shape({
-      toAddress: yup__WEBPACK_IMPORTED_MODULE_11__/* .string */ .Qb().required('Please enter valid Recipient').matches(/^(kaspa|kaspatest|kaspadev):[a-z0-9]{32,}$/i, 'Invalid address.'),
-      tickerInfo: yup__WEBPACK_IMPORTED_MODULE_11__/* .object */ .kt().required('Please enter valid ticker')
+    validationSchema: yup__WEBPACK_IMPORTED_MODULE_10__/* .object */ .kt().shape({
+      toAddress: yup__WEBPACK_IMPORTED_MODULE_10__/* .string */ .Qb().required('Please enter valid Recipient').matches(/^(kaspa|kaspatest|kaspadev):[a-z0-9]{32,}$/i, 'Invalid address.'),
+      tickerInfo: yup__WEBPACK_IMPORTED_MODULE_10__/* .object */ .kt().required('Please enter valid ticker')
     }),
     onSubmit: async values => {
       console.log('onSubmit values', values, loading);
@@ -783,7 +784,7 @@ const BlacklistIssue = () => {
           className: "space-y-1",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .c, {
             children: "Ticker"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .c, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_ui_components_KRC20TokenInput__WEBPACK_IMPORTED_MODULE_9__/* ["default"] */ .c, {
             name: "tickerInfo",
             type: "issue",
             onBlur: formik.handleBlur,
@@ -792,37 +793,32 @@ const BlacklistIssue = () => {
               formik.setFieldValue('tickerInfo', value);
               setTickerInfo(value);
             },
-            error: Boolean(formik.errors.tickerInfo)
-          }), formik.errors.tickerInfo ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .c, {
+            error: !rpcConnectStatus || Boolean(formik.errors.tickerInfo)
+          }), rpcConnectStatus ? formik.errors.tickerInfo ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .c, {
             color: "error.main",
             children: formik.errors.tickerInfo
-          }) : null]
+          }) : null : /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .c, {
+            color: "error",
+            children: "RPC Disconnected"
+          })]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .c, {
           className: "space-y-1",
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .c, {
             children: "Recipient"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .c, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_Wallet_EnterRecipientAddress__WEBPACK_IMPORTED_MODULE_8__.AddressInput, {
             name: "toAddress",
+            placeholder: 'Recipient Address',
             value: formik.values.toAddress,
-            onChange: formik.handleChange,
-            onBlur: formik.handleBlur,
-            placeholder: "Recipient",
             error: formik.touched.toAddress && Boolean(formik.errors.toAddress),
-            className: "w-full",
-            endAdornment: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .c, {
-              onClick: () => setDrawerVisible(true),
-              edge: "end",
-              children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)("img", {
-                src: _ui_images_common_contacts_book_svg__WEBPACK_IMPORTED_MODULE_9__,
-                width: 18,
-                height: 18,
-                alt: ""
-              })
-            })
+            onChange: e => {
+              formik.setFieldValue('toAddress', e.target.value);
+              formik.validateField('toAddress');
+            },
+            onBlur: formik.handleBlur
           }), formik.touched.toAddress && formik.errors.toAddress ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .c, {
             color: "error.main",
             children: formik.errors.toAddress
-          }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(antd_lib_radio__WEBPACK_IMPORTED_MODULE_18__/* ["default"].Group */ .cp.Group, {
+          }) : null, /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(antd_lib_radio__WEBPACK_IMPORTED_MODULE_16__/* ["default"].Group */ .cp.Group, {
             style: {
               margin: '15px 0 0 0'
             },
@@ -848,10 +844,10 @@ const BlacklistIssue = () => {
           children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_1__/* .Button */ .q, {
             variant: "contained",
             color: "primary",
-            disabled: loading,
+            disabled: loading || !rpcConnectStatus,
             className: "!rounded-lg !h-[42px] w-full",
             onClick: () => formik.handleSubmit(),
-            children: [loading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_19__/* ["default"] */ .c, {
+            children: [loading && /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_mui_material_CircularProgress__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .c, {
               size: 16,
               color: "inherit",
               className: "mr-1"
@@ -859,7 +855,7 @@ const BlacklistIssue = () => {
           })
         })]
       })
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_Wallet_TxCreateScreen__WEBPACK_IMPORTED_MODULE_8__.SelectAddressDrawer, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_12__.jsx)(_Wallet_EnterRecipientAddress__WEBPACK_IMPORTED_MODULE_8__.SelectAddressDrawer, {
       drawerVisible: drawerVisible,
       onClose: () => setDrawerVisible(false),
       handleAddrInput: handleAddrInput
@@ -979,278 +975,6 @@ var Checkbox = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_2__.forwardRef)(fu
   }));
 });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Checkbox);
-
-/***/ }),
-
-/***/ 54408:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-
-var _interopRequireWildcard = (__webpack_require__(128)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = useEvent;
-var React = _interopRequireWildcard(__webpack_require__(96651));
-function useEvent(callback) {
-  var fnRef = React.useRef();
-  fnRef.current = callback;
-  var memoFn = React.useCallback(function () {
-    var _fnRef$current;
-    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-    return (_fnRef$current = fnRef.current) === null || _fnRef$current === void 0 ? void 0 : _fnRef$current.call.apply(_fnRef$current, [fnRef].concat(args));
-  }, []);
-  return memoFn;
-}
-
-/***/ }),
-
-/***/ 36400:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-
-var _interopRequireDefault = (__webpack_require__(11140)["default"]);
-var _interopRequireWildcard = (__webpack_require__(128)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.useLayoutUpdateEffect = exports["default"] = void 0;
-var React = _interopRequireWildcard(__webpack_require__(96651));
-var _canUseDom = _interopRequireDefault(__webpack_require__(47748));
-/**
- * Wrap `React.useLayoutEffect` which will not throw warning message in test env
- */
-var useInternalLayoutEffect =  true && (0, _canUseDom.default)() ? React.useLayoutEffect : React.useEffect;
-var useLayoutEffect = function useLayoutEffect(callback, deps) {
-  var firstMountRef = React.useRef(true);
-  useInternalLayoutEffect(function () {
-    return callback(firstMountRef.current);
-  }, deps);
-
-  // We tell react that first mount has passed
-  useInternalLayoutEffect(function () {
-    firstMountRef.current = false;
-    return function () {
-      firstMountRef.current = true;
-    };
-  }, []);
-};
-var useLayoutUpdateEffect = exports.useLayoutUpdateEffect = function useLayoutUpdateEffect(callback, deps) {
-  useLayoutEffect(function (firstMount) {
-    if (!firstMount) {
-      return callback();
-    }
-  }, deps);
-};
-var _default = exports["default"] = useLayoutEffect;
-
-/***/ }),
-
-/***/ 32613:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-
-var _interopRequireDefault = (__webpack_require__(11140)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = useMergedState;
-var _slicedToArray2 = _interopRequireDefault(__webpack_require__(67204));
-var _useEvent = _interopRequireDefault(__webpack_require__(54408));
-var _useLayoutEffect = __webpack_require__(36400);
-var _useState5 = _interopRequireDefault(__webpack_require__(64128));
-/** We only think `undefined` is empty */
-function hasValue(value) {
-  return value !== undefined;
-}
-
-/**
- * Similar to `useState` but will use props value if provided.
- * Note that internal use rc-util `useState` hook.
- */
-function useMergedState(defaultStateValue, option) {
-  var _ref = option || {},
-    defaultValue = _ref.defaultValue,
-    value = _ref.value,
-    onChange = _ref.onChange,
-    postState = _ref.postState;
-
-  // ======================= Init =======================
-  var _useState = (0, _useState5.default)(function () {
-      if (hasValue(value)) {
-        return value;
-      } else if (hasValue(defaultValue)) {
-        return typeof defaultValue === 'function' ? defaultValue() : defaultValue;
-      } else {
-        return typeof defaultStateValue === 'function' ? defaultStateValue() : defaultStateValue;
-      }
-    }),
-    _useState2 = (0, _slicedToArray2.default)(_useState, 2),
-    innerValue = _useState2[0],
-    setInnerValue = _useState2[1];
-  var mergedValue = value !== undefined ? value : innerValue;
-  var postMergedValue = postState ? postState(mergedValue) : mergedValue;
-
-  // ====================== Change ======================
-  var onChangeFn = (0, _useEvent.default)(onChange);
-  var _useState3 = (0, _useState5.default)([mergedValue]),
-    _useState4 = (0, _slicedToArray2.default)(_useState3, 2),
-    prevValue = _useState4[0],
-    setPrevValue = _useState4[1];
-  (0, _useLayoutEffect.useLayoutUpdateEffect)(function () {
-    var prev = prevValue[0];
-    if (innerValue !== prev) {
-      onChangeFn(innerValue, prev);
-    }
-  }, [prevValue]);
-
-  // Sync value back to `undefined` when it from control to un-control
-  (0, _useLayoutEffect.useLayoutUpdateEffect)(function () {
-    if (!hasValue(value)) {
-      setInnerValue(value);
-    }
-  }, [value]);
-
-  // ====================== Update ======================
-  var triggerChange = (0, _useEvent.default)(function (updater, ignoreDestroy) {
-    setInnerValue(updater, ignoreDestroy);
-    setPrevValue([mergedValue], ignoreDestroy);
-  });
-  return [postMergedValue, triggerChange];
-}
-
-/***/ }),
-
-/***/ 64128:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-
-var _interopRequireWildcard = (__webpack_require__(128)["default"]);
-var _interopRequireDefault = (__webpack_require__(11140)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports["default"] = useSafeState;
-var _slicedToArray2 = _interopRequireDefault(__webpack_require__(67204));
-var React = _interopRequireWildcard(__webpack_require__(96651));
-/**
- * Same as React.useState but `setState` accept `ignoreDestroy` param to not to setState after destroyed.
- * We do not make this auto is to avoid real memory leak.
- * Developer should confirm it's safe to ignore themselves.
- */
-function useSafeState(defaultValue) {
-  var destroyRef = React.useRef(false);
-  var _React$useState = React.useState(defaultValue),
-    _React$useState2 = (0, _slicedToArray2.default)(_React$useState, 2),
-    value = _React$useState2[0],
-    setValue = _React$useState2[1];
-  React.useEffect(function () {
-    destroyRef.current = false;
-    return function () {
-      destroyRef.current = true;
-    };
-  }, []);
-  function safeSetState(updater, ignoreDestroy) {
-    if (ignoreDestroy && destroyRef.current) {
-      return;
-    }
-    setValue(updater);
-  }
-  return [value, safeSetState];
-}
-
-/***/ }),
-
-/***/ 26800:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-
-
-var _interopRequireDefault = (__webpack_require__(11140)["default"]);
-Object.defineProperty(exports, "__esModule", ({
-  value: true
-}));
-exports.composeRef = composeRef;
-exports.fillRef = fillRef;
-exports.supportNodeRef = supportNodeRef;
-exports.supportRef = supportRef;
-exports.useComposeRef = useComposeRef;
-var _typeof2 = _interopRequireDefault(__webpack_require__(18931));
-var _react = __webpack_require__(96651);
-var _reactIs = __webpack_require__(79896);
-var _useMemo = _interopRequireDefault(__webpack_require__(2428));
-/* eslint-disable no-param-reassign */
-
-function fillRef(ref, node) {
-  if (typeof ref === 'function') {
-    ref(node);
-  } else if ((0, _typeof2.default)(ref) === 'object' && ref && 'current' in ref) {
-    ref.current = node;
-  }
-}
-
-/**
- * Merge refs into one ref function to support ref passing.
- */
-function composeRef() {
-  for (var _len = arguments.length, refs = new Array(_len), _key = 0; _key < _len; _key++) {
-    refs[_key] = arguments[_key];
-  }
-  var refList = refs.filter(function (ref) {
-    return ref;
-  });
-  if (refList.length <= 1) {
-    return refList[0];
-  }
-  return function (node) {
-    refs.forEach(function (ref) {
-      fillRef(ref, node);
-    });
-  };
-}
-function useComposeRef() {
-  for (var _len2 = arguments.length, refs = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
-    refs[_key2] = arguments[_key2];
-  }
-  return (0, _useMemo.default)(function () {
-    return composeRef.apply(void 0, refs);
-  }, refs, function (prev, next) {
-    return prev.length !== next.length || prev.every(function (ref, i) {
-      return ref !== next[i];
-    });
-  });
-}
-function supportRef(nodeOrComponent) {
-  var _type$prototype, _nodeOrComponent$prot;
-  var type = (0, _reactIs.isMemo)(nodeOrComponent) ? nodeOrComponent.type.type : nodeOrComponent.type;
-
-  // Function component node
-  if (typeof type === 'function' && !((_type$prototype = type.prototype) !== null && _type$prototype !== void 0 && _type$prototype.render)) {
-    return false;
-  }
-
-  // Class component
-  if (typeof nodeOrComponent === 'function' && !((_nodeOrComponent$prot = nodeOrComponent.prototype) !== null && _nodeOrComponent$prot !== void 0 && _nodeOrComponent$prot.render)) {
-    return false;
-  }
-  return true;
-}
-function supportNodeRef(node) {
-  if (! /*#__PURE__*/(0, _react.isValidElement)(node)) {
-    return false;
-  }
-  if ((0, _reactIs.isFragment)(node)) {
-    return false;
-  }
-  return supportRef(node);
-}
-/* eslint-enable */
 
 /***/ })
 

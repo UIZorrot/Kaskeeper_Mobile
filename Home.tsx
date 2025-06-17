@@ -29,6 +29,7 @@ import { WebView } from 'react-native-webview';
 import { ScanDataContext } from './App';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useIsFocused } from '@react-navigation/native';
+import { useBiometricAuth } from './hooks/useBiometricAuth';
 
 const Home = memo(({ navigation, route }: {
   navigation?: any,
@@ -42,6 +43,7 @@ const Home = memo(({ navigation, route }: {
   const { hasPermission, requestPermission } = useCameraPermission()
   const { width, height } = useWindowDimensions();
   const keyboradHeight = useRef(0);
+  // const { isBiometryAvailable, biometryType, authenticate } = useBiometricAuth();
 
   useEffect(() => {
     // 当全局状态更新时，执行相关操作
@@ -72,6 +74,19 @@ const Home = memo(({ navigation, route }: {
       const data = JSON.parse(event.nativeEvent.data);
       const { callbackId, action, payload } = data || {};
       switch (action) {
+        case 'openBiometricAuth':
+          // if (!isBiometryAvailable) {
+          //   return executeNativeCallback(callbackId, 'fail', {
+          //     success: false,
+          //     message: 'Biometric authentication is not available',
+          //   });
+          // }
+          // const isAuthenticated = await authenticate();
+          // executeNativeCallback(callbackId, isAuthenticated ? 'success' : 'fail', {
+          //   success: isAuthenticated,
+          //   message: isAuthenticated ? 'Biometric authentication successful' : 'Biometric authentication failed',
+          // })
+          break;
         case 'openScan':
           let status;
           // 判断是ios / android
@@ -135,6 +150,14 @@ const Home = memo(({ navigation, route }: {
           // 复制文字到粘贴板
           Clipboard.setString(payload.textToCopy)
           executeNativeCallback(callbackId, 'success', {})
+          break
+        case 'readPasteText':
+          // 从粘贴板获取文字
+          const text = await Clipboard.getString();
+          console.log('readPasteText', text);
+          executeNativeCallback(callbackId, 'success', {
+            text,
+          });
           break
         default:
           console.log('default', data);

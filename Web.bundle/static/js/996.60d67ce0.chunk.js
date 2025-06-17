@@ -1,9 +1,9 @@
-(self["webpackChunkKaspaWallet"] = self["webpackChunkKaspaWallet"] || []).push([[3208],{
+"use strict";
+(self["webpackChunkKaspaWallet"] = self["webpackChunkKaspaWallet"] || []).push([[996],{
 
 /***/ 39568:
 /***/ ((__unused_webpack_module, exports) => {
 
-"use strict";
 
 // This icon file is generated automatically.
 Object.defineProperty(exports, "__esModule", ({ value: true }));
@@ -16,7 +16,6 @@ exports["default"] = EllipsisOutlined;
 /***/ 52040:
 /***/ ((__unused_webpack_module, exports) => {
 
-"use strict";
 
 // This icon file is generated automatically.
 Object.defineProperty(exports, "__esModule", ({ value: true }));
@@ -29,7 +28,6 @@ exports["default"] = PlusOutlined;
 /***/ 84684:
 /***/ ((module, exports, __webpack_require__) => {
 
-"use strict";
 
   Object.defineProperty(exports, "__esModule", ({
     value: true
@@ -49,7 +47,6 @@ exports["default"] = PlusOutlined;
 /***/ 63392:
 /***/ ((module, exports, __webpack_require__) => {
 
-"use strict";
 
   Object.defineProperty(exports, "__esModule", ({
     value: true
@@ -69,7 +66,6 @@ exports["default"] = PlusOutlined;
 /***/ 86288:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
 
 var _interopRequireDefault = __webpack_require__(11140);
@@ -102,7 +98,6 @@ exports["default"] = _default;
 /***/ 59464:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
 
 var _interopRequireDefault = __webpack_require__(11140);
@@ -132,165 +127,9 @@ exports["default"] = _default;
 
 /***/ }),
 
-/***/ 67472:
-/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
-
-"use strict";
-var __webpack_unused_export__;
-
-
-var _interopRequireWildcard = (__webpack_require__(128)["default"]);
-var _interopRequireDefault = (__webpack_require__(11140)["default"]);
-__webpack_unused_export__ = ({
-  value: true
-});
-exports.c = void 0;
-var _extends2 = _interopRequireDefault(__webpack_require__(68184));
-var _defineProperty2 = _interopRequireDefault(__webpack_require__(78288));
-var _slicedToArray2 = _interopRequireDefault(__webpack_require__(67204));
-var _classnames = _interopRequireDefault(__webpack_require__(10124));
-var _debounce = _interopRequireDefault(__webpack_require__(72224));
-var _omit = _interopRequireDefault(__webpack_require__(79132));
-var React = _interopRequireWildcard(__webpack_require__(96651));
-var _configProvider = __webpack_require__(92252);
-var _reactNode = __webpack_require__(51408);
-var _type = __webpack_require__(19968);
-var __rest = void 0 && (void 0).__rest || function (s, e) {
-  var t = {};
-  for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0) t[p] = s[p];
-  if (s != null && typeof Object.getOwnPropertySymbols === "function") for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
-    if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i])) t[p[i]] = s[p[i]];
-  }
-  return t;
-};
-var SpinSizes = (0, _type.tuple)('small', 'default', 'large');
-// Render indicator
-var defaultIndicator = null;
-function renderIndicator(prefixCls, props) {
-  var indicator = props.indicator;
-  var dotClassName = "".concat(prefixCls, "-dot");
-  // should not be render default indicator when indicator value is null
-  if (indicator === null) {
-    return null;
-  }
-  if ((0, _reactNode.isValidElement)(indicator)) {
-    return (0, _reactNode.cloneElement)(indicator, {
-      className: (0, _classnames["default"])(indicator.props.className, dotClassName)
-    });
-  }
-  if ((0, _reactNode.isValidElement)(defaultIndicator)) {
-    return (0, _reactNode.cloneElement)(defaultIndicator, {
-      className: (0, _classnames["default"])(defaultIndicator.props.className, dotClassName)
-    });
-  }
-  return /*#__PURE__*/React.createElement("span", {
-    className: (0, _classnames["default"])(dotClassName, "".concat(prefixCls, "-dot-spin"))
-  }, /*#__PURE__*/React.createElement("i", {
-    className: "".concat(prefixCls, "-dot-item")
-  }), /*#__PURE__*/React.createElement("i", {
-    className: "".concat(prefixCls, "-dot-item")
-  }), /*#__PURE__*/React.createElement("i", {
-    className: "".concat(prefixCls, "-dot-item")
-  }), /*#__PURE__*/React.createElement("i", {
-    className: "".concat(prefixCls, "-dot-item")
-  }));
-}
-function shouldDelay(spinning, delay) {
-  return !!spinning && !!delay && !isNaN(Number(delay));
-}
-var Spin = function Spin(props) {
-  var prefixCls = props.spinPrefixCls,
-    _props$spinning = props.spinning,
-    customSpinning = _props$spinning === void 0 ? true : _props$spinning,
-    delay = props.delay,
-    className = props.className,
-    _props$size = props.size,
-    size = _props$size === void 0 ? 'default' : _props$size,
-    tip = props.tip,
-    wrapperClassName = props.wrapperClassName,
-    style = props.style,
-    children = props.children,
-    restProps = __rest(props, ["spinPrefixCls", "spinning", "delay", "className", "size", "tip", "wrapperClassName", "style", "children"]);
-  var _React$useState = React.useState(function () {
-      return customSpinning && !shouldDelay(customSpinning, delay);
-    }),
-    _React$useState2 = (0, _slicedToArray2["default"])(_React$useState, 2),
-    spinning = _React$useState2[0],
-    setSpinning = _React$useState2[1];
-  React.useEffect(function () {
-    var updateSpinning = (0, _debounce["default"])(function () {
-      setSpinning(customSpinning);
-    }, delay);
-    updateSpinning();
-    return function () {
-      var _a;
-      (_a = updateSpinning === null || updateSpinning === void 0 ? void 0 : updateSpinning.cancel) === null || _a === void 0 ? void 0 : _a.call(updateSpinning);
-    };
-  }, [delay, customSpinning]);
-  var isNestedPattern = function isNestedPattern() {
-    return typeof children !== 'undefined';
-  };
-  var renderSpin = function renderSpin(_ref) {
-    var direction = _ref.direction;
-    var spinClassName = (0, _classnames["default"])(prefixCls, (0, _defineProperty2["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])((0, _defineProperty2["default"])({}, "".concat(prefixCls, "-sm"), size === 'small'), "".concat(prefixCls, "-lg"), size === 'large'), "".concat(prefixCls, "-spinning"), spinning), "".concat(prefixCls, "-show-text"), !!tip), "".concat(prefixCls, "-rtl"), direction === 'rtl'), className);
-    // fix https://fb.me/react-unknown-prop
-    var divProps = (0, _omit["default"])(restProps, ['indicator', 'prefixCls']);
-    var spinElement = /*#__PURE__*/React.createElement("div", (0, _extends2["default"])({}, divProps, {
-      style: style,
-      className: spinClassName,
-      "aria-live": "polite",
-      "aria-busy": spinning
-    }), renderIndicator(prefixCls, props), tip ? /*#__PURE__*/React.createElement("div", {
-      className: "".concat(prefixCls, "-text")
-    }, tip) : null);
-    if (isNestedPattern()) {
-      var containerClassName = (0, _classnames["default"])("".concat(prefixCls, "-container"), (0, _defineProperty2["default"])({}, "".concat(prefixCls, "-blur"), spinning));
-      return /*#__PURE__*/React.createElement("div", (0, _extends2["default"])({}, divProps, {
-        className: (0, _classnames["default"])("".concat(prefixCls, "-nested-loading"), wrapperClassName)
-      }), spinning && /*#__PURE__*/React.createElement("div", {
-        key: "loading"
-      }, spinElement), /*#__PURE__*/React.createElement("div", {
-        className: containerClassName,
-        key: "container"
-      }, children));
-    }
-    return spinElement;
-  };
-  return /*#__PURE__*/React.createElement(_configProvider.ConfigConsumer, null, renderSpin);
-};
-var SpinFC = function SpinFC(props) {
-  var customizePrefixCls = props.prefixCls;
-  var _React$useContext = React.useContext(_configProvider.ConfigContext),
-    getPrefixCls = _React$useContext.getPrefixCls;
-  var spinPrefixCls = getPrefixCls('spin', customizePrefixCls);
-  var spinClassProps = (0, _extends2["default"])((0, _extends2["default"])({}, props), {
-    spinPrefixCls: spinPrefixCls
-  });
-  return /*#__PURE__*/React.createElement(Spin, (0, _extends2["default"])({}, spinClassProps));
-};
-SpinFC.setDefaultIndicator = function (indicator) {
-  defaultIndicator = indicator;
-};
-if (false) {}
-var _default = exports.c = SpinFC;
-
-/***/ }),
-
-/***/ 34344:
-/***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-__webpack_require__(89148);
-__webpack_require__(33035);
-
-/***/ }),
-
 /***/ 77576:
 /***/ ((__unused_webpack_module, exports) => {
 
-"use strict";
 
 
 Object.defineProperty(exports, "__esModule", ({
@@ -308,7 +147,6 @@ var _default = exports["default"] = TabPane;
 /***/ 61572:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
 
 var _interopRequireDefault = (__webpack_require__(11140)["default"]);
@@ -358,7 +196,6 @@ function useAnimateConfig(prefixCls) {
 /***/ 14128:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
 
 var _interopRequireWildcard = (__webpack_require__(128)["default"]);
@@ -413,7 +250,6 @@ function useLegacyItems(items, children) {
 /***/ 87812:
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-"use strict";
 
 
 var _interopRequireWildcard = (__webpack_require__(128)["default"]);
@@ -505,7 +341,6 @@ var _default = exports["default"] = Tabs;
 /***/ 40712:
 /***/ ((__unused_webpack_module, __unused_webpack_exports, __webpack_require__) => {
 
-"use strict";
 
 
 __webpack_require__(89148);
@@ -513,659 +348,18 @@ __webpack_require__(92476);
 
 /***/ }),
 
-/***/ 40888:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var trimmedEndIndex = __webpack_require__(67672);
-
-/** Used to match leading whitespace. */
-var reTrimStart = /^\s+/;
-
-/**
- * The base implementation of `_.trim`.
- *
- * @private
- * @param {string} string The string to trim.
- * @returns {string} Returns the trimmed string.
- */
-function baseTrim(string) {
-  return string
-    ? string.slice(0, trimmedEndIndex(string) + 1).replace(reTrimStart, '')
-    : string;
-}
-
-module.exports = baseTrim;
-
-
-/***/ }),
-
-/***/ 67672:
-/***/ ((module) => {
-
-/** Used to match a single whitespace character. */
-var reWhitespace = /\s/;
-
-/**
- * Used by `_.trim` and `_.trimEnd` to get the index of the last non-whitespace
- * character of `string`.
- *
- * @private
- * @param {string} string The string to inspect.
- * @returns {number} Returns the index of the last non-whitespace character.
- */
-function trimmedEndIndex(string) {
-  var index = string.length;
-
-  while (index-- && reWhitespace.test(string.charAt(index))) {}
-  return index;
-}
-
-module.exports = trimmedEndIndex;
-
-
-/***/ }),
-
-/***/ 72224:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var isObject = __webpack_require__(16400),
-    now = __webpack_require__(15672),
-    toNumber = __webpack_require__(2331);
-
-/** Error message constants. */
-var FUNC_ERROR_TEXT = 'Expected a function';
-
-/* Built-in method references for those with the same name as other `lodash` methods. */
-var nativeMax = Math.max,
-    nativeMin = Math.min;
-
-/**
- * Creates a debounced function that delays invoking `func` until after `wait`
- * milliseconds have elapsed since the last time the debounced function was
- * invoked. The debounced function comes with a `cancel` method to cancel
- * delayed `func` invocations and a `flush` method to immediately invoke them.
- * Provide `options` to indicate whether `func` should be invoked on the
- * leading and/or trailing edge of the `wait` timeout. The `func` is invoked
- * with the last arguments provided to the debounced function. Subsequent
- * calls to the debounced function return the result of the last `func`
- * invocation.
- *
- * **Note:** If `leading` and `trailing` options are `true`, `func` is
- * invoked on the trailing edge of the timeout only if the debounced function
- * is invoked more than once during the `wait` timeout.
- *
- * If `wait` is `0` and `leading` is `false`, `func` invocation is deferred
- * until to the next tick, similar to `setTimeout` with a timeout of `0`.
- *
- * See [David Corbacho's article](https://css-tricks.com/debouncing-throttling-explained-examples/)
- * for details over the differences between `_.debounce` and `_.throttle`.
- *
- * @static
- * @memberOf _
- * @since 0.1.0
- * @category Function
- * @param {Function} func The function to debounce.
- * @param {number} [wait=0] The number of milliseconds to delay.
- * @param {Object} [options={}] The options object.
- * @param {boolean} [options.leading=false]
- *  Specify invoking on the leading edge of the timeout.
- * @param {number} [options.maxWait]
- *  The maximum time `func` is allowed to be delayed before it's invoked.
- * @param {boolean} [options.trailing=true]
- *  Specify invoking on the trailing edge of the timeout.
- * @returns {Function} Returns the new debounced function.
- * @example
- *
- * // Avoid costly calculations while the window size is in flux.
- * jQuery(window).on('resize', _.debounce(calculateLayout, 150));
- *
- * // Invoke `sendMail` when clicked, debouncing subsequent calls.
- * jQuery(element).on('click', _.debounce(sendMail, 300, {
- *   'leading': true,
- *   'trailing': false
- * }));
- *
- * // Ensure `batchLog` is invoked once after 1 second of debounced calls.
- * var debounced = _.debounce(batchLog, 250, { 'maxWait': 1000 });
- * var source = new EventSource('/stream');
- * jQuery(source).on('message', debounced);
- *
- * // Cancel the trailing debounced invocation.
- * jQuery(window).on('popstate', debounced.cancel);
- */
-function debounce(func, wait, options) {
-  var lastArgs,
-      lastThis,
-      maxWait,
-      result,
-      timerId,
-      lastCallTime,
-      lastInvokeTime = 0,
-      leading = false,
-      maxing = false,
-      trailing = true;
-
-  if (typeof func != 'function') {
-    throw new TypeError(FUNC_ERROR_TEXT);
-  }
-  wait = toNumber(wait) || 0;
-  if (isObject(options)) {
-    leading = !!options.leading;
-    maxing = 'maxWait' in options;
-    maxWait = maxing ? nativeMax(toNumber(options.maxWait) || 0, wait) : maxWait;
-    trailing = 'trailing' in options ? !!options.trailing : trailing;
-  }
-
-  function invokeFunc(time) {
-    var args = lastArgs,
-        thisArg = lastThis;
-
-    lastArgs = lastThis = undefined;
-    lastInvokeTime = time;
-    result = func.apply(thisArg, args);
-    return result;
-  }
-
-  function leadingEdge(time) {
-    // Reset any `maxWait` timer.
-    lastInvokeTime = time;
-    // Start the timer for the trailing edge.
-    timerId = setTimeout(timerExpired, wait);
-    // Invoke the leading edge.
-    return leading ? invokeFunc(time) : result;
-  }
-
-  function remainingWait(time) {
-    var timeSinceLastCall = time - lastCallTime,
-        timeSinceLastInvoke = time - lastInvokeTime,
-        timeWaiting = wait - timeSinceLastCall;
-
-    return maxing
-      ? nativeMin(timeWaiting, maxWait - timeSinceLastInvoke)
-      : timeWaiting;
-  }
-
-  function shouldInvoke(time) {
-    var timeSinceLastCall = time - lastCallTime,
-        timeSinceLastInvoke = time - lastInvokeTime;
-
-    // Either this is the first call, activity has stopped and we're at the
-    // trailing edge, the system time has gone backwards and we're treating
-    // it as the trailing edge, or we've hit the `maxWait` limit.
-    return (lastCallTime === undefined || (timeSinceLastCall >= wait) ||
-      (timeSinceLastCall < 0) || (maxing && timeSinceLastInvoke >= maxWait));
-  }
-
-  function timerExpired() {
-    var time = now();
-    if (shouldInvoke(time)) {
-      return trailingEdge(time);
-    }
-    // Restart the timer.
-    timerId = setTimeout(timerExpired, remainingWait(time));
-  }
-
-  function trailingEdge(time) {
-    timerId = undefined;
-
-    // Only invoke if we have `lastArgs` which means `func` has been
-    // debounced at least once.
-    if (trailing && lastArgs) {
-      return invokeFunc(time);
-    }
-    lastArgs = lastThis = undefined;
-    return result;
-  }
-
-  function cancel() {
-    if (timerId !== undefined) {
-      clearTimeout(timerId);
-    }
-    lastInvokeTime = 0;
-    lastArgs = lastCallTime = lastThis = timerId = undefined;
-  }
-
-  function flush() {
-    return timerId === undefined ? result : trailingEdge(now());
-  }
-
-  function debounced() {
-    var time = now(),
-        isInvoking = shouldInvoke(time);
-
-    lastArgs = arguments;
-    lastThis = this;
-    lastCallTime = time;
-
-    if (isInvoking) {
-      if (timerId === undefined) {
-        return leadingEdge(lastCallTime);
-      }
-      if (maxing) {
-        // Handle invocations in a tight loop.
-        clearTimeout(timerId);
-        timerId = setTimeout(timerExpired, wait);
-        return invokeFunc(lastCallTime);
-      }
-    }
-    if (timerId === undefined) {
-      timerId = setTimeout(timerExpired, wait);
-    }
-    return result;
-  }
-  debounced.cancel = cancel;
-  debounced.flush = flush;
-  return debounced;
-}
-
-module.exports = debounce;
-
-
-/***/ }),
-
-/***/ 15672:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var root = __webpack_require__(8893);
-
-/**
- * Gets the timestamp of the number of milliseconds that have elapsed since
- * the Unix epoch (1 January 1970 00:00:00 UTC).
- *
- * @static
- * @memberOf _
- * @since 2.4.0
- * @category Date
- * @returns {number} Returns the timestamp.
- * @example
- *
- * _.defer(function(stamp) {
- *   console.log(_.now() - stamp);
- * }, _.now());
- * // => Logs the number of milliseconds it took for the deferred invocation.
- */
-var now = function() {
-  return root.Date.now();
-};
-
-module.exports = now;
-
-
-/***/ }),
-
-/***/ 2331:
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-var baseTrim = __webpack_require__(40888),
-    isObject = __webpack_require__(16400),
-    isSymbol = __webpack_require__(22992);
-
-/** Used as references for various `Number` constants. */
-var NAN = 0 / 0;
-
-/** Used to detect bad signed hexadecimal string values. */
-var reIsBadHex = /^[-+]0x[0-9a-f]+$/i;
-
-/** Used to detect binary string values. */
-var reIsBinary = /^0b[01]+$/i;
-
-/** Used to detect octal string values. */
-var reIsOctal = /^0o[0-7]+$/i;
-
-/** Built-in method references without a dependency on `root`. */
-var freeParseInt = parseInt;
-
-/**
- * Converts `value` to a number.
- *
- * @static
- * @memberOf _
- * @since 4.0.0
- * @category Lang
- * @param {*} value The value to process.
- * @returns {number} Returns the number.
- * @example
- *
- * _.toNumber(3.2);
- * // => 3.2
- *
- * _.toNumber(Number.MIN_VALUE);
- * // => 5e-324
- *
- * _.toNumber(Infinity);
- * // => Infinity
- *
- * _.toNumber('3.2');
- * // => 3.2
- */
-function toNumber(value) {
-  if (typeof value == 'number') {
-    return value;
-  }
-  if (isSymbol(value)) {
-    return NAN;
-  }
-  if (isObject(value)) {
-    var other = typeof value.valueOf == 'function' ? value.valueOf() : value;
-    value = isObject(other) ? (other + '') : other;
-  }
-  if (typeof value != 'string') {
-    return value === 0 ? value : +value;
-  }
-  value = baseTrim(value);
-  var isBinary = reIsBinary.test(value);
-  return (isBinary || reIsOctal.test(value))
-    ? freeParseInt(value.slice(2), isBinary ? 2 : 8)
-    : (reIsBadHex.test(value) ? NAN : +value);
-}
-
-module.exports = toNumber;
-
-
-/***/ }),
-
-/***/ 33035:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ 92476:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 __webpack_require__.r(__webpack_exports__);
 // extracted by mini-css-extract-plugin
 
-
-/***/ }),
-
-/***/ 54184:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-// ESM COMPAT FLAG
-__webpack_require__.r(__webpack_exports__);
-
-// EXPORTS
-__webpack_require__.d(__webpack_exports__, {
-  _rs: () => (/* reexport */ _rs),
-  "default": () => (/* binding */ es)
-});
-
-// EXTERNAL MODULE: ./node_modules/.pnpm/@babel+runtime@7.23.9/node_modules/@babel/runtime/helpers/esm/extends.js
-var esm_extends = __webpack_require__(4731);
-// EXTERNAL MODULE: ./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js
-var react = __webpack_require__(96651);
-// EXTERNAL MODULE: ./node_modules/.pnpm/rc-util@5.38.1_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/rc-util/es/Children/toArray.js
-var toArray = __webpack_require__(72288);
-// EXTERNAL MODULE: ./node_modules/.pnpm/rc-util@5.38.1_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/rc-util/es/warning.js
-var warning = __webpack_require__(75808);
-// EXTERNAL MODULE: ./node_modules/.pnpm/@babel+runtime@7.23.9/node_modules/@babel/runtime/helpers/esm/objectSpread2.js
-var objectSpread2 = __webpack_require__(96392);
-// EXTERNAL MODULE: ./node_modules/.pnpm/@babel+runtime@7.23.9/node_modules/@babel/runtime/helpers/esm/typeof.js
-var esm_typeof = __webpack_require__(33432);
-// EXTERNAL MODULE: ./node_modules/.pnpm/rc-util@5.38.1_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/rc-util/es/Dom/findDOMNode.js
-var findDOMNode = __webpack_require__(88852);
-// EXTERNAL MODULE: ./node_modules/.pnpm/rc-util@5.38.1_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/rc-util/es/ref.js
-var es_ref = __webpack_require__(80512);
-;// CONCATENATED MODULE: ./node_modules/.pnpm/rc-resize-observer@1.4.0_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/rc-resize-observer/es/Collection.js
-
-var CollectionContext = /*#__PURE__*/react.createContext(null);
-/**
- * Collect all the resize event from children ResizeObserver
- */
-function Collection(_ref) {
-  var children = _ref.children,
-    onBatchResize = _ref.onBatchResize;
-  var resizeIdRef = react.useRef(0);
-  var resizeInfosRef = react.useRef([]);
-  var onCollectionResize = react.useContext(CollectionContext);
-  var onResize = react.useCallback(function (size, element, data) {
-    resizeIdRef.current += 1;
-    var currentId = resizeIdRef.current;
-    resizeInfosRef.current.push({
-      size: size,
-      element: element,
-      data: data
-    });
-    Promise.resolve().then(function () {
-      if (currentId === resizeIdRef.current) {
-        onBatchResize === null || onBatchResize === void 0 || onBatchResize(resizeInfosRef.current);
-        resizeInfosRef.current = [];
-      }
-    });
-
-    // Continue bubbling if parent exist
-    onCollectionResize === null || onCollectionResize === void 0 || onCollectionResize(size, element, data);
-  }, [onBatchResize, onCollectionResize]);
-  return /*#__PURE__*/react.createElement(CollectionContext.Provider, {
-    value: onResize
-  }, children);
-}
-// EXTERNAL MODULE: ./node_modules/.pnpm/resize-observer-polyfill@1.5.1/node_modules/resize-observer-polyfill/dist/ResizeObserver.es.js
-var ResizeObserver_es = __webpack_require__(67071);
-;// CONCATENATED MODULE: ./node_modules/.pnpm/rc-resize-observer@1.4.0_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/rc-resize-observer/es/utils/observerUtil.js
-
-// =============================== Const ===============================
-var elementListeners = new Map();
-function onResize(entities) {
-  entities.forEach(function (entity) {
-    var _elementListeners$get;
-    var target = entity.target;
-    (_elementListeners$get = elementListeners.get(target)) === null || _elementListeners$get === void 0 || _elementListeners$get.forEach(function (listener) {
-      return listener(target);
-    });
-  });
-}
-
-// Note: ResizeObserver polyfill not support option to measure border-box resize
-var resizeObserver = new ResizeObserver_es/* default */.c(onResize);
-
-// Dev env only
-var _el = (/* unused pure expression or super */ null && ( false ? 0 : null)); // eslint-disable-line
-var _rs =  false ? 0 : null; // eslint-disable-line
-
-// ============================== Observe ==============================
-function observe(element, callback) {
-  if (!elementListeners.has(element)) {
-    elementListeners.set(element, new Set());
-    resizeObserver.observe(element);
-  }
-  elementListeners.get(element).add(callback);
-}
-function unobserve(element, callback) {
-  if (elementListeners.has(element)) {
-    elementListeners.get(element).delete(callback);
-    if (!elementListeners.get(element).size) {
-      resizeObserver.unobserve(element);
-      elementListeners.delete(element);
-    }
-  }
-}
-// EXTERNAL MODULE: ./node_modules/.pnpm/@babel+runtime@7.23.9/node_modules/@babel/runtime/helpers/esm/classCallCheck.js
-var classCallCheck = __webpack_require__(74768);
-// EXTERNAL MODULE: ./node_modules/.pnpm/@babel+runtime@7.23.9/node_modules/@babel/runtime/helpers/esm/createClass.js
-var createClass = __webpack_require__(8612);
-// EXTERNAL MODULE: ./node_modules/.pnpm/@babel+runtime@7.23.9/node_modules/@babel/runtime/helpers/esm/inherits.js + 1 modules
-var inherits = __webpack_require__(38860);
-// EXTERNAL MODULE: ./node_modules/.pnpm/@babel+runtime@7.23.9/node_modules/@babel/runtime/helpers/esm/createSuper.js + 1 modules
-var createSuper = __webpack_require__(5376);
-;// CONCATENATED MODULE: ./node_modules/.pnpm/rc-resize-observer@1.4.0_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/rc-resize-observer/es/SingleObserver/DomWrapper.js
-
-
-
-
-
-/**
- * Fallback to findDOMNode if origin ref do not provide any dom element
- */
-var DomWrapper = /*#__PURE__*/function (_React$Component) {
-  (0,inherits/* default */.c)(DomWrapper, _React$Component);
-  var _super = (0,createSuper/* default */.c)(DomWrapper);
-  function DomWrapper() {
-    (0,classCallCheck/* default */.c)(this, DomWrapper);
-    return _super.apply(this, arguments);
-  }
-  (0,createClass/* default */.c)(DomWrapper, [{
-    key: "render",
-    value: function render() {
-      return this.props.children;
-    }
-  }]);
-  return DomWrapper;
-}(react.Component);
-
-;// CONCATENATED MODULE: ./node_modules/.pnpm/rc-resize-observer@1.4.0_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/rc-resize-observer/es/SingleObserver/index.js
-
-
-
-
-
-
-
-
-function SingleObserver(props, ref) {
-  var children = props.children,
-    disabled = props.disabled;
-  var elementRef = react.useRef(null);
-  var wrapperRef = react.useRef(null);
-  var onCollectionResize = react.useContext(CollectionContext);
-
-  // =========================== Children ===========================
-  var isRenderProps = typeof children === 'function';
-  var mergedChildren = isRenderProps ? children(elementRef) : children;
-
-  // ============================= Size =============================
-  var sizeRef = react.useRef({
-    width: -1,
-    height: -1,
-    offsetWidth: -1,
-    offsetHeight: -1
-  });
-
-  // ============================= Ref ==============================
-  var canRef = !isRenderProps && /*#__PURE__*/react.isValidElement(mergedChildren) && (0,es_ref/* supportRef */.QD)(mergedChildren);
-  var originRef = canRef ? mergedChildren.ref : null;
-  var mergedRef = (0,es_ref/* useComposeRef */.BG)(originRef, elementRef);
-  var getDom = function getDom() {
-    var _elementRef$current;
-    return (0,findDOMNode/* default */.c)(elementRef.current) || (
-    // Support `nativeElement` format
-    elementRef.current && (0,esm_typeof/* default */.c)(elementRef.current) === 'object' ? (0,findDOMNode/* default */.c)((_elementRef$current = elementRef.current) === null || _elementRef$current === void 0 ? void 0 : _elementRef$current.nativeElement) : null) || (0,findDOMNode/* default */.c)(wrapperRef.current);
-  };
-  react.useImperativeHandle(ref, function () {
-    return getDom();
-  });
-
-  // =========================== Observe ============================
-  var propsRef = react.useRef(props);
-  propsRef.current = props;
-
-  // Handler
-  var onInternalResize = react.useCallback(function (target) {
-    var _propsRef$current = propsRef.current,
-      onResize = _propsRef$current.onResize,
-      data = _propsRef$current.data;
-    var _target$getBoundingCl = target.getBoundingClientRect(),
-      width = _target$getBoundingCl.width,
-      height = _target$getBoundingCl.height;
-    var offsetWidth = target.offsetWidth,
-      offsetHeight = target.offsetHeight;
-
-    /**
-     * Resize observer trigger when content size changed.
-     * In most case we just care about element size,
-     * let's use `boundary` instead of `contentRect` here to avoid shaking.
-     */
-    var fixedWidth = Math.floor(width);
-    var fixedHeight = Math.floor(height);
-    if (sizeRef.current.width !== fixedWidth || sizeRef.current.height !== fixedHeight || sizeRef.current.offsetWidth !== offsetWidth || sizeRef.current.offsetHeight !== offsetHeight) {
-      var size = {
-        width: fixedWidth,
-        height: fixedHeight,
-        offsetWidth: offsetWidth,
-        offsetHeight: offsetHeight
-      };
-      sizeRef.current = size;
-
-      // IE is strange, right?
-      var mergedOffsetWidth = offsetWidth === Math.round(width) ? width : offsetWidth;
-      var mergedOffsetHeight = offsetHeight === Math.round(height) ? height : offsetHeight;
-      var sizeInfo = (0,objectSpread2/* default */.c)((0,objectSpread2/* default */.c)({}, size), {}, {
-        offsetWidth: mergedOffsetWidth,
-        offsetHeight: mergedOffsetHeight
-      });
-
-      // Let collection know what happened
-      onCollectionResize === null || onCollectionResize === void 0 || onCollectionResize(sizeInfo, target, data);
-      if (onResize) {
-        // defer the callback but not defer to next frame
-        Promise.resolve().then(function () {
-          onResize(sizeInfo, target);
-        });
-      }
-    }
-  }, []);
-
-  // Dynamic observe
-  react.useEffect(function () {
-    var currentElement = getDom();
-    if (currentElement && !disabled) {
-      observe(currentElement, onInternalResize);
-    }
-    return function () {
-      return unobserve(currentElement, onInternalResize);
-    };
-  }, [elementRef.current, disabled]);
-
-  // ============================ Render ============================
-  return /*#__PURE__*/react.createElement(DomWrapper, {
-    ref: wrapperRef
-  }, canRef ? /*#__PURE__*/react.cloneElement(mergedChildren, {
-    ref: mergedRef
-  }) : mergedChildren);
-}
-var RefSingleObserver = /*#__PURE__*/react.forwardRef(SingleObserver);
-if (false) {}
-/* harmony default export */ const es_SingleObserver = (RefSingleObserver);
-;// CONCATENATED MODULE: ./node_modules/.pnpm/rc-resize-observer@1.4.0_react-dom@18.2.0_react@18.2.0__react@18.2.0/node_modules/rc-resize-observer/es/index.js
-
-
-
-
-
-
-var INTERNAL_PREFIX_KEY = 'rc-observer-key';
-
-
-function ResizeObserver(props, ref) {
-  var children = props.children;
-  var childNodes = typeof children === 'function' ? [children] : (0,toArray/* default */.c)(children);
-  if (false) {}
-  return childNodes.map(function (child, index) {
-    var key = (child === null || child === void 0 ? void 0 : child.key) || "".concat(INTERNAL_PREFIX_KEY, "-").concat(index);
-    return /*#__PURE__*/react.createElement(es_SingleObserver, (0,esm_extends/* default */.c)({}, props, {
-      key: key,
-      ref: index === 0 ? ref : undefined
-    }), child);
-  });
-}
-var RefResizeObserver = /*#__PURE__*/react.forwardRef(ResizeObserver);
-if (false) {}
-RefResizeObserver.Collection = Collection;
-/* harmony default export */ const es = (RefResizeObserver);
 
 /***/ }),
 
 /***/ 22552:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
 
@@ -5589,7 +4783,6 @@ if (false) {}
 /***/ 26648:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
-"use strict";
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   c: () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
@@ -6131,27 +5324,6 @@ var KeyCode = {
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (KeyCode);
-
-/***/ }),
-
-/***/ 22744:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   c: () => (/* binding */ omit)
-/* harmony export */ });
-/* harmony import */ var _babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96392);
-
-function omit(obj, fields) {
-  var clone = (0,_babel_runtime_helpers_esm_objectSpread2__WEBPACK_IMPORTED_MODULE_0__/* ["default"] */ .c)({}, obj);
-  if (Array.isArray(fields)) {
-    fields.forEach(function (key) {
-      delete clone[key];
-    });
-  }
-  return clone;
-}
 
 /***/ })
 
