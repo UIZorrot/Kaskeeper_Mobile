@@ -5396,7 +5396,7 @@ class OpenApiService {
   async getWalletConfig() {
     // return this.httpGet('/default/config', {});
     return Promise.resolve({
-      version: '0.14.0',
+      version: '0.15.0',
       moonPayEnabled: false,
       statusMessage: ''
     });
@@ -6568,7 +6568,7 @@ const TWITTER_URL = '';
 const TELEGRAM_URL = '';
 const CHANNEL = undefined;
 // export const VERSION = process.env.release!;
-const VERSION = '0.14.0';
+const VERSION = '0.15.0';
 const MANIFEST_VERSION = undefined;
 let AddressFlagType = /*#__PURE__*/function (AddressFlagType) {
   AddressFlagType[AddressFlagType["Is_Enable_Kasplex"] = 1] = "Is_Enable_Kasplex";

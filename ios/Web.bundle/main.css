@@ -688,9 +688,6 @@ video {
 .mt-6{
   margin-top: 1.5rem;
 }
-.mt-\[1px\]{
-  margin-top: 1px;
-}
 .block{
   display: block;
 }
@@ -1123,6 +1120,9 @@ video {
 }
 .underline{
   text-decoration-line: underline;
+}
+.opacity-55{
+  opacity: 0.55;
 }
 .shadow{
   --tw-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);

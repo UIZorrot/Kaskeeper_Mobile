@@ -247,10 +247,11 @@ const AddressInput = _ref => {
         onFocus: () => setFocus(true)
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsxs)("div", {
         className: "flex items-center justify-end right-2 mt-2",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(IconView, {
-          iconUrl: _ui_images_common_paste_svg__WEBPACK_IMPORTED_MODULE_8__,
-          size: 20,
-          className: "mr-[14px] cursor-pointer mt-[1px]",
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("img", {
+          width: 20,
+          src: _ui_images_common_paste_svg__WEBPACK_IMPORTED_MODULE_8__,
+          alt: "PasteIcon",
+          className: "mr-[14px] cursor-pointer opacity-55",
           onClick: () => {
             (0,_ui_utils__WEBPACK_IMPORTED_MODULE_5__/* .readClipboard */ .ec)().then(text => {
               onChange && onChange({
@@ -264,10 +265,11 @@ const AddressInput = _ref => {
               tools.toastSuccess(t('Pasted Success'));
             });
           }
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(IconView, {
-          iconUrl: _ui_images_common_scan_svg__WEBPACK_IMPORTED_MODULE_7__,
-          size: 23,
-          className: "mr-3 cursor-pointer",
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("img", {
+          src: _ui_images_common_scan_svg__WEBPACK_IMPORTED_MODULE_7__,
+          alt: "ScanIcon",
+          width: 23,
+          className: "mr-3 cursor-pointer opacity-55",
           onClick: () => {
             var _window, _window$NativeCallbac;
             const scanParams = {
@@ -285,9 +287,11 @@ const AddressInput = _ref => {
             };
             return (_window = window) === null || _window === void 0 ? void 0 : (_window$NativeCallbac = _window.NativeCallbacks) === null || _window$NativeCallbac === void 0 ? void 0 : _window$NativeCallbac.register(scanParams);
           }
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)(IconView, {
-          iconUrl: _ui_images_setting_myContacts_svg__WEBPACK_IMPORTED_MODULE_6__,
-          size: 24,
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("img", {
+          className: "opacity-55",
+          width: 24,
+          src: _ui_images_setting_myContacts_svg__WEBPACK_IMPORTED_MODULE_6__,
+          alt: "myContactsIcon",
           onClick: () => {
             setDrawerVisible(true);
           }
@@ -637,7 +641,7 @@ function IconView(_ref7) {
     onClick,
     className
   } = _ref7;
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_19__.jsx)("div", {
+  return /*#__PURE__*/_jsx("div", {
     style: {
       maskImage: "url(".concat(iconUrl, ")"),
       maskSize: 'cover',

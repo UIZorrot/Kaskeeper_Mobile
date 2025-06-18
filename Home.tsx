@@ -87,7 +87,8 @@ const Home = memo(({ navigation, route }: {
           if (!password) return
           console.log('openBiometricAuth biometryType', biometryType)
           if (!isBiometryAvailable) {
-            return executeNativeCallback(callbackId, 'fail', {
+            return
+            executeNativeCallback(callbackId, 'fail', {
               success: false,
               message: 'Biometric authentication is not available',
             });
