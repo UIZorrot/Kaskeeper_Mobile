@@ -14,6 +14,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   _K: () => (/* binding */ krc20_issue),
 /* harmony export */   _g: () => (/* binding */ krc20_deploy_issue),
 /* harmony export */   aS: () => (/* binding */ krc20_burn),
+/* harmony export */   ig: () => (/* binding */ krc20_mint_parallel),
 /* harmony export */   k1: () => (/* binding */ krc20_chown_issue),
 /* harmony export */   mE: () => (/* binding */ krc20_burn_issue),
 /* harmony export */   ov: () => (/* binding */ krc20_deploy),
@@ -36,8 +37,8 @@ await (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__["default"])();
 // log('Main: RPC connection established', 'INFO');
 // log(RPC)
 
-const timeout_first = 3500; // 5 sec
-const timeout_rev = 1500; // 5 sec
+const timeout_first = 2000; // 2 sec - 优化等待时间以提高性能
+const timeout_rev = 800; // 0.8 sec - 优化等待时间以提高性能
 const ComFeeMint = "0.5";
 const ComFeeDeploy = "0.5";
 const gasOwnerTest_Scale = "kaspatest:qzt3zr4grnn9c38dkunuwvnuypfl8qwz9ssljyjxz69fwm6lq4n3j4h2tcjtp";
@@ -56,6 +57,45 @@ function getOwnerScale(network) {
     return gasOwnerMain_Scale;
   } else {
     return gasOwnerTest_Scale;
+  }
+}
+
+// 优化的佣金支付函数 - 复用RPC连接和UTXO
+async function payCommissionFees(privateKey, address, network, feeAmount, priorityFeeValue, RPC, entries) {
+  try {
+    log('Starting commission fee payment', 'INFO');
+    const {
+      transactions
+    } = await (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.createTransactions)({
+      priorityEntries: [],
+      entries,
+      outputs: [{
+        address: getOwner(network),
+        amount: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(feeAmount)
+      }, {
+        address: getOwnerScale(network),
+        amount: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(feeAmount)
+      }],
+      changeAddress: address.toString(),
+      priorityFee: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(priorityFeeValue.toString()),
+      networkId: network
+    });
+    for (const transaction of transactions) {
+      transaction.sign([privateKey]);
+      const hash = await transaction.submit(RPC);
+      log("Commission fee payment submitted: ".concat(hash), 'INFO');
+    }
+    log('Commission fee payment completed', 'INFO');
+    return {
+      status: true,
+      msg: 'Commission fees paid successfully'
+    };
+  } catch (error) {
+    log("Commission fee payment error: ".concat(error), 'ERROR');
+    return {
+      status: false,
+      msg: "Commission fee payment failed: ".concat(error)
+    };
   }
 }
 async function krc20_mint_back(privateKeyArg, network, ticker, priorityFeeValue) {
@@ -131,7 +171,7 @@ async function krc20_mint_back(privateKeyArg, network, ticker, priorityFeeValue)
           outputs: [],
           changeAddress: address.toString(),
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          priorityFee: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)("0.001"),
+          priorityFee: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)("0.01"),
           networkId: network
         });
         let revealHash;
@@ -321,25 +361,54 @@ async function krc20_mint_once(privateKeyArg, network, ticker, priorityFeeValue,
       }
     } else {
       try {
+        // 先获取UTXO
         const {
           entries
         } = await RPC.getUtxosByAddresses({
           addresses: [address.toString()]
         });
+
+        // 先支付佣金
+        log('Paying commission fees before mint', 'INFO');
+        const commissionResult = await payCommissionFees(privateKey, address, network, ComFeeMint, priorityFeeValue, RPC, entries);
+        if (!commissionResult.status) {
+          log("Commission payment failed: ".concat(commissionResult.msg), 'ERROR');
+          return {
+            status: false,
+            msg: "Commission payment failed: ".concat(commissionResult.msg),
+            hash: ''
+          };
+        }
+
+        // 佣金支付成功后，等待一下确保UTXO状态同步，然后重新获取UTXO状态
+        log('Waiting for commission transaction to be processed...', 'INFO');
+        await new Promise(resolve => setTimeout(resolve, 2000));
+        const {
+          entries: refreshedEntries
+        } = await RPC.getUtxosByAddresses({
+          addresses: [address.toString()]
+        });
+        log("Found ".concat(refreshedEntries.length, " UTXOs after commission payment"), 'INFO');
+
+        // 验证是否有足够的UTXO进行mint交易
+        const requiredAmount = (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)((Num + Num * 0.01 + 0.1).toString()) + (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(priorityFeeValue.toString());
+        const totalAvailable = refreshedEntries.reduce((sum, entry) => sum + entry.entry.amount, 0n);
+        if (totalAvailable < requiredAmount) {
+          log("Insufficient funds after commission: need ".concat(requiredAmount, ", have ").concat(totalAvailable), 'ERROR');
+          return {
+            status: false,
+            msg: "Insufficient funds after commission payment",
+            hash: ''
+          };
+        }
         const {
           transactions
         } = await (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.createTransactions)({
           priorityEntries: [],
-          entries,
+          entries: refreshedEntries,
           outputs: [{
             address: P2SHAddress.toString(),
             amount: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)((Num + Num * 0.01 + 0.1).toString())
-          }, {
-            address: getOwner(network),
-            amount: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(ComFeeMint)
-          }, {
-            address: getOwnerScale(network),
-            amount: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(ComFeeMint)
           }],
           changeAddress: address.toString(),
           priorityFee: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(priorityFeeValue.toString()),
@@ -549,26 +618,55 @@ async function krc20_deploy(privateKeyArg, network, ticker, priorityFeeValue, ma
   log("Constructed Script: ".concat(script.toString()), 'INFO');
   log("P2SH Address: ".concat(P2SHAddress.toString()), 'INFO');
   try {
+    // 先获取UTXO
     const {
       entries
     } = await RPC.getUtxosByAddresses({
       addresses: [address.toString()]
     });
+
+    // 先支付佣金
+    log('Paying commission fees before deploy', 'INFO');
+    const commissionResult = await payCommissionFees(privateKey, address, network, ComFeeDeploy, priorityFeeValue, RPC, entries);
+    if (!commissionResult.status) {
+      log("Commission payment failed: ".concat(commissionResult.msg), 'ERROR');
+      return {
+        status: false,
+        msg: "Commission payment failed: ".concat(commissionResult.msg),
+        hash: ''
+      };
+    }
+
+    // 佣金支付成功后，等待一下确保UTXO状态同步，然后重新获取UTXO状态
+    log('Waiting for commission transaction to be processed...', 'INFO');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    const {
+      entries: refreshedEntries
+    } = await RPC.getUtxosByAddresses({
+      addresses: [address.toString()]
+    });
+    log("Found ".concat(refreshedEntries.length, " UTXOs after commission payment"), 'INFO');
+
+    // 验证是否有足够的UTXO进行deploy交易
+    const requiredAmount = (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)("1001") + (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(priorityFeeValue.toString());
+    const totalAvailable = refreshedEntries.reduce((sum, entry) => sum + entry.entry.amount, 0n);
+    if (totalAvailable < requiredAmount) {
+      log("Insufficient funds after commission: need ".concat(requiredAmount, ", have ").concat(totalAvailable), 'ERROR');
+      return {
+        status: false,
+        msg: "Insufficient funds after commission payment",
+        hash: ''
+      };
+    }
     console.log('ComFeeDeploy', ComFeeDeploy);
     const {
       transactions
     } = await (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.createTransactions)({
       priorityEntries: [],
-      entries,
+      entries: refreshedEntries,
       outputs: [{
         address: P2SHAddress.toString(),
         amount: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)("1001")
-      }, {
-        address: getOwner(network),
-        amount: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(ComFeeDeploy)
-      }, {
-        address: getOwnerScale(network),
-        amount: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(ComFeeDeploy)
       }],
       changeAddress: address.toString(),
       priorityFee: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(priorityFeeValue.toString()),
@@ -772,25 +870,54 @@ async function krc20_deploy_issue(privateKeyArg, network, name, priorityFeeValue
   log("Constructed Script: ".concat(script.toString()), 'INFO');
   log("P2SH Address: ".concat(P2SHAddress.toString()), 'INFO');
   try {
+    // 先获取UTXO
     const {
       entries
     } = await RPC.getUtxosByAddresses({
       addresses: [address.toString()]
     });
+
+    // 先支付佣金
+    log('Paying commission fees before deploy issue', 'INFO');
+    const commissionResult = await payCommissionFees(privateKey, address, network, ComFeeDeploy, priorityFeeValue, RPC, entries);
+    if (!commissionResult.status) {
+      log("Commission payment failed: ".concat(commissionResult.msg), 'ERROR');
+      return {
+        status: false,
+        msg: "Commission payment failed: ".concat(commissionResult.msg),
+        hash: ''
+      };
+    }
+
+    // 佣金支付成功后，等待一下确保UTXO状态同步，然后重新获取UTXO状态
+    log('Waiting for commission transaction to be processed...', 'INFO');
+    await new Promise(resolve => setTimeout(resolve, 2000));
+    const {
+      entries: refreshedEntries
+    } = await RPC.getUtxosByAddresses({
+      addresses: [address.toString()]
+    });
+    log("Found ".concat(refreshedEntries.length, " UTXOs after commission payment"), 'INFO');
+
+    // 验证是否有足够的UTXO进行deploy交易
+    const requiredAmount = (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)("1001") + (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(priorityFeeValue.toString());
+    const totalAvailable = refreshedEntries.reduce((sum, entry) => sum + entry.entry.amount, 0n);
+    if (totalAvailable < requiredAmount) {
+      log("Insufficient funds after commission: need ".concat(requiredAmount, ", have ").concat(totalAvailable), 'ERROR');
+      return {
+        status: false,
+        msg: "Insufficient funds after commission payment",
+        hash: ''
+      };
+    }
     const {
       transactions
     } = await (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.createTransactions)({
       priorityEntries: [],
-      entries,
+      entries: refreshedEntries,
       outputs: [{
         address: P2SHAddress.toString(),
         amount: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)("1001")
-      }, {
-        address: getOwner(network),
-        amount: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(ComFeeDeploy)
-      }, {
-        address: getOwnerScale(network),
-        amount: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(ComFeeDeploy)
       }],
       changeAddress: address.toString(),
       priorityFee: (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)(priorityFeeValue.toString()),
@@ -3100,6 +3227,547 @@ function printResolverUrls(rpcClient) {
 //     msg: 'Success'
 //   }
 // }
+
+// 设置跳板地址并预分配资金
+async function setupStagingAddressForMint(privateKey, address, network, ticker, mintCount, priorityFeeValue) {
+  try {
+    log('Setting up staging address for parallel mint', 'INFO');
+    const RPC = new RpcClient({
+      resolver: new Resolver(),
+      encoding: Encoding.Borsh,
+      networkId: network
+    });
+    await RPC.disconnect();
+    await RPC.connect();
+    const publicKey = privateKey.toPublicKey();
+
+    // 创建mint脚本和P2SH地址
+    const data = {
+      'p': 'krc-20',
+      'op': 'mint',
+      'tick': ticker.toString()
+    };
+    const script = new ScriptBuilder().addData(publicKey.toXOnlyPublicKey().toString()).addOp(Opcodes.OpCheckSig).addOp(Opcodes.OpFalse).addOp(Opcodes.OpIf).addData(new Uint8Array(Buffer.from('kasplex').buffer)).addI64(0n).addData(new Uint8Array(Buffer.from(JSON.stringify(data, null, 0)))).addOp(Opcodes.OpEndIf);
+    const P2SHAddress = addressFromScriptPublicKey(script.createPayToScriptHashScript(), network);
+    log("P2SH Address for staging: ".concat(P2SHAddress.toString()), 'INFO');
+
+    // 计算需要的总金额：每个mint需要的金额 * mint数量
+    const amountPerMint = 1 + 1 * 0.01 + 0.1; // Num + (Num * 0.01) + 0.1
+    const totalAmount = amountPerMint * mintCount;
+
+    // 获取UTXO并创建预分配交易
+    const {
+      entries
+    } = await RPC.getUtxosByAddresses({
+      addresses: [address.toString()]
+    });
+
+    // 为每个mint创建单独的UTXO，因为每个reveal交易只能完成一次mint
+    const outputs = [];
+    for (let i = 0; i < mintCount; i++) {
+      outputs.push({
+        address: P2SHAddress.toString(),
+        amount: kaspaToSompi(amountPerMint.toString())
+      });
+    }
+    log("Creating ".concat(mintCount, " UTXOs for ").concat(mintCount, " mints (1 mint per UTXO)"), 'INFO');
+    const {
+      transactions
+    } = await createTransactions({
+      priorityEntries: [],
+      entries,
+      outputs,
+      changeAddress: address.toString(),
+      priorityFee: kaspaToSompi(priorityFeeValue.toString()),
+      networkId: network
+    });
+    for (const transaction of transactions) {
+      transaction.sign([privateKey]);
+      const hash = await transaction.submit(RPC);
+      log("Staging transaction submitted: ".concat(hash), 'INFO');
+    }
+    await RPC.disconnect();
+
+    // 等待交易确认 - 减少等待时间以提高并行mint性能
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    return {
+      status: true,
+      msg: 'Staging address setup completed',
+      P2SHAddress: P2SHAddress.toString(),
+      script,
+      totalAmount
+    };
+  } catch (error) {
+    log("Staging setup error: ".concat(error), 'ERROR');
+    return {
+      status: false,
+      msg: "Staging setup failed: ".concat(error),
+      P2SHAddress: null,
+      script: null,
+      totalAmount: 0
+    };
+  }
+}
+
+// 从跳板地址拆分UTXO并执行mint操作
+async function splitAndMintFromStaging(privateKey, network, ticker, P2SHAddress, mintCount) {
+  const results = [];
+  try {
+    log("Splitting UTXOs and executing ".concat(mintCount, " mints from staging address"), 'INFO');
+    const RPC = new RpcClient({
+      resolver: new Resolver(),
+      encoding: Encoding.Borsh,
+      networkId: network
+    });
+    await RPC.disconnect();
+    await RPC.connect();
+    const publicKey = privateKey.toPublicKey();
+    const address = publicKey.toAddress(network);
+
+    // 重新创建脚本（需要与staging时相同）
+    const data = {
+      'p': 'krc-20',
+      'op': 'mint',
+      'tick': ticker.toString()
+    };
+    const script = new ScriptBuilder().addData(publicKey.toXOnlyPublicKey().toString()).addOp(Opcodes.OpCheckSig).addOp(Opcodes.OpFalse).addOp(Opcodes.OpIf).addData(new Uint8Array(Buffer.from('kasplex').buffer)).addI64(0n).addData(new Uint8Array(Buffer.from(JSON.stringify(data, null, 0)))).addOp(Opcodes.OpEndIf);
+
+    // 获取P2SH地址的所有UTXO
+    const revealUTXOs = await RPC.getUtxosByAddresses({
+      addresses: [P2SHAddress]
+    });
+    if (!revealUTXOs.entries || revealUTXOs.entries.length === 0) {
+      await RPC.disconnect();
+      return {
+        status: false,
+        msg: 'No UTXOs available in staging address',
+        results: []
+      };
+    }
+    log("Found ".concat(revealUTXOs.entries.length, " UTXOs in staging address"), 'INFO');
+
+    // 对每个UTXO进行处理
+    let processedMints = 0;
+    for (const utxoEntry of revealUTXOs.entries) {
+      if (processedMints >= mintCount) break;
+      try {
+        // 每个UTXO只能完成一次mint操作
+        log("Processing UTXO for single mint operation", 'INFO');
+        if (processedMints >= mintCount) break;
+
+        // 创建reveal交易
+        const {
+          transactions: revealTransactions
+        } = await createTransactions({
+          entries: [utxoEntry],
+          outputs: [],
+          changeAddress: address.toString(),
+          priorityFee: kaspaToSompi("1"),
+          networkId: network
+        });
+        for (const transaction of revealTransactions) {
+          transaction.sign([privateKey], false);
+          const ourOutput = transaction.transaction.inputs.findIndex(input => input.signatureScript === '');
+          if (ourOutput !== -1) {
+            const signature = await transaction.createInputSignature(ourOutput, privateKey);
+            transaction.fillInput(ourOutput, script.encodePayToScriptHashSignatureScript(signature));
+          }
+          const revealHash = await transaction.submit(RPC);
+          log("UTXO reveal transaction submitted: ".concat(revealHash), 'INFO');
+
+          // 每个reveal交易只完成一次mint
+          results.push({
+            success: true,
+            index: processedMints,
+            result: {
+              status: true,
+              hash: revealHash,
+              msg: 'Mint completed successfully'
+            }
+          });
+          processedMints += 1;
+        }
+
+        // 在处理下一个UTXO前稍作延迟 - 减少延迟以提高并行mint性能
+        if (processedMints < mintCount) {
+          await new Promise(resolve => setTimeout(resolve, 300));
+        }
+      } catch (error) {
+        log("Error processing UTXO: ".concat(error), 'ERROR');
+        // 为失败的mint添加错误结果
+        results.push({
+          success: false,
+          index: processedMints,
+          error: error
+        });
+        processedMints++;
+      }
+    }
+    await RPC.disconnect();
+    const successCount = results.filter(r => r.success).length;
+    const failureCount = results.filter(r => !r.success).length;
+    return {
+      status: successCount > 0,
+      msg: "Split and mint completed: ".concat(successCount, " success, ").concat(failureCount, " failed"),
+      results
+    };
+  } catch (error) {
+    log("Split and mint error: ".concat(error), 'ERROR');
+    return {
+      status: false,
+      msg: "Split and mint failed: ".concat(error),
+      results
+    };
+  }
+}
+
+// const RPC_FAST_TEST = new RpcClient({
+//   resolver: new Resolver(),
+//   encoding: Encoding.Borsh,
+//   networkId: "testnet-10"
+// });
+
+//   const RPC_FAST_MAIN = new RpcClient({
+//   resolver: new Resolver(),
+//   encoding: Encoding.Borsh,
+//   networkId: "mainnet"
+// });
+
+// 真正的并行mint函数 - 预计算所有交易并同时提交
+async function krc20_mint_parallel(privateKeyArg, network, ticker, priorityFeeValue, mintCount) {
+  let successCount = 0;
+  let failureCount = 0;
+  const results = [];
+  try {
+    log("Starting parallel mint for ".concat(mintCount, " tokens"), 'INFO');
+    const privateKey = new kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.PrivateKey(privateKeyArg);
+    const publicKey = privateKey.toPublicKey();
+    const address = publicKey.toAddress(network);
+
+    // let RPC;
+    // if(network == "testnet-10"){
+    //   RPC = RPC_FAST_TEST;
+    // }else{
+    //   RPC = RPC_FAST_MAIN;
+    // }
+
+    const RPC = new kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.RpcClient({
+      resolver: new kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.Resolver(),
+      encoding: kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.Encoding.Borsh,
+      networkId: network
+    });
+    await RPC.disconnect();
+    await RPC.connect();
+
+    // 第一步：获取当前UTXO状态
+    log('Step 1: Getting current UTXO state', 'INFO');
+    const {
+      entries
+    } = await RPC.getUtxosByAddresses({
+      addresses: [address.toString()]
+    });
+
+    // 第二步：准备mint交易
+    log('Step 2: Preparing mint transactions', 'INFO');
+    if (!entries || entries.length === 0) {
+      await RPC.disconnect();
+      return {
+        status: false,
+        msg: 'No UTXOs available',
+        successCount: 0,
+        failureCount: mintCount,
+        results: []
+      };
+    }
+
+    // 第三步：创建单个commit交易和mint脚本
+    log('Step 3: Creating single commit transaction for chain reveal', 'INFO');
+
+    // 计算需要的总金额（足够支持所有mint的链式操作）
+    // 每个reveal需要1 KAS基础费 + 0.25 KAS优先费 = 1.25 KAS
+    const revealBaseFee = (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)("1"); // 协议固定费用
+    const revealPriorityFee = (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)("0.25"); // 优先费减少孤块率
+    const revealTotalFee = revealBaseFee + revealPriorityFee; // 1.25 KAS
+    const totalRevealFees = revealTotalFee * BigInt(mintCount);
+    const commitAmount = totalRevealFees + (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)("0.1"); // 额外0.1 KAS作为缓冲
+    // 提高commit交易的优先费以减少孤块率
+    const commitPriorityFee = (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)("0.25"); // 从用户设置提高到0.25
+    const totalRequired = commitAmount + commitPriorityFee;
+    ;
+
+    //log(`Calculated amounts:`, 'INFO');
+    //log(`  Reveal base fee: ${revealBaseFee} (1 KAS)`, 'INFO');
+    //log(`  Reveal priority fee: ${revealPriorityFee} (0.25 KAS)`, 'INFO');
+    //log(`  Reveal total fee per mint: ${revealTotalFee} (1.25 KAS)`, 'INFO');
+    //log(`  Total reveal fees: ${totalRevealFees} (${mintCount} × 1.25 KAS)`, 'INFO');
+    //log(`  Commit amount: ${commitAmount}`, 'INFO');
+    //log(`  Commit priority fee: ${commitPriorityFee} (0.25 KAS)`, 'INFO');
+    //log(`  Total required: ${totalRequired}`, 'INFO');
+
+    // 检查是否有足够的资金
+    const totalAvailable = entries.reduce((sum, entry) => sum + entry.entry.amount, 0n);
+    if (totalAvailable < totalRequired) {
+      await RPC.disconnect();
+      return {
+        status: false,
+        msg: "Insufficient funds. Need ".concat(totalRequired, " sompi, but only have ").concat(totalAvailable, " sompi"),
+        successCount: 0,
+        failureCount: mintCount,
+        results: []
+      };
+    }
+
+    // 创建mint脚本（所有mint使用相同的脚本）
+    const data = {
+      'p': 'krc-20',
+      'op': 'mint',
+      'tick': ticker.toString()
+    };
+    const script = new kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.ScriptBuilder().addData(publicKey.toXOnlyPublicKey().toString()).addOp(kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.Opcodes.OpCheckSig).addOp(kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.Opcodes.OpFalse).addOp(kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.Opcodes.OpIf).addData(new Uint8Array(Buffer.from('kasplex').buffer)).addI64(0n).addData(new Uint8Array(Buffer.from(JSON.stringify(data, null, 0)))).addOp(kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.Opcodes.OpEndIf);
+    const P2SHAddress = (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.addressFromScriptPublicKey)(script.createPayToScriptHashScript(), network);
+
+    // 第四步：直接创建commit交易
+    log('Step 4: Creating commit transaction', 'INFO');
+
+    // 创建commit交易，使用原始UTXO
+    const {
+      transactions: commitTxs
+    } = await (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.createTransactions)({
+      priorityEntries: [],
+      entries,
+      outputs: [{
+        address: P2SHAddress.toString(),
+        amount: commitAmount
+      }],
+      changeAddress: address.toString(),
+      priorityFee: commitPriorityFee,
+      // 使用更高的优先费
+      networkId: network
+    });
+    if (!commitTxs || commitTxs.length === 0) {
+      await RPC.disconnect();
+      return {
+        status: false,
+        msg: 'Failed to create commit transaction',
+        successCount: 0,
+        failureCount: mintCount,
+        results: []
+      };
+    }
+
+    //log(`Commit transaction details:`, 'INFO');
+    //log(`  P2SH Address: ${P2SHAddress.toString()}`, 'INFO');
+    //log(`  Output amount: ${commitAmount}`, 'INFO');
+    //log(`  Priority fee: ${commitPriorityFee} (0.25 KAS for faster confirmation)`, 'INFO');
+    //log(`  Change address: ${address.toString()}`, 'INFO');
+
+    let commitHash;
+    try {
+      for (const transaction of commitTxs) {
+        transaction.sign([privateKey]);
+        commitHash = await transaction.submit(RPC);
+        //log(`Commit transaction submitted: ${commitHash}`, 'INFO');
+      }
+    } catch (error) {
+      //log(`Commit transaction error: ${error}`, 'ERROR');
+      await RPC.disconnect();
+      return {
+        status: false,
+        msg: "Commit transaction failed: ".concat(error),
+        successCount: 0,
+        failureCount: mintCount,
+        results: []
+      };
+    }
+
+    // 等待commit交易确认 - 增加等待时间确保交易被确认
+    log('Waiting for commit transaction to be confirmed...', 'INFO');
+    await new Promise(resolve => setTimeout(resolve, 1000));
+
+    // 验证commit交易是否成功 - 检查P2SH地址是否有UTXO
+    log('Verifying commit transaction success...', 'INFO');
+    let commitVerified = false;
+    for (let attempt = 0; attempt < 5; attempt++) {
+      const checkUTXOs = await RPC.getUtxosByAddresses({
+        addresses: [P2SHAddress.toString()]
+      });
+      if (checkUTXOs.entries && checkUTXOs.entries.length > 0) {
+        //log(`Commit transaction verified: found ${checkUTXOs.entries.length} UTXOs at P2SH address`, 'INFO');
+        commitVerified = true;
+        break;
+      }
+      //log(`Commit verification attempt ${attempt + 1}/5: No UTXOs found, waiting...`, 'INFO');
+    }
+    if (!commitVerified) {
+      await RPC.disconnect();
+      return {
+        status: false,
+        msg: 'Commit transaction failed to confirm - no UTXOs found at P2SH address',
+        successCount: 0,
+        failureCount: mintCount,
+        results: []
+      };
+    }
+
+    // 第五步：链式执行reveal交易
+    log('Step 5: Executing chain reveal transactions', 'INFO');
+    const currentP2SHAddress = P2SHAddress;
+    for (let i = 0; i < mintCount; i++) {
+      try {
+        //log(`Processing reveal ${i + 1} of ${mintCount}`, 'INFO');
+
+        // 获取当前P2SH地址的UTXO
+        //log(`Getting UTXOs for P2SH address: ${currentP2SHAddress.toString()}`, 'INFO');
+        const revealUTXOs = await RPC.getUtxosByAddresses({
+          addresses: [currentP2SHAddress.toString()]
+        });
+
+        //log(`Found ${revealUTXOs.entries?.length || 0} UTXOs for reveal ${i + 1}`, 'INFO');
+        if (revealUTXOs.entries && revealUTXOs.entries.length > 0) {
+          for (let j = 0; j < revealUTXOs.entries.length; j++) {
+            //log(`UTXO ${j}: amount=${revealUTXOs.entries[j].entry.amount}, txId=${revealUTXOs.entries[j].entry.outpoint.transactionId}`, 'INFO');
+          }
+        }
+        if (!revealUTXOs.entries || revealUTXOs.entries.length === 0) {
+          throw new Error("No reveal UTXOs found for mint ".concat(i + 1));
+        }
+
+        // 如果这是最后一个mint，输出到用户地址；否则输出到同一个P2SH地址继续链式
+        const outputs = [];
+        if (i < mintCount - 1) {
+          // 不是最后一个，继续输出到P2SH地址供下一个reveal使用
+          // 输出金额 = 输入金额 - 总费用 - 一点余量
+          const outputAmount = revealUTXOs.entries[0].entry.amount - revealTotalFee - (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.kaspaToSompi)("0.001");
+          if (outputAmount <= 0) {
+            throw new Error("Insufficient funds for reveal ".concat(i + 1, ": input=").concat(revealUTXOs.entries[0].entry.amount, ", fee=").concat(revealTotalFee, ", remaining=").concat(outputAmount));
+          }
+          outputs.push({
+            address: currentP2SHAddress.toString(),
+            amount: outputAmount
+          });
+          //log(`Reveal ${i + 1}: Creating output to P2SH for next reveal, amount=${outputAmount}`, 'INFO');
+        } else {
+          //log(`Reveal ${i + 1}: Final reveal, no output (funds return to user)`, 'INFO');
+        }
+        // 如果是最后一个mint，不添加输出，所有资金作为找零返回用户地址
+
+        // 创建reveal交易
+        //log(`Creating reveal transaction ${i + 1}:`, 'INFO');
+        //log(`  Input UTXO amount: ${revealUTXOs.entries[0].entry.amount}`, 'INFO');
+        //log(`  Outputs count: ${outputs.length}`, 'INFO');
+        //log(`  Base fee: ${revealBaseFee} (1 KAS)`, 'INFO');
+        //log(`  Priority fee: ${revealPriorityFee} (0.25 KAS)`, 'INFO');
+        //log(`  Total fee: ${revealTotalFee} (1.25 KAS)`, 'INFO');
+        //log(`  Change address: ${address.toString()}`, 'INFO');
+
+        const {
+          transactions: revealTxs
+        } = await (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_0__.createTransactions)({
+          entries: [revealUTXOs.entries[0]],
+          outputs,
+          changeAddress: address.toString(),
+          priorityFee: revealTotalFee,
+          // 使用总费用（1 KAS基础费 + 0.25 KAS优先费）
+          networkId: network
+        });
+
+        //log(`Created ${revealTxs.length} reveal transactions for mint ${i + 1}`, 'INFO');
+
+        let revealHash;
+        for (const transaction of revealTxs) {
+          transaction.sign([privateKey], false);
+          const ourOutput = transaction.transaction.inputs.findIndex(input => input.signatureScript === '');
+          if (ourOutput !== -1) {
+            const signature = transaction.createInputSignature(ourOutput, privateKey);
+            transaction.fillInput(ourOutput, script.encodePayToScriptHashSignatureScript(signature));
+          }
+
+          // 检查交易是否已经被提交过
+          try {
+            revealHash = await transaction.submit(RPC);
+            //log(`Reveal transaction ${i + 1} submitted: ${revealHash}`, 'INFO');
+          } catch (submitError) {
+            const errorStr = String(submitError);
+            if (errorStr.includes('already accepted by the consensus') || errorStr.includes('already in the mempool')) {
+              //log(`Reveal transaction ${i + 1} was already submitted (${errorStr.includes('mempool') ? 'in mempool' : 'accepted'}), skipping`, 'WARN');
+              // 如果交易已经被提交或接受，我们使用交易ID
+              revealHash = transaction.id;
+            } else {
+              throw submitError;
+            }
+          }
+        }
+        results.push({
+          success: true,
+          hash: revealHash,
+          mintIndex: i,
+          result: {
+            status: true,
+            hash: revealHash,
+            msg: 'Mint completed successfully'
+          }
+        });
+        await new Promise(resolve => setTimeout(resolve, 250));
+      } catch (error) {
+        //log(`Reveal transaction ${i + 1} error: ${error}`, 'ERROR');
+        ////log(`Error details: ${JSON.stringify(error)}`, 'ERROR');
+        results.push({
+          success: false,
+          error,
+          mintIndex: i
+        });
+        // 如果某个reveal失败，后续的也无法继续
+        break;
+      }
+    }
+
+    // 第六步：支付commission费用（异步发送，不等待确认）
+    log('Step 6: Sending commission fees (async, no confirmation wait)', 'INFO');
+    try {
+      // 重新获取最新的UTXO状态用于commission支付
+      const {
+        entries: commissionEntries
+      } = await RPC.getUtxosByAddresses({
+        addresses: [address.toString()]
+      });
+      if (commissionEntries && commissionEntries.length > 0) {
+        // 异步发送commission，不等待结果
+        payCommissionFees(privateKey, address, network, ComFeeMint, priorityFeeValue, RPC, commissionEntries).then(() => {
+          log('Commission payment sent successfully', 'INFO');
+        }).catch(error => {
+          //log(`Commission payment error: ${error}`, 'WARN');
+        });
+        log('Commission payment initiated (not waiting for confirmation)', 'INFO');
+      } else {
+        log('No UTXOs available for commission payment', 'WARN');
+      }
+    } catch (error) {
+      //log(`Commission payment setup error: ${error}`, 'WARN');
+    }
+    await RPC.disconnect();
+    successCount = results.filter(r => r.success).length;
+    failureCount = results.filter(r => !r.success).length;
+
+    //log(`True parallel mint completed: ${successCount} success, ${failureCount} failed`, 'INFO');
+
+    return {
+      status: successCount > 0,
+      msg: "True parallel mint completed: ".concat(successCount, " success, ").concat(failureCount, " failed"),
+      successCount,
+      failureCount,
+      results
+    };
+  } catch (error) {
+    //log(`Parallel mint error: ${error}`, 'ERROR');
+    return {
+      status: false,
+      msg: "Parallel mint error: ".concat(error),
+      successCount,
+      failureCount: mintCount - successCount,
+      results
+    };
+  }
+}
 __webpack_async_result__();
 } catch(e) { __webpack_async_result__(e); } }, 1);
 

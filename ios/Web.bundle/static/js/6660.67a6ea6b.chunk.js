@@ -1,7 +1,7 @@
 "use strict";
-(self["webpackChunkKaspaWallet"] = self["webpackChunkKaspaWallet"] || []).push([[8344],{
+(self["webpackChunkKaspaWallet"] = self["webpackChunkKaspaWallet"] || []).push([[6660],{
 
-/***/ 48344:
+/***/ 76660:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 
@@ -22,6 +22,299 @@ var colorManipulator = __webpack_require__(76440);
 var capitalize = __webpack_require__(28216);
 // EXTERNAL MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/utils/createSimplePaletteValueFilter.js
 var createSimplePaletteValueFilter = __webpack_require__(99528);
+// EXTERNAL MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/internal/SwitchBase.js + 1 modules
+var SwitchBase = __webpack_require__(94112);
+// EXTERNAL MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/styles/styled.js
+var styled = __webpack_require__(92792);
+// EXTERNAL MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/utils/memoTheme.js + 1 modules
+var memoTheme = __webpack_require__(88344);
+// EXTERNAL MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/DefaultPropsProvider/DefaultPropsProvider.js
+var DefaultPropsProvider = __webpack_require__(5756);
+// EXTERNAL MODULE: ./node_modules/.pnpm/@mui+utils@6.2.0_@types+react@18.2.55_react@18.2.0/node_modules/@mui/utils/esm/generateUtilityClasses/generateUtilityClasses.js
+var generateUtilityClasses = __webpack_require__(6616);
+// EXTERNAL MODULE: ./node_modules/.pnpm/@mui+utils@6.2.0_@types+react@18.2.55_react@18.2.0/node_modules/@mui/utils/esm/generateUtilityClass/generateUtilityClass.js
+var generateUtilityClass = __webpack_require__(47080);
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/Switch/switchClasses.js
+
+
+function getSwitchUtilityClass(slot) {
+  return (0,generateUtilityClass/* default */.cp)('MuiSwitch', slot);
+}
+const switchClasses = (0,generateUtilityClasses/* default */.c)('MuiSwitch', ['root', 'edgeStart', 'edgeEnd', 'switchBase', 'colorPrimary', 'colorSecondary', 'sizeSmall', 'sizeMedium', 'checked', 'disabled', 'input', 'thumb', 'track']);
+/* harmony default export */ const Switch_switchClasses = (switchClasses);
+// EXTERNAL MODULE: ./node_modules/.pnpm/react@18.2.0/node_modules/react/jsx-runtime.js
+var jsx_runtime = __webpack_require__(2488);
+;// CONCATENATED MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/Switch/Switch.js
+'use client';
+
+// @inheritedComponent IconButton
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const useUtilityClasses = ownerState => {
+  const {
+    classes,
+    edge,
+    size,
+    color,
+    checked,
+    disabled
+  } = ownerState;
+  const slots = {
+    root: ['root', edge && `edge${(0,capitalize/* default */.c)(edge)}`, `size${(0,capitalize/* default */.c)(size)}`],
+    switchBase: ['switchBase', `color${(0,capitalize/* default */.c)(color)}`, checked && 'checked', disabled && 'disabled'],
+    thumb: ['thumb'],
+    track: ['track'],
+    input: ['input']
+  };
+  const composedClasses = (0,composeClasses/* default */.c)(slots, getSwitchUtilityClass, classes);
+  return {
+    ...classes,
+    // forward the disabled and checked classes to the SwitchBase
+    ...composedClasses
+  };
+};
+const SwitchRoot = (0,styled/* default */.cp)('span', {
+  name: 'MuiSwitch',
+  slot: 'Root',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.root, ownerState.edge && styles[`edge${(0,capitalize/* default */.c)(ownerState.edge)}`], styles[`size${(0,capitalize/* default */.c)(ownerState.size)}`]];
+  }
+})({
+  display: 'inline-flex',
+  width: 34 + 12 * 2,
+  height: 14 + 12 * 2,
+  overflow: 'hidden',
+  padding: 12,
+  boxSizing: 'border-box',
+  position: 'relative',
+  flexShrink: 0,
+  zIndex: 0,
+  // Reset the stacking context.
+  verticalAlign: 'middle',
+  // For correct alignment with the text.
+  '@media print': {
+    colorAdjust: 'exact'
+  },
+  variants: [{
+    props: {
+      edge: 'start'
+    },
+    style: {
+      marginLeft: -8
+    }
+  }, {
+    props: {
+      edge: 'end'
+    },
+    style: {
+      marginRight: -8
+    }
+  }, {
+    props: {
+      size: 'small'
+    },
+    style: {
+      width: 40,
+      height: 24,
+      padding: 7,
+      [`& .${Switch_switchClasses.thumb}`]: {
+        width: 16,
+        height: 16
+      },
+      [`& .${Switch_switchClasses.switchBase}`]: {
+        padding: 4,
+        [`&.${Switch_switchClasses.checked}`]: {
+          transform: 'translateX(16px)'
+        }
+      }
+    }
+  }]
+});
+const SwitchSwitchBase = (0,styled/* default */.cp)(SwitchBase/* default */.c, {
+  name: 'MuiSwitch',
+  slot: 'SwitchBase',
+  overridesResolver: (props, styles) => {
+    const {
+      ownerState
+    } = props;
+    return [styles.switchBase, {
+      [`& .${Switch_switchClasses.input}`]: styles.input
+    }, ownerState.color !== 'default' && styles[`color${(0,capitalize/* default */.c)(ownerState.color)}`]];
+  }
+})((0,memoTheme/* default */.c)(({
+  theme
+}) => ({
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  zIndex: 1,
+  // Render above the focus ripple.
+  color: theme.vars ? theme.vars.palette.Switch.defaultColor : `${theme.palette.mode === 'light' ? theme.palette.common.white : theme.palette.grey[300]}`,
+  transition: theme.transitions.create(['left', 'transform'], {
+    duration: theme.transitions.duration.shortest
+  }),
+  [`&.${Switch_switchClasses.checked}`]: {
+    transform: 'translateX(20px)'
+  },
+  [`&.${Switch_switchClasses.disabled}`]: {
+    color: theme.vars ? theme.vars.palette.Switch.defaultDisabledColor : `${theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[600]}`
+  },
+  [`&.${Switch_switchClasses.checked} + .${Switch_switchClasses.track}`]: {
+    opacity: 0.5
+  },
+  [`&.${Switch_switchClasses.disabled} + .${Switch_switchClasses.track}`]: {
+    opacity: theme.vars ? theme.vars.opacity.switchTrackDisabled : `${theme.palette.mode === 'light' ? 0.12 : 0.2}`
+  },
+  [`& .${Switch_switchClasses.input}`]: {
+    left: '-100%',
+    width: '300%'
+  }
+})), (0,memoTheme/* default */.c)(({
+  theme
+}) => ({
+  '&:hover': {
+    backgroundColor: theme.vars ? `rgba(${theme.vars.palette.action.activeChannel} / ${theme.vars.palette.action.hoverOpacity})` : (0,colorManipulator/* alpha */.W4)(theme.palette.action.active, theme.palette.action.hoverOpacity),
+    // Reset on touch devices, it doesn't add specificity
+    '@media (hover: none)': {
+      backgroundColor: 'transparent'
+    }
+  },
+  variants: [...Object.entries(theme.palette).filter((0,createSimplePaletteValueFilter/* default */.c)(['light'])) // check all the used fields in the style below
+  .map(([color]) => ({
+    props: {
+      color
+    },
+    style: {
+      [`&.${Switch_switchClasses.checked}`]: {
+        color: (theme.vars || theme).palette[color].main,
+        '&:hover': {
+          backgroundColor: theme.vars ? `rgba(${theme.vars.palette[color].mainChannel} / ${theme.vars.palette.action.hoverOpacity})` : (0,colorManipulator/* alpha */.W4)(theme.palette[color].main, theme.palette.action.hoverOpacity),
+          '@media (hover: none)': {
+            backgroundColor: 'transparent'
+          }
+        },
+        [`&.${Switch_switchClasses.disabled}`]: {
+          color: theme.vars ? theme.vars.palette.Switch[`${color}DisabledColor`] : `${theme.palette.mode === 'light' ? (0,colorManipulator/* lighten */.IV)(theme.palette[color].main, 0.62) : (0,colorManipulator/* darken */.sP)(theme.palette[color].main, 0.55)}`
+        }
+      },
+      [`&.${Switch_switchClasses.checked} + .${Switch_switchClasses.track}`]: {
+        backgroundColor: (theme.vars || theme).palette[color].main
+      }
+    }
+  }))]
+})));
+const SwitchTrack = (0,styled/* default */.cp)('span', {
+  name: 'MuiSwitch',
+  slot: 'Track',
+  overridesResolver: (props, styles) => styles.track
+})((0,memoTheme/* default */.c)(({
+  theme
+}) => ({
+  height: '100%',
+  width: '100%',
+  borderRadius: 14 / 2,
+  zIndex: -1,
+  transition: theme.transitions.create(['opacity', 'background-color'], {
+    duration: theme.transitions.duration.shortest
+  }),
+  backgroundColor: theme.vars ? theme.vars.palette.common.onBackground : `${theme.palette.mode === 'light' ? theme.palette.common.black : theme.palette.common.white}`,
+  opacity: theme.vars ? theme.vars.opacity.switchTrack : `${theme.palette.mode === 'light' ? 0.38 : 0.3}`
+})));
+const SwitchThumb = (0,styled/* default */.cp)('span', {
+  name: 'MuiSwitch',
+  slot: 'Thumb',
+  overridesResolver: (props, styles) => styles.thumb
+})((0,memoTheme/* default */.c)(({
+  theme
+}) => ({
+  boxShadow: (theme.vars || theme).shadows[1],
+  backgroundColor: 'currentColor',
+  width: 20,
+  height: 20,
+  borderRadius: '50%'
+})));
+const Switch = /*#__PURE__*/react.forwardRef(function Switch(inProps, ref) {
+  const props = (0,DefaultPropsProvider/* useDefaultProps */.C)({
+    props: inProps,
+    name: 'MuiSwitch'
+  });
+  const {
+    className,
+    color = 'primary',
+    edge = false,
+    size = 'medium',
+    sx,
+    ...other
+  } = props;
+  const ownerState = {
+    ...props,
+    color,
+    edge,
+    size
+  };
+  const classes = useUtilityClasses(ownerState);
+  const icon = /*#__PURE__*/(0,jsx_runtime.jsx)(SwitchThumb, {
+    className: classes.thumb,
+    ownerState: ownerState
+  });
+  return /*#__PURE__*/(0,jsx_runtime.jsxs)(SwitchRoot, {
+    className: (0,clsx/* default */.c)(classes.root, className),
+    sx: sx,
+    ownerState: ownerState,
+    children: [/*#__PURE__*/(0,jsx_runtime.jsx)(SwitchSwitchBase, {
+      type: "checkbox",
+      icon: icon,
+      checkedIcon: icon,
+      ref: ref,
+      ownerState: ownerState,
+      ...other,
+      classes: {
+        ...classes,
+        root: classes.switchBase
+      }
+    }), /*#__PURE__*/(0,jsx_runtime.jsx)(SwitchTrack, {
+      className: classes.track,
+      ownerState: ownerState
+    })]
+  });
+});
+ false ? 0 : void 0;
+/* harmony default export */ const Switch_Switch = (Switch);
+
+/***/ }),
+
+/***/ 94112:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+
+// EXPORTS
+__webpack_require__.d(__webpack_exports__, {
+  c: () => (/* binding */ internal_SwitchBase)
+});
+
+// EXTERNAL MODULE: ./node_modules/.pnpm/react@18.2.0/node_modules/react/index.js
+var react = __webpack_require__(96651);
+// EXTERNAL MODULE: ./node_modules/.pnpm/clsx@2.1.1/node_modules/clsx/dist/clsx.mjs
+var clsx = __webpack_require__(6584);
+// EXTERNAL MODULE: ./node_modules/.pnpm/@mui+utils@6.2.0_@types+react@18.2.55_react@18.2.0/node_modules/@mui/utils/esm/composeClasses/composeClasses.js
+var composeClasses = __webpack_require__(55160);
+// EXTERNAL MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/utils/capitalize.js
+var capitalize = __webpack_require__(28216);
 // EXTERNAL MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/styles/rootShouldForwardProp.js
 var rootShouldForwardProp = __webpack_require__(35760);
 // EXTERNAL MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/styles/styled.js
@@ -245,269 +538,6 @@ const SwitchBase = /*#__PURE__*/react.forwardRef(function SwitchBase(props, ref)
 // so that the API documentation is updated.
  false ? 0 : void 0;
 /* harmony default export */ const internal_SwitchBase = (SwitchBase);
-// EXTERNAL MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/utils/memoTheme.js + 1 modules
-var memoTheme = __webpack_require__(88344);
-// EXTERNAL MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/DefaultPropsProvider/DefaultPropsProvider.js
-var DefaultPropsProvider = __webpack_require__(5756);
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/Switch/switchClasses.js
-
-
-function getSwitchUtilityClass(slot) {
-  return (0,generateUtilityClass/* default */.cp)('MuiSwitch', slot);
-}
-const switchClasses = (0,generateUtilityClasses/* default */.c)('MuiSwitch', ['root', 'edgeStart', 'edgeEnd', 'switchBase', 'colorPrimary', 'colorSecondary', 'sizeSmall', 'sizeMedium', 'checked', 'disabled', 'input', 'thumb', 'track']);
-/* harmony default export */ const Switch_switchClasses = (switchClasses);
-;// CONCATENATED MODULE: ./node_modules/.pnpm/@mui+material@6.2.0_@emotion+react@11.14.0_@types+react@18.2.55_react@18.2.0__@emotion+_2baf7232eb08e8a43ff88af9225f18f8/node_modules/@mui/material/Switch/Switch.js
-'use client';
-
-// @inheritedComponent IconButton
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-const Switch_useUtilityClasses = ownerState => {
-  const {
-    classes,
-    edge,
-    size,
-    color,
-    checked,
-    disabled
-  } = ownerState;
-  const slots = {
-    root: ['root', edge && `edge${(0,capitalize/* default */.c)(edge)}`, `size${(0,capitalize/* default */.c)(size)}`],
-    switchBase: ['switchBase', `color${(0,capitalize/* default */.c)(color)}`, checked && 'checked', disabled && 'disabled'],
-    thumb: ['thumb'],
-    track: ['track'],
-    input: ['input']
-  };
-  const composedClasses = (0,composeClasses/* default */.c)(slots, getSwitchUtilityClass, classes);
-  return {
-    ...classes,
-    // forward the disabled and checked classes to the SwitchBase
-    ...composedClasses
-  };
-};
-const SwitchRoot = (0,styled/* default */.cp)('span', {
-  name: 'MuiSwitch',
-  slot: 'Root',
-  overridesResolver: (props, styles) => {
-    const {
-      ownerState
-    } = props;
-    return [styles.root, ownerState.edge && styles[`edge${(0,capitalize/* default */.c)(ownerState.edge)}`], styles[`size${(0,capitalize/* default */.c)(ownerState.size)}`]];
-  }
-})({
-  display: 'inline-flex',
-  width: 34 + 12 * 2,
-  height: 14 + 12 * 2,
-  overflow: 'hidden',
-  padding: 12,
-  boxSizing: 'border-box',
-  position: 'relative',
-  flexShrink: 0,
-  zIndex: 0,
-  // Reset the stacking context.
-  verticalAlign: 'middle',
-  // For correct alignment with the text.
-  '@media print': {
-    colorAdjust: 'exact'
-  },
-  variants: [{
-    props: {
-      edge: 'start'
-    },
-    style: {
-      marginLeft: -8
-    }
-  }, {
-    props: {
-      edge: 'end'
-    },
-    style: {
-      marginRight: -8
-    }
-  }, {
-    props: {
-      size: 'small'
-    },
-    style: {
-      width: 40,
-      height: 24,
-      padding: 7,
-      [`& .${Switch_switchClasses.thumb}`]: {
-        width: 16,
-        height: 16
-      },
-      [`& .${Switch_switchClasses.switchBase}`]: {
-        padding: 4,
-        [`&.${Switch_switchClasses.checked}`]: {
-          transform: 'translateX(16px)'
-        }
-      }
-    }
-  }]
-});
-const SwitchSwitchBase = (0,styled/* default */.cp)(internal_SwitchBase, {
-  name: 'MuiSwitch',
-  slot: 'SwitchBase',
-  overridesResolver: (props, styles) => {
-    const {
-      ownerState
-    } = props;
-    return [styles.switchBase, {
-      [`& .${Switch_switchClasses.input}`]: styles.input
-    }, ownerState.color !== 'default' && styles[`color${(0,capitalize/* default */.c)(ownerState.color)}`]];
-  }
-})((0,memoTheme/* default */.c)(({
-  theme
-}) => ({
-  position: 'absolute',
-  top: 0,
-  left: 0,
-  zIndex: 1,
-  // Render above the focus ripple.
-  color: theme.vars ? theme.vars.palette.Switch.defaultColor : `${theme.palette.mode === 'light' ? theme.palette.common.white : theme.palette.grey[300]}`,
-  transition: theme.transitions.create(['left', 'transform'], {
-    duration: theme.transitions.duration.shortest
-  }),
-  [`&.${Switch_switchClasses.checked}`]: {
-    transform: 'translateX(20px)'
-  },
-  [`&.${Switch_switchClasses.disabled}`]: {
-    color: theme.vars ? theme.vars.palette.Switch.defaultDisabledColor : `${theme.palette.mode === 'light' ? theme.palette.grey[100] : theme.palette.grey[600]}`
-  },
-  [`&.${Switch_switchClasses.checked} + .${Switch_switchClasses.track}`]: {
-    opacity: 0.5
-  },
-  [`&.${Switch_switchClasses.disabled} + .${Switch_switchClasses.track}`]: {
-    opacity: theme.vars ? theme.vars.opacity.switchTrackDisabled : `${theme.palette.mode === 'light' ? 0.12 : 0.2}`
-  },
-  [`& .${Switch_switchClasses.input}`]: {
-    left: '-100%',
-    width: '300%'
-  }
-})), (0,memoTheme/* default */.c)(({
-  theme
-}) => ({
-  '&:hover': {
-    backgroundColor: theme.vars ? `rgba(${theme.vars.palette.action.activeChannel} / ${theme.vars.palette.action.hoverOpacity})` : (0,colorManipulator/* alpha */.W4)(theme.palette.action.active, theme.palette.action.hoverOpacity),
-    // Reset on touch devices, it doesn't add specificity
-    '@media (hover: none)': {
-      backgroundColor: 'transparent'
-    }
-  },
-  variants: [...Object.entries(theme.palette).filter((0,createSimplePaletteValueFilter/* default */.c)(['light'])) // check all the used fields in the style below
-  .map(([color]) => ({
-    props: {
-      color
-    },
-    style: {
-      [`&.${Switch_switchClasses.checked}`]: {
-        color: (theme.vars || theme).palette[color].main,
-        '&:hover': {
-          backgroundColor: theme.vars ? `rgba(${theme.vars.palette[color].mainChannel} / ${theme.vars.palette.action.hoverOpacity})` : (0,colorManipulator/* alpha */.W4)(theme.palette[color].main, theme.palette.action.hoverOpacity),
-          '@media (hover: none)': {
-            backgroundColor: 'transparent'
-          }
-        },
-        [`&.${Switch_switchClasses.disabled}`]: {
-          color: theme.vars ? theme.vars.palette.Switch[`${color}DisabledColor`] : `${theme.palette.mode === 'light' ? (0,colorManipulator/* lighten */.IV)(theme.palette[color].main, 0.62) : (0,colorManipulator/* darken */.sP)(theme.palette[color].main, 0.55)}`
-        }
-      },
-      [`&.${Switch_switchClasses.checked} + .${Switch_switchClasses.track}`]: {
-        backgroundColor: (theme.vars || theme).palette[color].main
-      }
-    }
-  }))]
-})));
-const SwitchTrack = (0,styled/* default */.cp)('span', {
-  name: 'MuiSwitch',
-  slot: 'Track',
-  overridesResolver: (props, styles) => styles.track
-})((0,memoTheme/* default */.c)(({
-  theme
-}) => ({
-  height: '100%',
-  width: '100%',
-  borderRadius: 14 / 2,
-  zIndex: -1,
-  transition: theme.transitions.create(['opacity', 'background-color'], {
-    duration: theme.transitions.duration.shortest
-  }),
-  backgroundColor: theme.vars ? theme.vars.palette.common.onBackground : `${theme.palette.mode === 'light' ? theme.palette.common.black : theme.palette.common.white}`,
-  opacity: theme.vars ? theme.vars.opacity.switchTrack : `${theme.palette.mode === 'light' ? 0.38 : 0.3}`
-})));
-const SwitchThumb = (0,styled/* default */.cp)('span', {
-  name: 'MuiSwitch',
-  slot: 'Thumb',
-  overridesResolver: (props, styles) => styles.thumb
-})((0,memoTheme/* default */.c)(({
-  theme
-}) => ({
-  boxShadow: (theme.vars || theme).shadows[1],
-  backgroundColor: 'currentColor',
-  width: 20,
-  height: 20,
-  borderRadius: '50%'
-})));
-const Switch = /*#__PURE__*/react.forwardRef(function Switch(inProps, ref) {
-  const props = (0,DefaultPropsProvider/* useDefaultProps */.C)({
-    props: inProps,
-    name: 'MuiSwitch'
-  });
-  const {
-    className,
-    color = 'primary',
-    edge = false,
-    size = 'medium',
-    sx,
-    ...other
-  } = props;
-  const ownerState = {
-    ...props,
-    color,
-    edge,
-    size
-  };
-  const classes = Switch_useUtilityClasses(ownerState);
-  const icon = /*#__PURE__*/(0,jsx_runtime.jsx)(SwitchThumb, {
-    className: classes.thumb,
-    ownerState: ownerState
-  });
-  return /*#__PURE__*/(0,jsx_runtime.jsxs)(SwitchRoot, {
-    className: (0,clsx/* default */.c)(classes.root, className),
-    sx: sx,
-    ownerState: ownerState,
-    children: [/*#__PURE__*/(0,jsx_runtime.jsx)(SwitchSwitchBase, {
-      type: "checkbox",
-      icon: icon,
-      checkedIcon: icon,
-      ref: ref,
-      ownerState: ownerState,
-      ...other,
-      classes: {
-        ...classes,
-        root: classes.switchBase
-      }
-    }), /*#__PURE__*/(0,jsx_runtime.jsx)(SwitchTrack, {
-      className: classes.track,
-      ownerState: ownerState
-    })]
-  });
-});
- false ? 0 : void 0;
-/* harmony default export */ const Switch_Switch = (Switch);
 
 /***/ }),
 
