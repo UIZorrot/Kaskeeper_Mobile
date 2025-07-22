@@ -5062,10 +5062,10 @@ class KeyringService extends events.EventEmitter {
 /* harmony default export */ const service_keyring = (new KeyringService());
 // EXTERNAL MODULE: ./node_modules/.pnpm/randomstring@1.3.0/node_modules/randomstring/index.js
 var randomstring = __webpack_require__(99896);
-// EXTERNAL MODULE: ./src/ui/utils/index.ts + 2 modules
-var ui_utils = __webpack_require__(48818);
 // EXTERNAL MODULE: ./src/ui/features/browser/tabs.ts + 1 modules
 var tabs = __webpack_require__(96447);
+// EXTERNAL MODULE: ./src/ui/utils/index.ts + 2 modules
+var ui_utils = __webpack_require__(48818);
 ;// CONCATENATED MODULE: ./src/background/service/openapi.ts
 /* eslint-disable @typescript-eslint/no-empty-function */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -5396,7 +5396,7 @@ class OpenApiService {
   async getWalletConfig() {
     // return this.httpGet('/default/config', {});
     return Promise.resolve({
-      version: '0.16.0',
+      version: '0.18.0',
       moonPayEnabled: false,
       statusMessage: ''
     });
@@ -6504,8 +6504,8 @@ const INTERNAL_REQUEST_SESSION = {
 const OPENAPI_URL_MAINNET = 'https://api.kaspa.org';
 const OPENAPI_URL_TESTNET = 'https://api-tn10.kaspa.org';
 const OPENAPI_URL_DEVNET = 'https://api.kaspa.org/dev';
-const OPENAPI_RPC_MAINNET = 'wss://dina.kaspa.green/kaspa/mainnet/wrpc/borsh';
-const OPENAPI_RPC_TESTNET = 'wss://baryon-10.kaspa.green/kaspa/testnet-10/wrpc/borsh';
+const OPENAPI_RPC_MAINNET = undefined;
+const OPENAPI_RPC_TESTNET = (/* unused pure expression or super */ null && (undefined));
 const OPENAPI_RPC_DEVNET = 'ws://127.0.0.1:17610';
 const NETWORK_TYPES = [{
   value: _types__WEBPACK_IMPORTED_MODULE_0__/* .NetworkType */ .U5.Mainnet,
@@ -6568,7 +6568,7 @@ const TWITTER_URL = '';
 const TELEGRAM_URL = '';
 const CHANNEL = undefined;
 // export const VERSION = process.env.release!;
-const VERSION = '0.16.0';
+const VERSION = '0.18.0';
 const MANIFEST_VERSION = undefined;
 let AddressFlagType = /*#__PURE__*/function (AddressFlagType) {
   AddressFlagType[AddressFlagType["Is_Enable_Kasplex"] = 1] = "Is_Enable_Kasplex";

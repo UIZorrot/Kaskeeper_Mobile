@@ -1899,22 +1899,10 @@ __webpack_async_result__();
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(96651);
 /* harmony import */ var _ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(17534);
-/* harmony import */ var _ui_theme_font__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(69508);
-/* harmony import */ var _ui_utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(48818);
-/* harmony import */ var _Button__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(65044);
-/* harmony import */ var _Column__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(67196);
-/* harmony import */ var _Popover__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(43336);
-/* harmony import */ var _Row__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(13976);
-/* harmony import */ var _Text__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(46476);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(2488);
+/* harmony import */ var _ui_utils__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(48818);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(2488);
 /* eslint-disable no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-
-
-
-
-
-
 
 
 
@@ -1930,7 +1918,7 @@ const UpgradePopover = _ref => {
     changelogs: [],
     title: ''
   });
-  const wallet = (0,_ui_utils__WEBPACK_IMPORTED_MODULE_3__/* .useWallet */ .e6)();
+  const wallet = (0,_ui_utils__WEBPACK_IMPORTED_MODULE_2__/* .useWallet */ .e6)();
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (!versionInfo.newVersion) return;
     wallet.getVersionDetail(versionInfo.newVersion).then(res => {
@@ -1939,50 +1927,44 @@ const UpgradePopover = _ref => {
       console.log(e);
     });
   }, [versionInfo.newVersion]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Popover__WEBPACK_IMPORTED_MODULE_6__/* .Popover */ ._, {
-    onClose: onClose,
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_Column__WEBPACK_IMPORTED_MODULE_5__/* .Column */ .o, {
-      justifyCenter: true,
-      itemsCenter: true,
-      children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Column__WEBPACK_IMPORTED_MODULE_5__/* .Column */ .o, {
-        mt: "lg",
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Text__WEBPACK_IMPORTED_MODULE_8__/* .Text */ .a, {
-          preset: "bold",
-          text: versionDetail.title,
-          textCenter: true
-        })
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
-        style: {
-          marginTop: 8
-        },
-        children: versionDetail.changelogs.map((str, index) => /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)("div", {
-          style: {
-            fontSize: _ui_theme_font__WEBPACK_IMPORTED_MODULE_2__/* .fontSizes */ .Q.sm
-          },
-          children: str
-        }, index))
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_Row__WEBPACK_IMPORTED_MODULE_7__/* .Row */ .W, {
-        full: true,
-        mt: "lg",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Button__WEBPACK_IMPORTED_MODULE_4__/* .Button */ .q, {
-          text: "Skip",
-          full: true,
-          onClick: e => {
-            if (onClose) {
-              onClose();
-            }
-          }
-        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_Button__WEBPACK_IMPORTED_MODULE_4__/* .Button */ .q, {
-          text: "Go to update",
-          full: true,
-          preset: "primary",
-          onClick: e => {
-            (0,_ui_utils__WEBPACK_IMPORTED_MODULE_3__/* .openUrlLink */ .lc)('https://kaspa.org');
-          }
-        })]
-      })]
-    })
-  });
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.Fragment, {})
+  // <Popover onClose={onClose}>
+  //   <Column justifyCenter itemsCenter>
+  //     <Column mt="lg">
+  //       <Text preset="bold" text={versionDetail.title} textCenter />
+  //     </Column>
+
+  //     <div style={{ marginTop: 8 }}>
+  //       {versionDetail.changelogs.map((str, index) => (
+  //         <div key={index} style={{ fontSize: fontSizes.sm }}>
+  //           {str}
+  //         </div>
+  //       ))}
+  //     </div>
+
+  //     <Row full mt="lg">
+  //       <Button
+  //         text="Skip"
+  //         full
+  //         onClick={(e) => {
+  //           if (onClose) {
+  //             onClose();
+  //           }
+  //         }}
+  //       />
+
+  //       <Button
+  //         text="Go to update"
+  //         full
+  //         preset="primary"
+  //         onClick={(e) => {
+  //           window.open('https://kaspa.org');
+  //         }}
+  //       />
+  //     </Row>
+  //   </Column>
+  // </Popover>
+  ;
 };
 
 /***/ }),
