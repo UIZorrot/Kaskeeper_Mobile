@@ -312,7 +312,13 @@ const Home = memo(({ navigation, route }: {
           onShouldStartLoadWithRequest={
             (event) => {
               console.log('onShouldStartLoadWithRequest', event);
-              if (['https://kaspa.org/crescendo-hard-fork-roadmap-10bps/', 'https://kas.fyi/krc20-tokens', 'https://kaspa.org/'].includes(event.url)) {
+              if ([
+                'https://kaspa.org/crescendo-hard-fork-roadmap-10bps/',
+                'https://kas.fyi/krc20-tokens',
+                'https://kaspa.org/',
+                'https://t.me/kaskeeper_official',
+                'https://github.com/scalebit/KasKeeper_Dapp'
+              ].includes(event.url)) {
                 Linking.openURL(event.url)
                 return false
               }

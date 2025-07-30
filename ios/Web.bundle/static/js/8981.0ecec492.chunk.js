@@ -811,6 +811,8 @@ var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_bac
 
 
 
+const gasLimit = 60000n;
+const gasPrice = 2001000000000n;
 function TxCreateScreen() {
   const {
     state
@@ -1081,7 +1083,8 @@ function TxCreateScreen() {
         setError(t('Amount exceeds your token balance'));
         return;
       }
-      setTxFee(Number(0.01));
+      console.log('getGasLimit', getGasLimit);
+      setTxFee(Number(web3__WEBPACK_IMPORTED_MODULE_28__/* ["default"].utils.fromWei */ .cp3.utils.fromWei(gasLimit * gasPrice, 'ether')));
       setDisabled(false);
     }
   }, [toInfo, inputAmount, tokenAmount, feeRate, enableRBF, activeToken, currentLayer, rpcConnectStatus]);
@@ -1195,18 +1198,25 @@ function TxCreateScreen() {
   };
   const handleTransferErc20 = async () => {
     // 查询账户余额是否够扣除fee
-    if (Number(safeBalanceL2) < 0.01) return tools.toastError('Insufficient balance');
-    let networkId = '';
-    if (networkType === _shared_types__WEBPACK_IMPORTED_MODULE_7__/* .NetworkType */ .U5.Mainnet) {
-      networkId = 'mainnet';
-    } else if (networkType === _shared_types__WEBPACK_IMPORTED_MODULE_7__/* .NetworkType */ .U5.Testnet) {
-      networkId = 'testnet-10';
-    } else {
-      networkId = 'devnet';
-    }
     setSending(true);
-    let hash = '';
     try {
+      const rpc = {
+        [_shared_types__WEBPACK_IMPORTED_MODULE_7__/* .NetworkType */ .U5.Mainnet]: _shared_constant__WEBPACK_IMPORTED_MODULE_6__/* .OPENAPI_RPC_MAINNET_L2 */ .Qj,
+        [_shared_types__WEBPACK_IMPORTED_MODULE_7__/* .NetworkType */ .U5.Testnet]: _shared_constant__WEBPACK_IMPORTED_MODULE_6__/* .OPENAPI_RPC_TESTNET_L2 */ .i8,
+        [_shared_types__WEBPACK_IMPORTED_MODULE_7__/* .NetworkType */ .U5.Devnet]: _shared_constant__WEBPACK_IMPORTED_MODULE_6__/* .OPENAPI_RPC_DEVNET_L2 */ .yb
+      }[networkType] || '';
+      const web3 = new web3__WEBPACK_IMPORTED_MODULE_28__/* ["default"] */ .cp3(rpc);
+      const balanceWei = await web3.eth.getBalance(addressL2);
+      if (balanceWei < gasLimit * gasPrice) return tools.toastError('Insufficient balance');
+      let networkId = '';
+      if (networkType === _shared_types__WEBPACK_IMPORTED_MODULE_7__/* .NetworkType */ .U5.Mainnet) {
+        networkId = 'mainnet';
+      } else if (networkType === _shared_types__WEBPACK_IMPORTED_MODULE_7__/* .NetworkType */ .U5.Testnet) {
+        networkId = 'testnet-10';
+      } else {
+        networkId = 'devnet';
+      }
+      let hash = '';
       if (relayerType === 'L1') {
         const res = await (0,_background_krc20_l2__WEBPACK_IMPORTED_MODULE_5__/* .send_erc20_with_evm_payload */ .YZ)(networkId, "0x".concat(privateKey.hex), address, txFee, toInfo.address, tokenAmount,
         // '' + Number(tokenAmount) * 10 ** activeToken.decimals,

@@ -1628,6 +1628,7 @@ if (_shared_constant__WEBPACK_IMPORTED_MODULE_0__/* .MANIFEST_VERSION */ .iz ===
 /* harmony export */   UF: () => (/* binding */ fetch_erc20),
 /* harmony export */   W8: () => (/* binding */ getBalanceByAddress),
 /* harmony export */   gt: () => (/* binding */ fetch_tx),
+/* harmony export */   k1: () => (/* binding */ fetch_l1_kas_transactions),
 /* harmony export */   mq: () => (/* binding */ fetch_krc20_oplist),
 /* harmony export */   s5: () => (/* binding */ fetch_krc20_list),
 /* harmony export */   sN: () => (/* binding */ get_krc20_icon_url)
@@ -1898,6 +1899,12 @@ async function fetch_Activity(network, address, limit, offest) {
     throw new Error('Network error: ' + e.message);
   }
 }
+async function fetch_l1_kas_transactions(network, transactionIds) {
+  const res = await axios__WEBPACK_IMPORTED_MODULE_2__/* ["default"] */ .c.post("".concat(rest_api_url(network), "transactions/search"), {
+    transactionIds: transactionIds
+  });
+  return res.data || [];
+}
 async function fetch_tx(network, tx) {
   const headers = {
     // 'X-Client': 'KasWare Wallet',
@@ -1993,9 +2000,10 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony export */   SO: () => (/* reexport safe */ _l2Ethers__WEBPACK_IMPORTED_MODULE_3__.SO),
 /* harmony export */   YZ: () => (/* binding */ send_erc20_with_evm_payload),
 /* harmony export */   gB: () => (/* binding */ send_kaspa_with_dapp_payload),
-/* harmony export */   kz: () => (/* binding */ send_kaspa_with_dapp_evm_payload)
+/* harmony export */   kz: () => (/* binding */ send_kaspa_with_dapp_evm_payload),
+/* harmony export */   mo: () => (/* binding */ TKASE_ADDRESS)
 /* harmony export */ });
-/* unused harmony exports prepare_eth_payload, sign_eth_trans_payload, prepare_eth_erc20_payload */
+/* unused harmony exports TKASE_ABI_JSON, rpcUrl, prepare_eth_payload, sign_eth_trans_payload, prepare_eth_erc20_payload */
 /* harmony import */ var ethers__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(17108);
 /* harmony import */ var kaspa_wasm__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(21704);
 /* harmony import */ var _l2Ethers__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5140);
@@ -2006,6 +2014,345 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 
 
 await (0,kaspa_wasm__WEBPACK_IMPORTED_MODULE_1__["default"])();
+const TKASE_ADDRESS = '0x5Ef3136F4dc8683f6169023A589bdd598E4A7F8C';
+const TKASE_ABI_JSON = [{
+  "inputs": [],
+  "name": "add_mint",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "spender",
+    "type": "address"
+  }, {
+    "internalType": "uint256",
+    "name": "value",
+    "type": "uint256"
+  }],
+  "name": "approve",
+  "outputs": [{
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+  }],
+  "stateMutability": "nonpayable",
+  "type": "function"
+}, {
+  "inputs": [],
+  "stateMutability": "nonpayable",
+  "type": "constructor"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "spender",
+    "type": "address"
+  }, {
+    "internalType": "uint256",
+    "name": "allowance",
+    "type": "uint256"
+  }, {
+    "internalType": "uint256",
+    "name": "needed",
+    "type": "uint256"
+  }],
+  "name": "ERC20InsufficientAllowance",
+  "type": "error"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "sender",
+    "type": "address"
+  }, {
+    "internalType": "uint256",
+    "name": "balance",
+    "type": "uint256"
+  }, {
+    "internalType": "uint256",
+    "name": "needed",
+    "type": "uint256"
+  }],
+  "name": "ERC20InsufficientBalance",
+  "type": "error"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "approver",
+    "type": "address"
+  }],
+  "name": "ERC20InvalidApprover",
+  "type": "error"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "receiver",
+    "type": "address"
+  }],
+  "name": "ERC20InvalidReceiver",
+  "type": "error"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "sender",
+    "type": "address"
+  }],
+  "name": "ERC20InvalidSender",
+  "type": "error"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "spender",
+    "type": "address"
+  }],
+  "name": "ERC20InvalidSpender",
+  "type": "error"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "internalType": "address",
+    "name": "owner",
+    "type": "address"
+  }, {
+    "indexed": true,
+    "internalType": "address",
+    "name": "spender",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "internalType": "uint256",
+    "name": "value",
+    "type": "uint256"
+  }],
+  "name": "Approval",
+  "type": "event"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "_receiver",
+    "type": "address"
+  }],
+  "name": "requestTokens",
+  "outputs": [],
+  "stateMutability": "nonpayable",
+  "type": "function"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "internalType": "address",
+    "name": "Receiver",
+    "type": "address"
+  }, {
+    "indexed": true,
+    "internalType": "uint256",
+    "name": "Amount",
+    "type": "uint256"
+  }],
+  "name": "SendToken",
+  "type": "event"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "to",
+    "type": "address"
+  }, {
+    "internalType": "uint256",
+    "name": "value",
+    "type": "uint256"
+  }],
+  "name": "transfer",
+  "outputs": [{
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+  }],
+  "stateMutability": "nonpayable",
+  "type": "function"
+}, {
+  "anonymous": false,
+  "inputs": [{
+    "indexed": true,
+    "internalType": "address",
+    "name": "from",
+    "type": "address"
+  }, {
+    "indexed": true,
+    "internalType": "address",
+    "name": "to",
+    "type": "address"
+  }, {
+    "indexed": false,
+    "internalType": "uint256",
+    "name": "value",
+    "type": "uint256"
+  }],
+  "name": "Transfer",
+  "type": "event"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "from",
+    "type": "address"
+  }, {
+    "internalType": "address",
+    "name": "to",
+    "type": "address"
+  }, {
+    "internalType": "uint256",
+    "name": "value",
+    "type": "uint256"
+  }],
+  "name": "transferFrom",
+  "outputs": [{
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+  }],
+  "stateMutability": "nonpayable",
+  "type": "function"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "owner",
+    "type": "address"
+  }, {
+    "internalType": "address",
+    "name": "spender",
+    "type": "address"
+  }],
+  "name": "allowance",
+  "outputs": [{
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+  }],
+  "stateMutability": "view",
+  "type": "function"
+}, {
+  "inputs": [],
+  "name": "amountAllowed",
+  "outputs": [{
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+  }],
+  "stateMutability": "view",
+  "type": "function"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "account",
+    "type": "address"
+  }],
+  "name": "balanceOf",
+  "outputs": [{
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+  }],
+  "stateMutability": "view",
+  "type": "function"
+}, {
+  "inputs": [],
+  "name": "decimals",
+  "outputs": [{
+    "internalType": "uint8",
+    "name": "",
+    "type": "uint8"
+  }],
+  "stateMutability": "view",
+  "type": "function"
+}, {
+  "inputs": [],
+  "name": "getContractAddress",
+  "outputs": [{
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+  }],
+  "stateMutability": "view",
+  "type": "function"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+  }],
+  "name": "lastRequestTime",
+  "outputs": [{
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+  }],
+  "stateMutability": "view",
+  "type": "function"
+}, {
+  "inputs": [],
+  "name": "name",
+  "outputs": [{
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+  }],
+  "stateMutability": "view",
+  "type": "function"
+}, {
+  "inputs": [],
+  "name": "owner",
+  "outputs": [{
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+  }],
+  "stateMutability": "view",
+  "type": "function"
+}, {
+  "inputs": [{
+    "internalType": "address",
+    "name": "",
+    "type": "address"
+  }],
+  "name": "requestedAddress",
+  "outputs": [{
+    "internalType": "bool",
+    "name": "",
+    "type": "bool"
+  }],
+  "stateMutability": "view",
+  "type": "function"
+}, {
+  "inputs": [],
+  "name": "requestInterval",
+  "outputs": [{
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+  }],
+  "stateMutability": "view",
+  "type": "function"
+}, {
+  "inputs": [],
+  "name": "symbol",
+  "outputs": [{
+    "internalType": "string",
+    "name": "",
+    "type": "string"
+  }],
+  "stateMutability": "view",
+  "type": "function"
+}, {
+  "inputs": [],
+  "name": "totalSupply",
+  "outputs": [{
+    "internalType": "uint256",
+    "name": "",
+    "type": "uint256"
+  }],
+  "stateMutability": "view",
+  "type": "function"
+}];
 const BASE_FEE = '0.0003'; // Kaspa 基础费用，单位 KAS
 
 // 使用指定的 RPC URL 和链 ID
@@ -2565,6 +2912,18 @@ async function prepare_eth_erc20_payload(privateKey, tokenContractAddress, toAdd
       nonce: web3__WEBPACK_IMPORTED_MODULE_0__/* ["default"].utils.toHex */ .cp3.utils.toHex(nonce),
       chainId: chainId
     };
+
+    // console.log('unsignedTx', JSON.stringify({
+    //   from: fromAddress,
+    //   to: tokenContractAddress, // 交易目标是代币合约地址
+    //   value: '0', // 不发送 ETH
+    //   data, // 包含 transfer 函数调用数据
+    //   gas: gasLimit,
+    //   gasPrice: Number(gasPrice),
+    //   nonce: Number(nonce),
+    //   chainId: Number(chainId),
+    // }), privateKey, account);
+    // return ''
 
     // 签名交易
     const signedTx = await web3.eth.accounts.signTransaction(unsignedTx, privateKey);
@@ -5396,7 +5755,7 @@ class OpenApiService {
   async getWalletConfig() {
     // return this.httpGet('/default/config', {});
     return Promise.resolve({
-      version: '0.18.0',
+      version: '0.19.0',
       moonPayEnabled: false,
       statusMessage: ''
     });
@@ -6568,7 +6927,7 @@ const TWITTER_URL = '';
 const TELEGRAM_URL = '';
 const CHANNEL = undefined;
 // export const VERSION = process.env.release!;
-const VERSION = '0.18.0';
+const VERSION = '0.19.0';
 const MANIFEST_VERSION = undefined;
 let AddressFlagType = /*#__PURE__*/function (AddressFlagType) {
   AddressFlagType[AddressFlagType["Is_Enable_Kasplex"] = 1] = "Is_Enable_Kasplex";
@@ -9218,9 +9577,11 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var _state_settings_hooks__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(17534);
 /* harmony import */ var _ui_utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(48818);
 /* harmony import */ var _background_krc20_ActiveUTXO__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(57360);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(2488);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_0__]);
-_ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_0__ = (__webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__)[0];
+/* harmony import */ var _background_krc20_l2__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(34780);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(2488);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_0__, _background_krc20_l2__WEBPACK_IMPORTED_MODULE_7__]);
+([_ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_0__, _background_krc20_l2__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -9320,8 +9681,12 @@ function AccountContextProvider(_ref) {
         } = item;
         let symbol = token.symbol;
         if (!symbol) {
-          unknownIndex += 1;
-          symbol = "Unknown".concat(unknownIndex);
+          if (token.address === _background_krc20_l2__WEBPACK_IMPORTED_MODULE_7__/* .TKASE_ADDRESS */ .mo) {
+            symbol = 'TKASE';
+          } else {
+            unknownIndex += 1;
+            symbol = "Unknown".concat(unknownIndex);
+          }
         }
         if (allListObj[token.address]) {
           allListObj[token.address].balance = Number(value);
@@ -9375,7 +9740,7 @@ function AccountContextProvider(_ref) {
       refreshErc20Tokens: fetchErc20Tokens
     };
   }, [krc20Tokens, erc20Tokens, loading, handleActiveToken]);
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(AccountContext.Provider, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_8__.jsx)(AccountContext.Provider, {
     value: value,
     children: children
   });

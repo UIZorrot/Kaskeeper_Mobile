@@ -248,66 +248,40 @@ function ActivitiesScrren() {
         setFetchListData([]);
         return;
       }
-      const data = await (0,_background_krc20_ActiveUTXO__WEBPACK_IMPORTED_MODULE_1__/* .fetch_Activity */ .CA)(networkName, address, 7, 0);
-      const enrichedData = await Promise.all(data.map(async item => {
-        let type = 'Received';
-        const inputAddress = item.inputs[0].previous_outpoint_address;
-        if (inputAddress === address) {
-          type = 'Sent';
+      const data = await (0,_background_krc20_ActiveUTXO__WEBPACK_IMPORTED_MODULE_1__/* .fetch_Activity */ .CA)(networkName, address, 10, 0);
+      const transactions = [];
+      data.forEach(item => {
+        if (item.inputs && item.inputs.length > 0) {
+          transactions.push(...item.inputs.map(input => input.previous_outpoint_hash));
         }
-        // let inputTotal = 0
+      });
+      const inputTransactions = await (0,_background_krc20_ActiveUTXO__WEBPACK_IMPORTED_MODULE_1__/* .fetch_l1_kas_transactions */ .k1)(networkName, transactions);
+      const enrichedData = await Promise.all(data.map(async item => {
         const inputTotal = item.inputs.reduce((acc, curr) => {
-          console.log('inputTotal', curr);
-          return acc + curr.previous_outpoint_amount;
+          var _inputTxObj$outputs$c;
+          let inputAmount = 0;
+          const inputTxObj = inputTransactions.find(tx => tx.transaction_id === curr.previous_outpoint_hash);
+          if ((inputTxObj === null || inputTxObj === void 0 ? void 0 : (_inputTxObj$outputs$c = inputTxObj.outputs[curr.previous_outpoint_index]) === null || _inputTxObj$outputs$c === void 0 ? void 0 : _inputTxObj$outputs$c.script_public_key_address) === address) {
+            var _inputTxObj$outputs$c2;
+            inputAmount = (inputTxObj === null || inputTxObj === void 0 ? void 0 : (_inputTxObj$outputs$c2 = inputTxObj.outputs[curr.previous_outpoint_index]) === null || _inputTxObj$outputs$c2 === void 0 ? void 0 : _inputTxObj$outputs$c2.amount) || 0;
+          }
+          return acc + inputAmount;
         }, 0);
         const outputTotal = item.outputs.reduce((acc, curr) => {
           let amount = 0;
-          if (inputAddress === curr.script_public_key_address) {
+          if (address === curr.script_public_key_address) {
             amount = curr.amount;
           }
           return acc + amount;
         }, 0);
         console.log('total', inputTotal, outputTotal);
-        const amount = inputTotal - outputTotal - item.mass;
-
-        // let totalAmount = 0;
-        // let dectotalAmount = 0;
-        // await Promise.all(
-        //   item.inputs.map(async (input) => {
-        //     if (input?.signature_script?.length > 200) {
-        //       console.log('Skipping special input:', input);
-        //       return;
-        //     }
-
-        //     try {
-        //       const txDetails = await fetch_tx(networkName, input.previous_outpoint_hash);
-        //       let flag = 0;
-        //       txDetails.outputs.forEach((output) => {
-        //         if (output.script_public_key_address === address && input.previous_outpoint_index == flag) {
-        //           dectotalAmount += parseInt(output.amount);
-        //         }
-        //         flag = flag + 1;
-        //       });
-        //     } catch (error) {
-        //       // error
-        //     }
-        //   })
-        // );
-
-        // item.outputs.forEach((output) => {
-        //   const outputAmount = parseInt(output.amount);
-        //   if (output.script_public_key_address === address) {
-        //     totalAmount += outputAmount;
-        //   }
-        // });
-        // const amount = totalAmount - dectotalAmount;
-
+        const amount = outputTotal - (inputTotal || item.mass);
         return {
           // txdetail: item,
-          type,
+          type: amount >= 0 ? 'Received' : 'Sent',
           // : 'TransferNative',
           txid: item.transaction_id || '',
-          amount: amount,
+          amount: Math.abs(amount),
           dec: 8,
           tick: 'KAS',
           time: item.block_time,
@@ -363,6 +337,7 @@ function ActivitiesScrren() {
       const baseUrl = network === kaspa_wasm__WEBPACK_IMPORTED_MODULE_22__.NetworkType.Mainnet ? _shared_constant__WEBPACK_IMPORTED_MODULE_13__/* .OPENAPI_URL_MAINNET_L2 */ .Qy : network === kaspa_wasm__WEBPACK_IMPORTED_MODULE_22__.NetworkType.Testnet ? _shared_constant__WEBPACK_IMPORTED_MODULE_13__/* .OPENAPI_URL_TESTNET_L2 */ .E$ : _shared_constant__WEBPACK_IMPORTED_MODULE_13__/* .OPENAPI_URL_DEVNET_L2 */ .MZ;
       const response = await fetch("".concat(baseUrl, "/api/v2/addresses/").concat(addressL2, "/transactions"));
       const data = await response.json();
+      console.log('getL2TokenList', data === null || data === void 0 ? void 0 : data.items);
       setL2NativeActivites((data === null || data === void 0 ? void 0 : data.items) || []);
     } catch (error) {
       console.log('getL2List rror');
@@ -371,34 +346,42 @@ function ActivitiesScrren() {
     }
   }, [address, network, addressL2, currentLayer]);
   const getErc20List = (0,react__WEBPACK_IMPORTED_MODULE_8__.useCallback)(async () => {
-    console.log('getErc20List', erc20Tokens);
-    const erc20List = [];
-    for (const index in erc20Tokens) {
-      var _res$data;
-      const res = await (0,_background_krc20_ActiveUTXO__WEBPACK_IMPORTED_MODULE_1__/* .fetch_erc20 */ .UF)(network, addressL2, erc20Tokens[index].contractAddress);
-      res === null || res === void 0 ? void 0 : (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.items.forEach(item => {
-        erc20List.push({
-          ...item,
-          symbol: erc20Tokens[index].symbol,
-          dec: erc20Tokens[index].decimals
+    try {
+      setLoading(true);
+      const erc20List = [];
+      for (const index in erc20Tokens) {
+        var _res$data;
+        const res = await (0,_background_krc20_ActiveUTXO__WEBPACK_IMPORTED_MODULE_1__/* .fetch_erc20 */ .UF)(network, addressL2, erc20Tokens[index].contractAddress);
+        res === null || res === void 0 ? void 0 : (_res$data = res.data) === null || _res$data === void 0 ? void 0 : _res$data.items.forEach(item => {
+          erc20List.push({
+            ...item,
+            symbol: erc20Tokens[index].symbol,
+            dec: erc20Tokens[index].decimals
+          });
         });
-      });
+      }
+      console.log('getErc20List', erc20List);
+      setErc20List(erc20List);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setLoading(false);
     }
-    setErc20List(erc20List);
   }, [address, network, addressL2]);
   (0,react__WEBPACK_IMPORTED_MODULE_8__.useEffect)(() => {
     if (!address) return;
+    console.log('erc20List', activeKey);
     if (currentLayer !== 'L2') {
-      fetchList();
+      if (activeKey === 'native') fetchList();
       // 获取krc20List
-      getKrc20List();
+      if (activeKey === 'krc20') getKrc20List();
       setTabsItem(tabsItemOrigin.filter(item => item.key !== 'l2Token'));
     } else {
-      getL2TokenList();
-      getErc20List();
+      if (activeKey === 'l2Token') getErc20List();
+      if (activeKey === 'native') getL2TokenList();
       setTabsItem(tabsItemOrigin.filter(item => item.key !== 'krc20'));
     }
-  }, [address, network, fetchList, krc20Tokens, addressL2, currentLayer, erc20Tokens]);
+  }, [address, network, fetchList, krc20Tokens, addressL2, currentLayer, erc20Tokens, activeKey]);
   const handleClick = () => {
     if (!address || !addressL2) return;
     const baseUrl = network === kaspa_wasm__WEBPACK_IMPORTED_MODULE_22__.NetworkType.Mainnet ? "https://kas.fyi/addresses/".concat(address, "?page=1") : "https://explorer-tn10.kaspa.org/addresses/".concat(address, "?page=1");
@@ -442,9 +425,6 @@ function ActivitiesScrren() {
   //   );
   // }
 
-  (0,react__WEBPACK_IMPORTED_MODULE_8__.useEffect)(() => {
-    console.log('activeKey', activeKey);
-  }, [activeKey]);
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_2__/* .Layout */ ._W, {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_16__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_2__/* .Header */ .ek, {
       onBack: () => navigate('MainScreen'),

@@ -33,16 +33,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(24468);
 /* harmony import */ var _ui_state_settings_hooks__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(17534);
 /* harmony import */ var _ui_utils__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(48818);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(37656);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(70884);
-/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(87136);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(37656);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(70884);
+/* harmony import */ var _mui_material__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(87136);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(96651);
 /* harmony import */ var _MainRoute__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(77980);
 /* harmony import */ var _ui_context_AccountContext__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(23932);
 /* harmony import */ var _ui_components_ActionComponent__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(23848);
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(2488);
-var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_components__WEBPACK_IMPORTED_MODULE_0__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_2__, _MainRoute__WEBPACK_IMPORTED_MODULE_6__, _ui_context_AccountContext__WEBPACK_IMPORTED_MODULE_7__]);
-([_ui_components__WEBPACK_IMPORTED_MODULE_0__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_2__, _MainRoute__WEBPACK_IMPORTED_MODULE_6__, _ui_context_AccountContext__WEBPACK_IMPORTED_MODULE_7__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+/* harmony import */ var _background_krc20_l2__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(34780);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(2488);
+var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_ui_components__WEBPACK_IMPORTED_MODULE_0__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_2__, _MainRoute__WEBPACK_IMPORTED_MODULE_6__, _ui_context_AccountContext__WEBPACK_IMPORTED_MODULE_7__, _background_krc20_l2__WEBPACK_IMPORTED_MODULE_9__]);
+([_ui_components__WEBPACK_IMPORTED_MODULE_0__, _ui_state_accounts_hooks__WEBPACK_IMPORTED_MODULE_2__, _MainRoute__WEBPACK_IMPORTED_MODULE_6__, _ui_context_AccountContext__WEBPACK_IMPORTED_MODULE_7__, _background_krc20_l2__WEBPACK_IMPORTED_MODULE_9__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -88,6 +90,9 @@ const ImportERC20 = () => {
     if (list.find(item => item.contractAddress === e.target.value)) return setValidAddress('Already added');
     try {
       const token = await (0,_ui_utils__WEBPACK_IMPORTED_MODULE_4__/* .validateERC20Token */ .CA)(e.target.value, networkType);
+      if (!token.symbol && e.target.value === _background_krc20_l2__WEBPACK_IMPORTED_MODULE_9__/* .TKASE_ADDRESS */ .mo) {
+        token.symbol = 'TKASE';
+      }
       setFormData(() => ({
         contractAddress: e.target.value,
         symbol: token.symbol,
@@ -122,21 +127,21 @@ const ImportERC20 = () => {
       console.log('addERC20Token error', error);
     }
   };
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Layout */ ._W, {
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Header */ .ek, {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Layout */ ._W, {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Header */ .ek, {
       onBack: () => {
         window.history.go(-1);
       },
       title: "Import ERC20"
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_ui_components_Styled_Content__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c, {
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_ui_components_Styled_Content__WEBPACK_IMPORTED_MODULE_1__/* ["default"] */ .c, {
       className: "pt-0 mt-3",
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .c, {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .c, {
         className: "space-y-4",
-        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .c, {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .c, {
           className: "space-y-1",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .c, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .c, {
             children: "Token Contract Address"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .c, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .c, {
             value: formData.contractAddress,
             name: "contractAddress",
             size: "small",
@@ -145,18 +150,18 @@ const ImportERC20 = () => {
             autoComplete: "off",
             onChange: handleAddressChange,
             error: !!validAddress
-          }), validAddress ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .c, {
+          }), validAddress ? /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .c, {
             color: "error",
             children: validAddress
           }) : '']
         }),
         /*#__PURE__*/
         // true || formData.contractAddress && !validAddress && formData.symbol &&
-        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .c, {
+        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .c, {
           className: "space-y-1",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .c, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .c, {
             children: "Token Symbol"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .c, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .c, {
             value: formData.symbol,
             name: "symbol",
             size: "small",
@@ -173,11 +178,11 @@ const ImportERC20 = () => {
         }),
         /*#__PURE__*/
         // true || formData.contractAddress && !validAddress && formData.decimals &&
-        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .c, {
+        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsxs)(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .c, {
           className: "space-y-1",
-          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .c, {
+          children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .c, {
             children: "Token Decimals"
-          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_12__/* ["default"] */ .c, {
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_mui_material__WEBPACK_IMPORTED_MODULE_13__/* ["default"] */ .c, {
             type: "number",
             value: formData.decimals,
             name: "decimals",
@@ -190,7 +195,7 @@ const ImportERC20 = () => {
         }),
         /*#__PURE__*/
         // true || formData.contractAddress && !validAddress && formData.symbol && formData.decimals &&
-        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_9__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Button */ .q, {
+        (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_10__.jsx)(_ui_components__WEBPACK_IMPORTED_MODULE_0__/* .Button */ .q, {
           variant: "contained",
           color: "primary",
           className: "!rounded-lg !h-[42px] w-full",
