@@ -250,7 +250,8 @@ const Home = memo(({ navigation, route }: {
   }, [isFocused]);
 
   const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    // backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    backgroundColor: '#FFFFFF',
     // flex: 1,
     height: webViewHeight, // webViewHeight,
     paddingTop: insets.top,
@@ -259,7 +260,8 @@ const Home = memo(({ navigation, route }: {
 
   return <SafeAreaView style={backgroundStyle}>
     <StatusBar
-      barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+      // barStyle={isDarkMode ? 'light-content' : 'dark-content'}
+      barStyle={'dark-content'}
       backgroundColor={backgroundStyle.backgroundColor}
     />
     {/* <KeyboardAvoidingView
